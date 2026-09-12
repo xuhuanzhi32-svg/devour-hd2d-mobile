@@ -35,6 +35,21 @@ test('pulse finishes supply damage when its enemy kill opens an upgrade',()=>{
  const e=g._spawnEnemy('slime',false,{x:h.x,z:h.z});e.hp=1;g.skill('pulse');
  assert.equal(g.state.mode,'upgrade');assert.equal(p.broken,true);assert.equal(g.attack(),false);assert.equal(g.skill('pulse'),false);
 });
+test('perfect dodge rewards once inside the dash window and never converts ordinary invulnerability',()=>{
+ const {g}=make(),h=g.state.hero;g.state.enemies=[];h.hp=h.maxHp;h.ultimate=0;h.invulnerable=0;g.state.cooldowns.pulse=4;
+ assert.equal(g.skill('dash'),true);const hp=h.hp;assert.equal(g._hurt(25),false);assert.equal(h.hp,hp);assert.equal(h.ultimate,16);assert.equal(g.state.cooldowns.pulse,3);assert.equal(g.state.stats.perfectDodges,1);
+ assert.equal(g._hurt(25),false);assert.equal(g.state.stats.perfectDodges,1);
+ h.invulnerable=.5;g.state.cooldowns.dash=0;assert.equal(g.skill('dash'),true);assert.equal(h.dodgeReady,false);assert.equal(g._hurt(25),false);assert.equal(g.state.stats.perfectDodges,1);
+ h.invulnerable=0;h.dodgeWindow=0;h.dodgeReady=false;assert.equal(g._hurt(25),true);assert.ok(h.hp<hp);assert.equal(g.state.stats.perfectDodges,1);
+});
+test('three boss perfect dodges open one 2.5 second break window and persist safely',()=>{
+ const {g,storage}=make();g.state.enemies=[];g._spawnBoss();const boss=g.state.enemies[0],h=g.state.hero;h.ultimate=0;h.invulnerable=0;
+ for(let i=0;i<3;i++){if(i===2){g._warning(h.x,h.z,2,1,30,{enemyId:boss.id});g._projectile(h.x-2,h.z,Math.PI/2,2,30,{enemyId:boss.id});}g.state.cooldowns.dash=0;h.invulnerable=0;assert.equal(g.skill('dash'),true);assert.equal(g._hurt(30,{enemyId:boss.id}),false);}
+ assert.equal(boss.guard,3);assert.equal(boss.stagger,2.5);assert.equal(g.state.stats.bossBreaks,1);assert.equal(g.state.stats.perfectDodges,3);assert.equal(h.ultimate,48);
+ assert.equal(g.state.effects.some(f=>f.type==='telegraph'&&f.enemyId===boss.id&&!f.fired),false);assert.equal(g.state.projectiles.some(p=>p.enemyId===boss.id),false);
+ boss.hp=boss.maxHp=100;g._damageEnemy(boss,20,'bite');assert.equal(boss.hp,73);
+ g.pause();const reload=new Game({storage});assert.ok(reload.resume());const savedBoss=reload.state.enemies.find(e=>e.boss);assert.equal(savedBoss.guard,3);assert.equal(savedBoss.stagger,2.5);
+});
 test('four-second chain grants capped extra energy from third kill; damage and expiration reset it',()=>{
  const {g}=make(),s=g.state,h=s.hero;s.enemies=[];h.nextXp=10000;h.ultimate=0;
  const kill=()=>{const e=g._spawnEnemy('slime',false,{x:0,z:5});g._devour(e);};
@@ -51,6 +66,12 @@ test('v0.6 save migrates new supplies once and preserves old stats and RNG ID al
  const {g,storage}=make();g.pause();const raw=JSON.parse(storage.getItem('devourHD2D.v1'));delete raw.state.props;delete raw.state.chain;const id=raw.nextId;
  storage.setItem('devourHD2D.v1',JSON.stringify(raw));const reload=new Game({storage});assert.ok(reload.resume());assert.equal(reload.state.props.length,6);assert.equal(reload.nextId,id+6);
  assert.equal(reload.state.hero.hp,raw.state.hero.hp);reload.save();const again=new Game({storage});assert.ok(again.resume());assert.equal(again.nextId,reload.nextId);assert.deepEqual(clone(again.state.props),clone(reload.state.props));
+});
+test('older boss saves migrate dodge and guard state while corrupt combat fields are rejected',()=>{
+ const {g,storage}=make();g.state.enemies=[];g._spawnBoss();g.pause();const raw=JSON.parse(storage.getItem('devourHD2D.v1')),boss=raw.state.enemies.find(e=>e.boss);
+ delete raw.state.hero.dodgeWindow;delete raw.state.hero.dodgeReady;delete raw.state.stats.perfectDodges;delete raw.state.stats.bossBreaks;delete boss.guard;delete boss.stagger;
+ storage.setItem('devourHD2D.v1',JSON.stringify(raw));const reload=new Game({storage});assert.ok(reload.resume());const migrated=reload.state.enemies.find(e=>e.boss);assert.equal(reload.state.hero.dodgeWindow,0);assert.equal(reload.state.hero.dodgeReady,false);assert.equal(migrated.guard,3);assert.equal(migrated.stagger,0);
+ reload.pause();const corrupt=JSON.parse(storage.getItem('devourHD2D.v1'));corrupt.state.enemies.find(e=>e.boss).stagger=99;storage.setItem('devourHD2D.v1',JSON.stringify(corrupt));assert.equal(new Game({storage}).resume(),false);
 });
 test('corrupt supply state is rejected without overwriting the original save',()=>{
  for(const change of [p=>p.hp=-1,p=>p.kind='script',p=>p.broken=true,p=>p.x=Infinity]){

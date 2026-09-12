@@ -120,6 +120,7 @@
 @media(max-height:700px){.menu h1{font-size:64px;margin:8px 0}.menu h2{margin-bottom:8px}.menu .intro{display:none}.menu .title-rule{margin-bottom:12px}.menu-links{margin:8px 0}.setup-description{margin-bottom:8px}.preparation-row{margin-top:8px}.menu{gap:10px}}
 @media(max-height:480px) and (orientation:landscape){.menu .menu-bottom{position:static;font-size:8px;padding-top:6px}.menu .preparation-row{width:100%;margin-top:4px}.menu .preparation-row label{display:flex;align-items:center;gap:6px;white-space:nowrap}.menu .preparation-row select{min-height:44px}.menu .setup-description{min-height:0;max-width:100%;font-size:9px;margin:4px 0 7px}.menu .menu-links{flex-wrap:wrap}.menu .menu-content{max-width:76vw}.menu .difficulty-row{flex-shrink:0}}
 .web-tools{position:fixed;right:24px;bottom:25px;z-index:12;display:grid;gap:8px;padding:12px;width:185px;font-size:10px}.web-tools button{min-height:36px;padding:7px 9px}.web-tools label{display:flex;gap:6px;align-items:center;color:#d6c690}.web-tools input{width:85px;accent-color:#d5b575}.web-tools small{color:#bac8aa;line-height:1.6}.damage-layer{position:fixed;inset:0;pointer-events:none;z-index:7;overflow:hidden}.damage-number{position:absolute;transform:translate(-50%,-100%);font:700 19px Georgia,serif;color:#ffe9b0;text-shadow:0 2px 2px #151b13,1px 0 #151b13}.damage-number.strong{font-size:27px;color:#ffce7b}.prop-label{position:absolute;transform:translate(-50%,-100%);font-size:9px;letter-spacing:1px;color:#e6d6a3;text-shadow:0 2px 3px #000}.combo-panel{position:fixed;right:24px;top:300px;z-index:7;text-align:right;pointer-events:none;border-right:2px solid #d8bd7e;padding:10px 13px;background:linear-gradient(90deg,transparent,#17271fd9);min-width:130px}.combo-panel b{font:32px Georgia;color:#f4d897}.combo-panel small{display:block;font-size:10px;color:#d7d7b9}.combo-panel i{display:block;height:3px;background:#d9b975;margin-top:8px;width:100%;transform-origin:right}.photo-exit{position:fixed;right:24px;top:24px;z-index:60;padding:12px 20px;background:#13271ed9}.photo-mode #hud,.photo-mode #objective,.photo-mode #hunt-panel,.photo-mode #minimap-wrap,.photo-mode #stat-rack,.photo-mode #target-panel,.photo-mode #skillbar,.photo-mode #build-strip,.photo-mode #move-help,.photo-mode #labels,.photo-mode #boss-ui,.photo-mode #pause-screen,.photo-mode #chapter-banner,.photo-mode #interact-button,.photo-mode #joystick,.photo-mode #toast,.photo-mode #damage-layer,.photo-mode #combo-panel{display:none!important}.photo-mode .web-tools small{display:none}.photo-mode .web-tools{opacity:.7}
+.dodge-callout{position:fixed;left:50%;top:27%;z-index:14;pointer-events:none;transform:translate(-50%,-50%);text-align:center;color:#fbdfa0;text-shadow:0 3px 8px #000;animation:dodge-pop .22s ease-out}.dodge-callout b{display:block;font:700 30px Georgia,serif;letter-spacing:5px}.dodge-callout small{font-size:11px;letter-spacing:2px;color:#d9f2dc}@keyframes dodge-pop{from{opacity:0;transform:translate(-50%,-30%) scale(.7)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}.photo-mode #dodge-callout{display:none!important}@media(prefers-reduced-motion:reduce){.dodge-callout{animation:none}}
 @media(max-width:1000px){.web-tools{width:150px;right:12px;bottom:120px}.combo-panel{right:12px;top:260px}.web-tools small{display:none}}
 </style>
 </head>
@@ -147,7 +148,8 @@
 <div id="joystick" class="joystick hidden" aria-label="移动摇杆"><div id="stick"></div></div><button id="interact-button" class="interact-button hidden">F · 进入下一区域</button>
 <div id="damage-layer" class="damage-layer" aria-hidden="true"></div>
 <div id="combo-panel" class="combo-panel hidden" role="status"><b id="combo-count">0</b><small id="combo-caption">连续吞噬</small><i id="combo-time"></i></div>
-<aside id="web-tools" class="web-tools glass hidden" aria-label="Web 镜头控制"><button id="photo-button">P · 暂停观景</button><label>镜头 <input id="camera-zoom" aria-label="镜头缩放" type="range" min="75" max="135" step="5" value="100"><span id="zoom-value">100%</span></label><small>右键定向撕咬 · 滚轮缩放<br>击碎场景补给，拾取掉落</small></aside>
+<div id="dodge-callout" class="dodge-callout hidden" role="status"><b>完美闪避</b><small id="dodge-caption">终极能量 +16</small></div>
+<aside id="web-tools" class="web-tools glass hidden" aria-label="Web 镜头控制"><button id="photo-button">P · 暂停观景</button><label>镜头 <input id="camera-zoom" aria-label="镜头缩放" type="range" min="75" max="135" step="5" value="100"><span id="zoom-value">100%</span></label><small>右键定向撕咬 · 滚轮缩放<br>Q 精准闪避 · 三次破势统治者<br>击碎场景补给，拾取掉落</small></aside>
 <button id="photo-exit" class="photo-exit hidden">退出观景 · P / Esc</button>
 <div id="menu" class="screen menu hidden">
  <div class="menu-top"><div class="wordmark">DEVOUR <span>/</span> EVOLVE</div><span class="edition">HD-2D · WEB EDITION</span></div>
@@ -155,7 +157,7 @@
  <div class="preparation-row"><label>出身<select id="origin-select" aria-label="选择出身"><option value="unformed">初生之种 · 均衡</option><option value="fangborn">裂齿猎手 · 近战</option><option value="tideborn">腐潮行者 · 技能</option><option value="shellborn">磐壳守望 · 生存</option></select></label><label>旅程<select id="journey-select" aria-label="选择旅程"><option value="campaign">五区战役</option><option value="trial" id="trial-option" disabled>五王试炼 · 通关解锁</option></select></label></div><p id="origin-description" class="setup-description"></p><div class="menu-buttons"><button id="start-button" class="primary">开始新进化 <span>↗</span></button><button id="continue-button" class="secondary" disabled>继续旅程 <span id="save-label">暂无记录</span></button></div>
  <div class="menu-links"><button id="meta-button">永久进化</button><span>/</span><button id="how-button">冒险指南</button><span>/</span><button id="collection-button">遗物图鉴</button><span>/</span><button id="achievements-button">成就</button><span>/</span><button id="records-button">战绩</button><span>/</span><button id="settings-button">设置</button></div>
  <div class="difficulty-row"><span>冒险强度</span><label><input name="difficulty" type="radio" value="story" checked> 轻松旅程</label><label><input name="difficulty" type="radio" value="normal"> 标准挑战</label></div>
- </section><aside class="menu-route" aria-label="五区域冒险路线"><div class="eyebrow gold">WORLD ROUTE · 05</div><ol><li class="active"><i>01</i><span><b>新手村厕所</b><small>从最底层醒来</small></span></li><li><i>02</i><span><b>腐烂下水道</b><small>饥饿开始回响</small></span></li><li><i>03</i><span><b>新手村外围</b><small>第一次被世界看见</small></span></li><li><i>04</i><span><b>王国边境</b><small>击穿秩序的防线</small></span></li><li><i>05</i><span><b>圣域裂谷</b><small>吞下最后的规则</small></span></li></ol><div class="loop-card"><span>核心循环</span><b>吞噬 → 探索 → 构筑 → 挑战统治者</b><small>场景破坏 · 连噬反馈 · 镜头缩放 · 暂停观景</small></div></aside><div class="menu-bottom"><span>吞噬 · 进化 · 跨越五个世界</span><span>原创 HD-2D 可玩重制版 <b>v0.7.0 WEB</b></span></div>
+ </section><aside class="menu-route" aria-label="五区域冒险路线"><div class="eyebrow gold">WORLD ROUTE · 05</div><ol><li class="active"><i>01</i><span><b>新手村厕所</b><small>从最底层醒来</small></span></li><li><i>02</i><span><b>腐烂下水道</b><small>饥饿开始回响</small></span></li><li><i>03</i><span><b>新手村外围</b><small>第一次被世界看见</small></span></li><li><i>04</i><span><b>王国边境</b><small>击穿秩序的防线</small></span></li><li><i>05</i><span><b>圣域裂谷</b><small>吞下最后的规则</small></span></li></ol><div class="loop-card"><span>核心循环</span><b>吞噬 → 探索 → 构筑 → 挑战统治者</b><small>精准闪避 · 统治者破势 · 场景破坏 · 暂停观景</small></div></aside><div class="menu-bottom"><span>吞噬 · 进化 · 跨越五个世界</span><span>原创 HD-2D 可玩重制版 <b>v0.8.0 WEB</b></span></div>
 </div>
 <div id="upgrade-screen" class="screen modal hidden" role="dialog" aria-modal="true" aria-labelledby="upgrade-title"><section class="upgrade-panel"><div class="eyebrow gold">EVOLUTION</div><h2 id="upgrade-title">饥饿，让你蜕变。</h2><p id="upgrade-description">选择一项基因。每一次选择，都改变你的下一口。</p><div id="upgrade-cards" class="upgrade-cards"></div><small class="muted">按 1 / 2 / 3 选择 · 选择期间世界暂停</small></section></div>
 <div id="pause-screen" class="screen modal hidden" role="dialog" aria-modal="true" aria-labelledby="pause-title"><section class="panel compact"><div class="eyebrow gold">TAKE A BREATH</div><h2 id="pause-title">世界暂时安静了。</h2><p id="pause-stats"></p><button id="resume-button" class="primary">继续冒险</button><button id="pause-settings" class="secondary">设置</button><button id="save-menu-button" class="secondary">保存并返回主菜单</button><small id="save-warning" class="muted"></small></section></div>
@@ -461,13 +463,15 @@ function validSave(s) {
   if (h.biteCooldown !== undefined && (!finite(h.biteCooldown) || h.biteCooldown < 0 || h.biteCooldown > 2)) return false;
   if (h.biteWindow !== undefined && (!finite(h.biteWindow) || h.biteWindow < 0 || h.biteWindow > 2)) return false;
   if (h.biteStep !== undefined && !integer(h.biteStep,0,3)) return false;
+  if (h.dodgeWindow !== undefined && (!finite(h.dodgeWindow) || h.dodgeWindow < 0 || h.dodgeWindow > 1)) return false;
+  if (h.dodgeReady !== undefined && typeof h.dodgeReady !== 'boolean') return false;
   if (Math.abs(h.x) > 18 || Math.abs(h.z) > 18 || h.maxHp < 20 || h.maxHp > 3000 || h.hp < 0 || h.hp > h.maxHp || h.power < 1 || h.power > 500 || h.speed < 1 || h.speed > 20 || h.xp < 0 || h.nextXp < 1 || !integer(h.level, 1, 100)) return false;
   if (h.dashTime < 0 || h.dashTime > 2 || Math.abs(h.dashX) > 1.5 || Math.abs(h.dashZ) > 1.5 || h.invulnerable < 0 || h.invulnerable > 30) return false;
   if (!g.objectives || !integer(g.objectives.eaten, 0, 1e6) || !integer(g.objectives.landmarks, 0, 3) || !integer(g.pendingUpgrades, 0, 100)) return false;
   if (!g.cooldowns || !['pulse', 'dash', 'ultimate'].every(k => finite(g.cooldowns[k]) && g.cooldowns[k] >= 0 && g.cooldowns[k] <= 120)) return false;
   if (!g.upgrades || !Object.entries(g.upgrades).every(([k,v]) => UPGRADES.some(u => u.id === k && integer(v, 0, u.max)))) return false;
   if (!g.stats || !['eaten','kills','damageTaken','zonesCleared','elapsed','score'].every(k => finite(g.stats[k]) && g.stats[k] >= 0)) return false;
-  if (['elitesKilled','huntsCompleted','lootCollected','hazardsTriggered','activeHits'].some(k => g.stats[k] !== undefined && (!finite(g.stats[k]) || g.stats[k] < 0))) return false;
+  if (['elitesKilled','huntsCompleted','lootCollected','hazardsTriggered','activeHits','perfectDodges','bossBreaks'].some(k => g.stats[k] !== undefined && (!finite(g.stats[k]) || g.stats[k] < 0))) return false;
   if (!g.portal || !finite(g.portal.x) || !finite(g.portal.z) || typeof g.portal.active !== 'boolean') return false;
   if (!['time','zoneTime','spawnTimer','autoAttackTimer','saveTimer'].every(k => finite(g[k]) && g[k] >= 0 && g[k] < 1e9)) return false;
   if (g.environmentTimer !== undefined && (!finite(g.environmentTimer) || g.environmentTimer < 0 || g.environmentTimer > 1e9)) return false;
@@ -490,6 +494,8 @@ function validSave(s) {
     if (e.chargeTime !== undefined && (!finite(e.chargeTime) || e.chargeTime < 0 || e.chargeTime > 3)) return false;
     if (e.chargeX !== undefined && (!finite(e.chargeX) || Math.abs(e.chargeX) > 1.5)) return false;
     if (e.chargeZ !== undefined && (!finite(e.chargeZ) || Math.abs(e.chargeZ) > 1.5)) return false;
+    if (e.guard !== undefined && !integer(e.guard,0,3)) return false;
+    if (e.stagger !== undefined && (!finite(e.stagger) || e.stagger < 0 || e.stagger > 3)) return false;
     return e.attackCount === undefined || integer(e.attackCount,0,1e7);
   })) return false;
   if (!g.pickups.every(p => ['xp','heal','essence'].includes(p.type) && [p.x,p.z,p.value,p.age].every(finite))) return false;
@@ -585,20 +591,22 @@ class Game {
     h.biteCooldown=finite(h.biteCooldown)?Math.max(0,h.biteCooldown):0;
     h.biteWindow=finite(h.biteWindow)?Math.max(0,h.biteWindow):0;
     h.biteStep=integer(h.biteStep,0,3)?h.biteStep:0;
+    h.dodgeWindow=finite(h.dodgeWindow)?Math.max(0,h.dodgeWindow):0;
+    h.dodgeReady=typeof h.dodgeReady==='boolean'?h.dodgeReady:false;
     s.environmentTimer=finite(s.environmentTimer)?Math.max(0,s.environmentTimer):12;
     s.environmentIntroduced=typeof s.environmentIntroduced==='boolean'?s.environmentIntroduced:false;
     const hunt=s.hunt;
     s.hunt=hunt&&HUNT_CONTRACTS.some(c=>c.id===hunt.contract)&&['pending','active','complete','failed'].includes(hunt.status)
       ?{contract:hunt.contract,status:hunt.status,targetId:integer(hunt.targetId,1,1e9)?hunt.targetId:null,timeLeft:finite(hunt.timeLeft)?Math.max(0,hunt.timeLeft):0}
       :{contract:contract.id,status:'pending',targetId:null,timeLeft:0};
-    s.stats={elitesKilled:0,huntsCompleted:0,lootCollected:0,hazardsTriggered:0,activeHits:0,...s.stats};
+    s.stats={elitesKilled:0,huntsCompleted:0,lootCollected:0,hazardsTriggered:0,activeHits:0,perfectDodges:0,bossBreaks:0,...s.stats};
     s.relics ||= [];s.expeditionLog ||= [];s.activeExpedition ||= null;
     s.journey ||= 'campaign';s.origin ||= 'unformed';
     s.props ||= s.journey==='trial'?[]:this._makeProps();s.chain ||= {count:0,time:0};
     s.stats.propsBroken ||= 0;s.stats.maxChain ||= 0;
     h.wardCooldown ||= 0;
     s.landmarks.forEach((l,i)=>{l.eventId=EXPEDITIONS[s.zone*3+i].id;l.resolved=s.journey==='trial'||s.expeditionLog.some(e=>e.id===l.eventId);});
-    for(const enemy of s.enemies)enemy.elite=ELITES[enemy.elite]?enemy.elite:null;
+    for(const enemy of s.enemies){enemy.elite=ELITES[enemy.elite]?enemy.elite:null;if(enemy.boss){enemy.guard=integer(enemy.guard,0,3)?enemy.guard:3;enemy.stagger=finite(enemy.stagger)?Math.max(0,enemy.stagger):0;}}
     return s;
   }
 
@@ -606,7 +614,7 @@ class Game {
     return {
       zone: 0, time: 0, zoneTime: 0, mode: 'menu', seed: this.initialSeed,
       runId: `run-${Date.now()}-${this.rng}-${++this._runSerial}`, difficulty: 'normal',journey:'campaign',origin:'unformed',
-      hero: { x: 0, z: 5, r: .48, hp: 120 + this.meta.vitality * 10, maxHp: 120 + this.meta.vitality * 10, level: 1, xp: 0, nextXp: 24, angle: Math.PI, moving: false, hit: 0, attack: 0, devourTimer: 0, ultimate: 0, ultimateActive: 0, power: 12 + this.meta.power * 1.5, speed: 4.25 * (1 + this.meta.speed * .025), invulnerable: 0, dashTime: 0, dashX: 0, dashZ: -1, biteCooldown:0, biteWindow:0, biteStep:0, wardCooldown:0 },
+      hero: { x: 0, z: 5, r: .48, hp: 120 + this.meta.vitality * 10, maxHp: 120 + this.meta.vitality * 10, level: 1, xp: 0, nextXp: 24, angle: Math.PI, moving: false, hit: 0, attack: 0, devourTimer: 0, ultimate: 0, ultimateActive: 0, power: 12 + this.meta.power * 1.5, speed: 4.25 * (1 + this.meta.speed * .025), invulnerable: 0, dashTime: 0, dashX: 0, dashZ: -1, dodgeWindow:0, dodgeReady:false, biteCooldown:0, biteWindow:0, biteStep:0, wardCooldown:0 },
       enemies: [], pickups: [], effects: [], projectiles: [], landmarks: [
         { id:this._id(),x:-16,z:-12,found:false,name:'遗落的铜铃' },
         { id:this._id(),x:16,z:-12,found:false,name:'干涸的水桶' },
@@ -618,7 +626,7 @@ class Game {
       environmentTimer: 12, environmentIntroduced: false, hunt: { contract:HUNT_CONTRACTS[0].id, status:'pending', targetId:null, timeLeft:0 },
       meta: this.meta, settings: this.settings, story: ZONES[0].story,
       relics:[],expeditionLog:[],activeExpedition:null,props:[],chain:{count:0,time:0},
-      stats: { eaten: 0, kills: 0, damageTaken: 0, zonesCleared: 0, elapsed: 0, score: 0, elitesKilled:0, huntsCompleted:0, lootCollected:0, hazardsTriggered:0, activeHits:0 },
+      stats: { eaten: 0, kills: 0, damageTaken: 0, zonesCleared: 0, elapsed: 0, score: 0, elitesKilled:0, huntsCompleted:0, lootCollected:0, hazardsTriggered:0, activeHits:0, perfectDodges:0, bossBreaks:0 },
     };
   }
 
@@ -728,7 +736,7 @@ class Game {
     const s = this.state;
     s.zone = zone; s.zoneTime = 0; s.bossKilled = false; s.bossSpawned = false;
     s.hero.x = 0; s.hero.z = 5; s.hero.hp = Math.min(s.hero.maxHp, s.hero.hp + s.hero.maxHp * .25);
-    s.hero.invulnerable = 2; s.hero.dashTime = 0;
+    s.hero.invulnerable = 2; s.hero.dashTime = 0;s.hero.dodgeWindow=0;s.hero.dodgeReady=false;
     s.props=s.journey==='trial'?[]:this._makeProps();s.chain={count:0,time:0};
     s.enemies = []; s.pickups = []; s.effects = []; s.projectiles = [];
     s.portal = { x: 0, z: -14, active: false };
@@ -810,7 +818,7 @@ class Game {
     // Reserve one slot even if a wave is full.
     if (s.enemies.length >= 50) s.enemies.splice(s.enemies.findIndex(e => !e.boss),1);
     const hp = [430,700,1050,1450,2050][s.zone] * (s.difficulty === 'story' ? .8 : 1) * (s.journey==='trial'?TRIAL_RULES.bossHp:1);
-    const e = { id: this._id(), x: 0, z: -10.5, r: 1.0 + s.zone*.06, hp, maxHp: hp, type: ['goblin','rat','knight','soldier','mage'][s.zone], boss: true, bossIndex: s.zone, angle: 0, hit: 0, attack: 0, dead: false, edible: false, aiTimer: 2.3, wanderAngle: 0, chargeTime: 0, chargeX: 0, chargeZ: 0, phase: 1, attackCount: 0, shield: false };
+    const e = { id: this._id(), x: 0, z: -10.5, r: 1.0 + s.zone*.06, hp, maxHp: hp, type: ['goblin','rat','knight','soldier','mage'][s.zone], boss: true, bossIndex: s.zone, angle: 0, hit: 0, attack: 0, dead: false, edible: false, aiTimer: 2.3, wanderAngle: 0, chargeTime: 0, chargeX: 0, chargeZ: 0, phase: 1, attackCount: 0, shield: false, guard:3, stagger:0 };
     s.enemies.push(e);
     this._effect('evolve', e.x,e.z,2.0,2.8,'#edb667');
     this._toast(`${ZONES[s.zone].boss}出现了！避开红色预警，寻找进攻时机。`);
@@ -892,7 +900,7 @@ class Game {
       this._sound('pulse');
     } else if (kind === 'dash') {
       s.cooldowns.dash=3.5*reduction;
-      h.dashTime=.24; h.invulnerable=Math.max(h.invulnerable,.55);
+      const canDodge=h.invulnerable<=0;h.dashTime=.24;h.dodgeWindow=canDodge?.30:0;h.dodgeReady=canDodge;h.invulnerable=Math.max(h.invulnerable,.55);
       h.dashX=Math.sin(h.angle); h.dashZ=Math.cos(h.angle);
       this._effect('dash',h.x,h.z,.45,1.1,'#b4e3b3');
       if(this.hasRelic('feather')){this._effect('pulse',h.x,h.z,.4,2.5,'#b4e3b3');for(const e of [...s.enemies])if(!e.dead&&dist(h,e)<2.5+e.r)this._damageEnemy(e,h.power*.7,'relic');}
@@ -918,9 +926,10 @@ class Game {
     if((e.elite||e.boss)&&(this.state.upgrades.hunter||0)>0)amount*=1+(this.state.upgrades.hunter||0)*.12;
     if(e.elite==='bulwark'&&!e.armorBroken){amount*=.72;if(e.hp-amount<=e.maxHp*.5){e.armorBroken=true;this._effect('evolve',e.x,e.z,.45,e.r*1.8,'#f1cf83');this._toast(`${e.eliteName||'铁壳精英'}的护甲破裂了！`);}}
     if (e.shield && !e.boss) amount *= .7;
+    if(e.boss&&e.stagger>0)amount*=1.35;
     const actual=Math.min(e.hp,amount);
     e.hp=Math.max(0,e.hp-amount); e.hit=.15;
-    this._effect('number',e.x,e.z,.72,.1,'#ffe9b0',{value:Math.ceil(actual),strong:source==='bite'&&this.state.hero.biteStep===3});
+    this._effect('number',e.x,e.z,.72,.1,'#ffe9b0',{value:Math.ceil(actual),strong:(source==='bite'&&this.state.hero.biteStep===3)||(e.boss&&e.stagger>0)});
     e.edible=e.hp<=this._eatThreshold();
     this._effect('hit',e.x,e.z,.25,.45,'#fff1b5');
     if (e.hp<=0) this._devour(e);
@@ -1020,9 +1029,24 @@ class Game {
     return true;
   }
 
-  _hurt(amount) {
+  _perfectDodge(enemyId=null) {
+    const s=this.state,h=s.hero;if(!h.dodgeReady||h.dodgeWindow<=0)return false;
+    h.dodgeReady=false;h.dodgeWindow=0;h.invulnerable=Math.max(h.invulnerable,.45);h.ultimate=clamp(h.ultimate+16,0,100);s.cooldowns.pulse=Math.max(0,s.cooldowns.pulse-1);s.stats.perfectDodges=(s.stats.perfectDodges||0)+1;s.stats.score+=75;
+    const enemy=s.enemies.find(e=>e.id===enemyId&&!e.dead);
+    let caption='终极能量 +16 · 脉冲冷却 -1s';
+    if(enemy?.boss){
+      enemy.guard=Math.max(0,(enemy.guard??3)-1);
+      if(enemy.guard===0){enemy.guard=3;enemy.stagger=2.5;enemy.aiTimer=.25;s.stats.bossBreaks=(s.stats.bossBreaks||0)+1;s.stats.score+=250;s.effects=s.effects.filter(f=>!(f.type==='telegraph'&&f.enemyId===enemy.id&&!f.fired));s.projectiles=s.projectiles.filter(p=>p.enemyId!==enemy.id);caption='统治者破势 · 2.5 秒增伤窗口';this._sound('boss-defeated');}
+      else caption=`破势 ${3-enemy.guard}/3 · 终极能量 +16`;
+    }
+    this._effect('dodge',h.x,h.z,.8,1.4,'#f7d884',{caption});this._toast(`完美闪避：${caption}`);this._sound('dash');return true;
+  }
+
+  _hurt(amount,{enemyId=null}={}) {
     const s=this.state,h=s.hero;
-    if(s.mode!=='playing' || h.invulnerable>0 || h.hp<=0) return false;
+    if(s.mode!=='playing'||h.hp<=0)return false;
+    if(h.dodgeWindow>0&&h.dodgeReady){this._perfectDodge(enemyId);return false;}
+    if(h.invulnerable>0)return false;
     if(this.hasRelic('ward')&&!(h.wardCooldown>0)){h.wardCooldown=12;h.invulnerable=.3;this._effect('pulse',h.x,h.z,.4,1.5,'#a8dce8');this._toast('守护残印抵挡了这次伤害。');this._sound('discover');return false;}
     const damage=Math.max(1,amount*(1-(s.upgrades.armor||0)*.08)*(s.difficulty==='story'?.58:1));
     h.hp=Math.max(0,h.hp-damage);h.hit=.22;h.invulnerable=.85;s.stats.damageTaken+=damage;
@@ -1184,19 +1208,20 @@ class Game {
   _updateEffects(dt) {
     const s=this.state;
     for(const f of [...s.effects]) {
+      if(!s.effects.includes(f))continue;
       f.age+=dt;
       if(f.type==='telegraph' && !f.fired && f.age>=f.delay) {
         f.fired=true;
         if(f.action==='volley') {
           const count=clamp(Math.floor(f.count)||0,0,24);
-          for(let i=0;i<count;i++) this._projectile(f.x,f.z,f.angle+(i-(count-1)/2)*f.spread,f.speed,f.damage);
+          for(let i=0;i<count;i++) this._projectile(f.x,f.z,f.angle+(i-(count-1)/2)*f.spread,f.speed,f.damage,{enemyId:f.enemyId});
         } else if(f.action==='ring') {
           const count=clamp(Math.floor(f.count)||0,0,24);
-          for(let i=0;i<count;i++) this._projectile(f.x,f.z,i*Math.PI*2/Math.max(1,count)+f.angle,f.speed,f.damage);
+          for(let i=0;i<count;i++) this._projectile(f.x,f.z,i*Math.PI*2/Math.max(1,count)+f.angle,f.speed,f.damage,{enemyId:f.enemyId});
         } else if(f.action==='charge') {
           const e=s.enemies.find(e=>e.id===f.enemyId && !e.dead);
           if(e){e.chargeTime=clamp(Number(f.chargeDuration)||0,0,3);e.chargeX=Math.sin(Number(f.angle)||0);e.chargeZ=Math.cos(Number(f.angle)||0);}
-        } else if(dist(f,s.hero)<f.radius+s.hero.r*.65) this._hurt(f.damage);
+        } else if(dist(f,s.hero)<f.radius+s.hero.r*.65) this._hurt(f.damage,{enemyId:f.enemyId});
         this._effect('hit',f.x,f.z,.3,f.radius,'#f59063');
       }
     }
@@ -1206,7 +1231,7 @@ class Game {
       const nx=p.x+p.vx*dt,nz=p.z+p.vz*dt;
       if(this._blocked(nx,nz,p.r)){p.life=0;continue;}
       p.x=nx;p.z=nz;
-      if(dist(p,s.hero)<p.r+s.hero.r){this._hurt(p.damage);p.life=0;}
+      if(dist(p,s.hero)<p.r+s.hero.r){this._hurt(p.damage,{enemyId:p.enemyId});p.life=0;}
     }
     s.projectiles=s.projectiles.filter(p=>p.life>0);
   }
@@ -1215,9 +1240,10 @@ class Game {
     const s=this.state,h=s.hero;
     const phase=e.hp<e.maxHp*.33?3:e.hp<e.maxHp*.66?2:1;
     if(phase!==e.phase){e.phase=phase;e.aiTimer=1.2;this._toast(`${ZONES[s.zone].boss}进入第 ${phase} 阶段${phase===3?'：绝境狂暴！':'！'}`);this._effect('evolve',e.x,e.z,1,2.5,'#f09076');}
+    e.stagger=Math.max(0,(e.stagger||0)-dt);if(e.stagger>0){e.attack=0;return;}
     if(e.chargeTime>0) {
       e.chargeTime=Math.max(0,e.chargeTime-dt);this._move(e,e.chargeX*11*dt,e.chargeZ*11*dt);
-      if(dist(e,h)<e.r+h.r+.25)this._hurt(23+s.zone*4);
+      if(dist(e,h)<e.r+h.r+.25)this._hurt(23+s.zone*4,{enemyId:e.id});
       return;
     }
     if(d>3.6) this._move(e,dx/d*(1.3+s.zone*.12)*dt,dz/d*(1.3+s.zone*.12)*dt);
@@ -1270,7 +1296,7 @@ class Game {
     e.hit=Math.max(0,e.hit-dt);e.attack=Math.max(0,e.attack-dt);
     e.edible=e.hp<=this._eatThreshold();e.angle=Math.atan2(dx,dz);
     if(e.boss){this._bossAI(e,dt,d,dx,dz);return;}
-    if(e.chargeTime>0){e.chargeTime=Math.max(0,e.chargeTime-dt);this._move(e,e.chargeX*9*dt,e.chargeZ*9*dt);if(dist(e,h)<e.r+h.r)this._hurt(t.damage*(1+s.zone*.13));return;}
+    if(e.chargeTime>0){e.chargeTime=Math.max(0,e.chargeTime-dt);this._move(e,e.chargeX*9*dt,e.chargeZ*9*dt);if(dist(e,h)<e.r+h.r)this._hurt(t.damage*(1+s.zone*.13),{enemyId:e.id});return;}
     e.aiTimer-=dt;
     const aggro=e.type==='mage'||e.type==='larva'?11:9;
     if(d>aggro){this._move(e,Math.sin(e.wanderAngle)*t.speed*.25*dt,Math.cos(e.wanderAngle)*t.speed*.25*dt);if(e.aiTimer<0){e.wanderAngle=this._rand()*Math.PI*2;e.aiTimer=t.interval;}return;}
@@ -1307,7 +1333,7 @@ class Game {
   _step(dt,input) {
     const s=this.state,h=s.hero;
     s.time+=dt;s.zoneTime+=dt;s.stats.elapsed=s.time;s.saveTimer+=dt;
-    h.devourTimer=Math.max(0,(h.devourTimer||0)-dt);h.hit=Math.max(0,h.hit-dt);h.attack=Math.max(0,h.attack-dt);h.invulnerable=Math.max(0,h.invulnerable-dt);h.ultimateActive=Math.max(0,(h.ultimateActive||0)-dt);h.biteCooldown=Math.max(0,(h.biteCooldown||0)-dt);h.biteWindow=Math.max(0,(h.biteWindow||0)-dt);if(h.biteWindow===0)h.biteStep=0;
+    h.devourTimer=Math.max(0,(h.devourTimer||0)-dt);h.hit=Math.max(0,h.hit-dt);h.attack=Math.max(0,h.attack-dt);h.invulnerable=Math.max(0,h.invulnerable-dt);h.ultimateActive=Math.max(0,(h.ultimateActive||0)-dt);h.biteCooldown=Math.max(0,(h.biteCooldown||0)-dt);h.biteWindow=Math.max(0,(h.biteWindow||0)-dt);if(h.biteWindow===0)h.biteStep=0;h.dodgeWindow=Math.max(0,(h.dodgeWindow||0)-dt);if(h.dodgeWindow===0)h.dodgeReady=false;
     for(const k of ['pulse','dash','ultimate'])s.cooldowns[k]=Math.max(0,s.cooldowns[k]-dt);
     h.hp=Math.min(h.maxHp,h.hp+((s.upgrades.regen||0)*.45+(this.hasRelic('fungus')?.65:0))*dt);
     h.wardCooldown=Math.max(0,(h.wardCooldown||0)-dt);
@@ -1365,7 +1391,7 @@ class Game {
     return {
       ...s.stats, zone:s.zone, zoneName:ZONES[s.zone].name, bossName:ZONES[s.zone].boss,
       hp:h.hp,maxHp:h.maxHp,level:h.level,xp:h.xp,nextXp:h.nextXp,xpRatio:clamp(h.xp/h.nextXp,0,1),ultimate:h.ultimate,
-      power:h.power,speed:h.speed,time:s.time,objectives:{...s.objectives},boss:boss?{hp:boss.hp,maxHp:boss.maxHp,name:ZONES[s.zone].boss,phase:boss.phase}:null,
+      power:h.power,speed:h.speed,time:s.time,objectives:{...s.objectives},boss:boss?{hp:boss.hp,maxHp:boss.maxHp,name:ZONES[s.zone].boss,phase:boss.phase,guard:boss.guard??3,stagger:boss.stagger||0}:null,
       cooldowns:{...s.cooldowns,bite:h.biteCooldown},cooldownMax:{bite:h.biteStep===3?.48:.34,pulse:6*reduction,dash:3.5*reduction,ultimate:14*reduction},
       canInteract:s.mode==='playing' && ((s.portal.active && dist(h,s.portal)<2.35)||s.landmarks.some(l=>!l.resolved && dist(h,l)<2.2)),
       portalActive:s.portal.active,edibleThreshold:this._eatThreshold(),pendingUpgrades:s.pendingUpgrades,
@@ -2017,6 +2043,7 @@ function bindWebControls(){
 function updateWebFX(){
  const s=game.state,active=s.mode!=='menu',chain=s.chain||{count:0,time:0};show('web-tools',active);$('photo-button').disabled=s.mode!=='playing';
  show('combo-panel',active&&chain.count>=2);$('combo-count').textContent=chain.count+' 连噬';$('combo-caption').textContent=chain.count>=3?'追加终极能量 +'+Math.min(5,chain.count-2):'4 秒内继续吞噬';$('combo-time').style.transform='scaleX('+(chain.time/4)+')';
+ const dodge=[...(s.effects||[])].reverse().find(f=>f.type==='dodge');show('dodge-callout',active&&!photoMode&&!!dodge);if(dodge)$('dodge-caption').textContent=dodge.caption||'终极能量 +16';
  if(photoMode||!active){$('damage-layer').innerHTML='';return;}
  const out=[];for(const f of (s.effects||[]).filter(f=>f.type==='number').slice(-32)){const p=renderer.project(f.x,f.z,1.8+(prefs.reducedMotion?0:f.age*1.3));if(p.visible)out.push(`<span class="damage-number ${f.strong?'strong':''}" style="left:${p.x+(f.id%3-1)*12}px;top:${p.y}px;opacity:${Math.max(0,1-f.age/f.duration)};color:${f.value<0?'#ff9d8c':'#ffe9b0'}">${f.value}</span>`);}
  for(const p of s.props||[]){if(p.broken||Math.hypot(p.x-s.hero.x,p.z-s.hero.z)>7)continue;const q=renderer.project(p.x,p.z,1.4);if(q.visible)out.push(`<span class="prop-label" style="left:${q.x}px;top:${q.y}px">${{heal:'补给箱',essence:'精华罐',xp:'经验罐'}[p.kind]} · ${Math.ceil(p.hp)}</span>`);}
@@ -2031,7 +2058,7 @@ function openInfo(type){if(!$('info-screen').classList.contains('hidden')){rende
 function hideInfo(){show('info-screen',false);if(game?.state.mode==='event')renderExpedition();if(infoResume&&game?.state.mode==='paused')game.unpause();infoResume=false;infoBack=null;}
 function renderInfo(type){$('info-content').dataset.view=type;
  document.querySelectorAll('[data-info]').forEach(button=>{const active=button.dataset.info===type;button.classList.toggle('active',active);button.setAttribute('aria-current',active?'page':'false');});
- if(type==='records'){renderRecords();return;}if(type==='collection'){renderCollection();return;}if(type==='achievements'){renderAchievements();return;}if(type==='how'){$('info-title').textContent='把世界，变成食物。';$('info-eyebrow').textContent='ADVENTURER’S GUIDE';$('info-content').innerHTML=`<div class="guide-grid"><div class="guide-card"><b>01 · 从弱小开始</b><p>WASD / 方向键移动，或点击地面自动前往。触屏使用左下摇杆。靠近小型生物会自动吞噬；大敌需要先削弱。</p></div><div class="guide-card"><b>02 · 把攻击接成三段</b><p>Z / 触屏「连牙撕咬」发动主动近战；在连段窗口内连续三次，终结击范围与伤害更高。Space 腐蚀脉冲，Q 冲刺，E 终极进化。</p></div><div class="guide-card"><b>03 · 狩猎与区域异变</b><p>每个区域都会出现一只带词缀的限时狩猎精英，击杀可得永久精华。清洁桶、污水喷口、巡逻队、弩炮与裂谷脉冲需要不同走位。</p></div><div class="guide-card"><b>04 · 探索与统治者</b><p>靠近地标可发现它；按 F / 触屏调查打开探索抉择，可获得遗物、休整或交换精华。选择时暂停战斗。完成吞噬与两个地标后，统治者出现。红色预警越亮越接近命中；击败后前往北侧出口，按 F 或触屏按钮继续。</p></div></div><p>开局可选均衡、近战、技能、生存四种出身。通关战役后解锁五王试炼：Lv.8、7 次初始基因选择，连战五位强化统治者；每过一关再选 2 次，入场总共回复 35% 最大生命并恢复 25% 终极能量。升级时按 1 / 2 / 3 · Esc 暂停 · J 旅途记录。精华可用于永久进化。Web 操作：右键定向撕咬、滚轮缩放、P 暂停观景。击碎补给箱/精华罐/经验罐获得掉落；4 秒内连续吞噬积累连噬，3 连起追加终极能量，受伤中断。</p>`;
+ if(type==='records'){renderRecords();return;}if(type==='collection'){renderCollection();return;}if(type==='achievements'){renderAchievements();return;}if(type==='how'){$('info-title').textContent='把世界，变成食物。';$('info-eyebrow').textContent='ADVENTURER’S GUIDE';$('info-content').innerHTML=`<div class="guide-grid"><div class="guide-card"><b>01 · 从弱小开始</b><p>WASD / 方向键移动，或点击地面自动前往。触屏使用左下摇杆。靠近小型生物会自动吞噬；大敌需要先削弱。</p></div><div class="guide-card"><b>02 · 把攻击接成三段</b><p>Z / 触屏「连牙撕咬」发动主动近战；在连段窗口内连续三次，终结击范围与伤害更高。Space 腐蚀脉冲，Q 暴食冲刺，E 终极进化；在攻击命中的 0.3 秒内冲刺可触发完美闪避。</p></div><div class="guide-card"><b>03 · 狩猎与区域异变</b><p>每个区域都会出现一只带词缀的限时狩猎精英，击杀可得永久精华。清洁桶、污水喷口、巡逻队、弩炮与裂谷脉冲需要不同走位。</p></div><div class="guide-card"><b>04 · 探索与统治者</b><p>靠近地标可发现它；按 F / 触屏调查打开探索抉择，可获得遗物、休整或交换精华。选择时暂停战斗。完成吞噬与两个地标后，统治者出现。红色预警越亮越接近命中；击败后前往北侧出口，按 F 或触屏按钮继续。</p></div></div><p>开局可选均衡、近战、技能、生存四种出身。通关战役后解锁五王试炼：Lv.8、7 次初始基因选择，连战五位强化统治者；每过一关再选 2 次，入场总共回复 35% 最大生命并恢复 25% 终极能量。升级时按 1 / 2 / 3 · Esc 暂停 · J 旅途记录。精华可用于永久进化。Web 操作：右键定向撕咬、滚轮缩放、P 暂停观景。完美闪避获得 16 点终极能量并削减 1 秒脉冲冷却；对统治者累计三次可打开 2.5 秒破势增伤窗口。击碎补给箱/精华罐/经验罐获得掉落；4 秒内连续吞噬积累连噬，3 连起追加终极能量，受伤中断。</p>`;
  }else if(type==='settings'){$('info-title').textContent='让冒险适合你。';$('info-eyebrow').textContent='SETTINGS';$('info-content').innerHTML=`<div class="info-row"><div>画面质量<small>低档减少渲染分辨率，适合移动设备。</small></div><select id="quality-select" aria-label="画面质量"><option value="high">精致</option><option value="low">流畅</option></select></div><div class="info-row"><div>声音<small>首次操作后启用音频。</small></div><input id="sound-toggle" type="checkbox" aria-label="声音"></div><div class="info-row"><div>环境音乐<small>随区域变化的轻声旋律。</small></div><input id="music-toggle" type="checkbox" aria-label="环境音乐"></div><div class="info-row"><div>减少动态效果<small>减轻画面震动和镜头变化。</small></div><input id="motion-toggle" type="checkbox" aria-label="减少动态效果"></div><div class="info-row"><div>自动腐蚀脉冲<small>附近有敌人且冷却结束时自动施放。</small></div><input id="auto-toggle" type="checkbox" aria-label="自动腐蚀脉冲"></div>`;$('quality-select').value=prefs.quality;$('quality-select').onchange=e=>setPreference('quality',e.target.value);for(const [id,key] of [['sound-toggle','sound'],['music-toggle','music'],['motion-toggle','reducedMotion'],['auto-toggle','autoPulse']]){$(id).checked=!!prefs[key];$(id).onchange=e=>{audio.unlock();setPreference(key,e.target.checked);};}
  }else if(type==='meta'){$('info-title').textContent='把上一世，带入下一口。';$('info-eyebrow').textContent='PERMANENT EVOLUTION';const m=game.state.meta||{};$('info-content').innerHTML=`<p>现有精华：<strong>${m.essence||0}</strong>。永久进化会在下一次新旅程生效。</p>`+[['vitality','厚实生命','提升初始生命'],['power','锋利饥饿','提升初始攻击'],['speed','轻盈粘液','提升初始移动速度']].map(([id,title,desc])=>`<div class="info-row"><div>${title} <small>${desc} · 当前 ${m[id]||0} 级</small></div><button data-buy="${id}">升级 · ${metaCost(id)} 精华</button></div>`).join('');document.querySelectorAll('[data-buy]').forEach(b=>b.onclick=()=>{if(!game.buyMeta(b.dataset.buy))toast('精华不足，或这项进化已达到上限。');renderInfo('meta');});
  }else{$('info-title').textContent='你曾吞噬过的世界。';$('info-eyebrow').textContent='FIELD NOTES';const s=game.state,genes=Object.entries(s.upgrades||{}).filter(([,n])=>n>0),st=s.stats||{};$('info-content').innerHTML=`<p>${journeyName(s.journey)} · ${originName(s.origin)} · 种子 ${s.seed}<br>本局 Lv.${s.hero.level} · 吞噬 ${st.eaten||0} · 精英 ${st.elitesKilled||0} · 狩猎 ${st.huntsCompleted||0} · 战利品 ${st.lootCollected||0} · 游玩 ${fmt(s.time)} · ${s.difficulty==='normal'?'标准挑战':'轻松旅程'}</p>`+REGION.map((n,i)=>`<div class="info-row"><div>${ROMAN[i]}. ${n}<small>${MOTTO[i]}</small></div><span>${i<s.zone?'已突破':i===s.zone?'当前区域':'尚未抵达'}</span></div>`).join('')+(genes.length?`<div class="gene-summary">${genes.map(([id,n])=>`<span>${escapeHTML((Array.isArray(UPGRADES)?UPGRADES.find(u=>u.id===id):UPGRADES?.[id])?.name||id)} <b>×${n}</b></span>`).join('')}</div>`:'<div class="info-content-empty">尚未获得基因。继续吞噬，下一次升级将改变你的构筑。</div>');}}
@@ -2082,7 +2109,7 @@ function renderEnd(){
  $('end-eyebrow').textContent=s.newRecord?'NEW PERSONAL BEST':win?'THE WORLD HAS A NEW RULE':'THE JOURNEY CONTINUES';
  $('end-title').textContent=win?(trial?'五王俯首，饥饿未止。':'你吞下了，世界的规则。'):'这还不是你的终点。';
  $('end-story').textContent=`${journeyName(s.journey)} · ${originName(s.origin)} · ${s.difficulty==='story'?'轻松旅程':'标准挑战'}。 ${win?(trial?'强化五王试炼完成。更换出身，再创造你的个人纪录。':'五区域战役完成，五王试炼已解锁。继续挑战，或带着精华开始下一次进化。'):'本局已结算。留下的精华，会成为下一次醒来的力量。'}`;
- $('end-stats').innerHTML=[['最终等级',s.hero.level],['吞噬数量',st.eaten||0],['击败统治者',`${st.zonesCleared} / 5`],['旅程时长',fmt(s.time)],['最高连噬',st.maxChain||0],['破坏补给',st.propsBroken||0],['本局积分',r?.score??Math.floor(st.score||0)],['结算精华',`+${r?.reward||0}`]].map(([label,value])=>`<div><b>${value}</b><small>${label}</small></div>`).join('');
+ $('end-stats').innerHTML=[['最终等级',s.hero.level],['吞噬数量',st.eaten||0],['击败统治者',`${st.zonesCleared} / 5`],['旅程时长',fmt(s.time)],['最高连噬',st.maxChain||0],['完美闪避',st.perfectDodges||0],['统治者破势',st.bossBreaks||0],['破坏补给',st.propsBroken||0],['本局积分',r?.score??Math.floor(st.score||0)],['结算精华',`+${r?.reward||0}`]].map(([label,value])=>`<div><b>${value}</b><small>${label}</small></div>`).join('');
  show('trial-button',win&&!trial&&game.canStartTrial());audio.play(win?'victory':'hit');
 }
 function refreshSave(){refreshSetup();const save=game.getSaveInfo?.();const ok=!!save?.available;$('continue-button').disabled=!ok;$('save-label').textContent=ok?`${REGION[save.zone||0]} · Lv.${save.level||save.hero?.level||1}`:'暂无记录';}
@@ -2091,14 +2118,14 @@ function updateLabels(){const s=game.state,list=[];for(const l of s.landmarks){i
 function updateHuntPanel(s){const hunt=s.hunt,contract=HUNTS[hunt?.contract]||HUNT_CONTRACTS[s.zone],visible=s.journey!=='trial'&&!!hunt&&s.mode!=='menu'&&!s.portal?.active;show('hunt-panel',visible);if(!visible)return;const affix=ELITES[contract.affix],states={pending:'追踪中',active:'限时目标',complete:'已完成',failed:'已失效'};$('hunt-state').textContent=states[hunt.status]||'追踪中';$('hunt-name').textContent=contract.name;$('hunt-reward').textContent=`奖励 ${contract.reward} 永久精华 · ${affix?.name||'异变'}词缀`;$('hunt-panel').dataset.status=hunt.status;if(hunt.status==='pending'){const wait=Math.max(0,7+s.zone-s.zoneTime);$('hunt-timer').textContent=wait>0?`${Math.ceil(wait)}s`:'即将出现';$('hunt-description').textContent='异变气息正在区域中聚集，准备迎战精英。';$('hunt-bar').style.width=`${Math.min(100,Math.max(0,100-wait/(7+s.zone)*100))}%`;}else if(hunt.status==='active'){$('hunt-timer').textContent=`${Math.ceil(hunt.timeLeft)}s`;$('hunt-description').textContent=`寻找金色标记的${affix?.name||'异变'}目标，在倒计时结束前将它吞噬。`;$('hunt-bar').style.width=`${Math.max(0,hunt.timeLeft/contract.time*100)}%`;}else{$('hunt-timer').textContent=hunt.status==='complete'?'完成':'超时';$('hunt-description').textContent=hunt.status==='complete'?'永久精华已经结算，本区域狩猎完成。':'目标仍可被吞噬，但永久精华悬赏已经失效。';$('hunt-bar').style.width=hunt.status==='complete'?'100%':'0%';}}
 function setSkillButton(id,left,max,{name,charge=null,label=null}={}){const button=$(id),needsCharge=charge!==null&&charge<100,recovery=needsCharge&&left<=0?100-charge:Math.min(100,left/Math.max(.01,max)*100),status=left>0?`${left.toFixed(1)}s`:needsCharge?`充能 ${Math.floor(charge)}%`:label||'就绪';button.style.setProperty('--recovery',`${recovery}%`);button.querySelector('.cooldown').textContent=status;button.classList.toggle('cooling',left>0||needsCharge);button.classList.toggle('ready',left<=0&&!needsCharge);button.classList.toggle('charged',id==='ultimate'&&left<=0&&!needsCharge);button.setAttribute('aria-label',`${name}，${left>0?`冷却 ${left.toFixed(1)} 秒`:needsCharge?`充能 ${Math.floor(charge)}%`:label||'就绪'}`);}
 function updateHUD(){const s=game.state,h=s.hero,o=s.objectives||{},stats=game.getStats?.()||{},form=h.level>=12?'深渊形态':h.level>=6?'变异形态':'初生形态';$('hero-name').textContent=h.level>=12?'深渊粪泥兽':h.level>=6?'变异米田共':'米田共';$('level').textContent=`LV. ${h.level}`;$('hp-text').textContent=`${Math.ceil(h.hp)} / ${Math.round(h.maxHp)}`;$('hp-bar').style.width=`${Math.max(0,h.hp/h.maxHp*100)}%`;$('xp-bar').style.width=`${Math.min(100,h.xp/h.nextXp*100)}%`;$('xp-text').textContent=`${Math.floor(h.xp)} / ${Math.floor(h.nextXp)}`;$('form-name').textContent=form;$('next-form').textContent=h.level<6?`距离蜕变 ${6-h.level} 级`:h.level<12?`距离蜕变 ${12-h.level} 级`:'完全体';$('chapter').textContent=`CHAPTER ${ROMAN[s.zone]}`;$('zone-name').textContent=REGION[s.zone];$('zone-mood').textContent=MOTTO[s.zone];$('zone-number').textContent=`0${s.zone+1} / 05`;$('minimap-caption').textContent=REGION[s.zone];$('timer').textContent=fmt(s.time);$('kill-counter').textContent=`吞噬 ${s.stats?.eaten||0}`;$('essence').textContent=s.meta?.essence||0;$('eat-progress').textContent=`${o.eaten||0} / ${o.target||0}`;$('landmark-progress').textContent=`${o.landmarks||0} / ${o.targetLandmarks||2}`;$('eat-progress').classList.toggle('done',(o.eaten||0)>=(o.target||0));$('landmark-progress').classList.toggle('done',(o.landmarks||0)>=(o.targetLandmarks||2));$('goal-bar').style.width=`${Math.min(100,(o.eaten||0)/(o.target||1)*100)}%`;
- const boss=s.enemies.find(e=>e.boss&&!e.dead&&e.hp>0);show('boss-ui',!!boss&&s.mode!=='menu');if(boss){$('boss-name').textContent=BOSS[s.zone];$('boss-bar').style.width=`${Math.max(0,boss.hp/boss.maxHp*100)}%`;$('boss-hp-text').textContent=`${Math.ceil(boss.hp)} / ${Math.ceil(boss.maxHp)}`;$('boss-phase').textContent=`阶段 ${ROMAN[boss.phase?boss.phase-1:boss.hp/boss.maxHp<.33?2:boss.hp/boss.maxHp<.66?1:0]}`;}
+ const boss=s.enemies.find(e=>e.boss&&!e.dead&&e.hp>0);show('boss-ui',!!boss&&s.mode!=='menu');if(boss){$('boss-name').textContent=BOSS[s.zone];$('boss-bar').style.width=`${Math.max(0,boss.hp/boss.maxHp*100)}%`;$('boss-hp-text').textContent=`${Math.ceil(boss.hp)} / ${Math.ceil(boss.maxHp)}`;const phase=ROMAN[boss.phase?boss.phase-1:boss.hp/boss.maxHp<.33?2:boss.hp/boss.maxHp<.66?1:0];$('boss-phase').textContent=boss.stagger>0?`破势 · ${boss.stagger.toFixed(1)}s`:`阶段 ${phase} · 破势 ${3-(boss.guard??3)}/3`;}
  $('quest-title').textContent=boss?'击败区域统治者':s.portal?.active?'前往北侧出口':['一个不太体面的开始','水道中的秘密','村落的最后防线','突破王国封锁','吞噬世界的规则'][s.zone];$('quest-description').textContent=boss?'留意红色预警。移动躲避后，抓住空隙发动技能。':s.portal?.active?'统治者已经倒下。前往地图上方的传送门。':'吞噬弱小生物，靠近金色地标进行调查。';$('hint').textContent=boss?'红圈变亮 → 离开范围 → Z 三段反击':s.portal?.active?'靠近出口，按 F 或点击进入按钮':'绿色单位可吞噬 · 金色菱形是地标';updateHuntPanel(s);updateTrialHUD(s);
  const biteLeft=Math.max(0,h.biteCooldown||0),combo=h.biteWindow>0&&h.biteStep>0;setSkillButton('bite',biteLeft,stats.cooldownMax?.bite||.34,{name:'连牙撕咬',label:combo?`连段 ${h.biteStep}/3`:null});$('bite').classList.toggle('combo',combo);$('bite').dataset.combo=String(combo?h.biteStep:0);setSkillButton('pulse',Math.max(0,s.cooldowns?.pulse||0),stats.cooldownMax?.pulse||6,{name:'腐蚀脉冲'});setSkillButton('dash',Math.max(0,s.cooldowns?.dash||0),stats.cooldownMax?.dash||3.5,{name:'暴食冲刺'});setSkillButton('ultimate',Math.max(0,s.cooldowns?.ultimate||0),stats.cooldownMax?.ultimate||14,{name:'终极进化',charge:h.ultimate});
  $('power-stat').textContent=Number(stats.power||h.power||0).toFixed(1);$('speed-stat').textContent=Number(stats.speed||h.speed||0).toFixed(2);$('devour-stat').textContent=`${Math.round(stats.edibleThreshold||0)} HP`;const genes=Object.entries(s.upgrades||{}).filter(([,rank])=>rank>0);$('journal-button').title=`旅途 / 遗物 ${s.relics.length} / 可领取成就 ${game.getAchievements().filter(a=>a.ready).length}`;$('gene-stat').textContent=genes.reduce((sum,[,rank])=>sum+rank,0);$('build-chips').innerHTML=genes.length?genes.slice(-4).map(([id,rank])=>`<span class="build-chip">${escapeHTML((Array.isArray(UPGRADES)?UPGRADES.find(u=>u.id===id):UPGRADES?.[id])?.name||id)} <b>×${rank}</b></span>`).join(''):'<span class="empty-build">尚未选择进化</span>';
  const nearest=s.enemies.filter(e=>!e.dead&&!e.boss).map(e=>({e,d:Math.hypot(e.x-h.x,e.z-h.z)})).filter(x=>x.d<9).sort((a,b)=>a.d-b.d)[0];show('target-panel',!!nearest&&s.mode!=='menu'&&!boss);if(nearest){const e=nearest.e,edible=!!e.edible,affix=ELITES[e.elite];$('target-panel').classList.toggle('edible',edible);$('target-panel').classList.toggle('elite',!!e.elite);$('target-distance').textContent=`${nearest.d.toFixed(1)}m`;$('target-name').textContent=e.elite?`${e.eliteName||affix?.name||'异变'} · ${NAMES[e.type]||e.type}`:NAMES[e.type]||e.type;$('target-state').textContent=edible?'可吞噬':e.elite?`${affix?.name||'精英'}词缀`:'需削弱';$('target-hint').textContent=edible?'靠近目标即可自动吞噬':e.elite==='bulwark'&&!e.armorBroken?'先击破半血铁壳，再压入吞噬线':e.elite==='frenzy'?'高速连击精英，使用冲刺拉开距离':e.elite==='plague'?'疫化攻击会追加范围预警':'攻击至生命低于吞噬线';$('target-bar').style.width=`${Math.max(0,Math.min(100,e.hp/e.maxHp*100))}%`;}
  const site=s.landmarks.find(l=>!l.resolved&&Math.hypot(h.x-l.x,h.z-l.z)<2.2);show('interact-button',stats.canInteract);$('interact-button').textContent=site?`F · 调查${site.name}`:s.zone===4?'F · 吞噬最后的规则':'F · 进入下一区域';$('relic-status').textContent=`遗物 ${s.relics.length} · 成就待领 ${game.getAchievements().filter(a=>a.ready).length}${game.hasRelic('ward')?` · 守护${h.wardCooldown>0?h.wardCooldown.toFixed(1)+'s':'就绪'}`:''}`;drawMinimap();updateLabels();
  // Read-only DOM diagnostics for QA: real state, never a gameplay control.
- $('world').dataset.props=JSON.stringify((s.props||[]).map(p=>({kind:p.kind,x:p.x,z:p.z,hp:p.hp,broken:p.broken})));$('world').dataset.mode=s.mode;$('world').dataset.journey=s.journey;$('world').dataset.origin=s.origin;$('world').dataset.zone=String(s.zone);$('world').dataset.hero=JSON.stringify({x:+h.x.toFixed(3),z:+h.z.toFixed(3),level:h.level,hp:+h.hp.toFixed(2)});$('world').dataset.metrics=JSON.stringify(renderer.getMetrics?.()||{});
+ $('world').dataset.props=JSON.stringify((s.props||[]).map(p=>({kind:p.kind,x:p.x,z:p.z,hp:p.hp,broken:p.broken})));$('world').dataset.mode=s.mode;$('world').dataset.journey=s.journey;$('world').dataset.origin=s.origin;$('world').dataset.zone=String(s.zone);$('world').dataset.hero=JSON.stringify({x:+h.x.toFixed(3),z:+h.z.toFixed(3),level:h.level,hp:+h.hp.toFixed(2)});$('world').dataset.metrics=JSON.stringify(renderer.getMetrics?.()||{});$('world').dataset.combat=JSON.stringify({perfectDodges:s.stats.perfectDodges||0,bossBreaks:s.stats.bossBreaks||0,dodgeWindow:+(h.dodgeWindow||0).toFixed(3),dodgeReady:!!h.dodgeReady,bossGuard:boss?.guard??null,bossStagger:+(boss?.stagger||0).toFixed(3)});
  if(s.mode==='upgrade'&&choiceKey!==(s.upgradeChoices||[]).map(x=>typeof x==='string'?x:x.id||x.name).join(','))renderUpgrades();}
 function resize(){if(renderer)renderer.resize(innerWidth,innerHeight);}
 function togglePause(){if(game.state.mode==='playing')game.pause();else if(game.state.mode==='paused'&&$('info-screen').classList.contains('hidden'))game.unpause();}

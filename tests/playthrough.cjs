@@ -24,9 +24,9 @@ function run(options){
   if(warning){x=h.x-warning.x;z=h.z-warning.z;if(Math.hypot(x,z)<.1)x=1;}
   const n=Math.hypot(x,z);g.update(1/30,n>.01?{x:x/n,z:z/n}:{x:0,z:0});
  }
- const s=g.state,record={...options,result:s.mode,seconds:+s.time.toFixed(2),zones:s.stats.zonesCleared,hp:+s.hero.hp.toFixed(2),propsBroken:s.stats.propsBroken||0,maxChain:s.stats.maxChain||0,attacks};
+ const s=g.state,record={...options,result:s.mode,seconds:+s.time.toFixed(2),zones:s.stats.zonesCleared,hp:+s.hero.hp.toFixed(2),propsBroken:s.stats.propsBroken||0,maxChain:s.stats.maxChain||0,perfectDodges:s.stats.perfectDodges||0,bossBreaks:s.stats.bossBreaks||0,attacks};
  console.log(JSON.stringify(record));assert.equal(s.mode,'victory');return record;
 }
 const results=[run({difficulty:'story',seed:420})];assert.ok(g.canStartTrial());
 results.push(run({journey:'trial',difficulty:'story',origin:'fangborn',seed:420}));
-fs.mkdirSync(path.join(__dirname,'../qa'),{recursive:true});fs.writeFileSync(path.join(__dirname,'../qa/playthrough-v070.json'),JSON.stringify({kind:'public-api-accelerated-simulation',noStateInjection:true,notBrowserPlaythrough:true,results},null,2)+'\n');
+fs.mkdirSync(path.join(__dirname,'../qa'),{recursive:true});fs.writeFileSync(path.join(__dirname,'../qa/playthrough-v080.json'),JSON.stringify({kind:'public-api-accelerated-simulation',noStateInjection:true,notBrowserPlaythrough:true,results},null,2)+'\n');
