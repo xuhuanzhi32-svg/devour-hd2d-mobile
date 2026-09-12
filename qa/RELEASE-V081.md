@@ -20,7 +20,11 @@ The WebGL/Three.js HD-2D world and real 3D buildings were still present. The ins
 
 ## Browser gate
 
-Pending publication and in-context screenshot inspection. Canvas evidence must remain labeled compatibility output and must not be represented as real WebGL/GPU evidence.
+- GitHub Pages served the exact release HTML checksum: `711fe660e78903cf09ff7067a3da529ecb1205311be4fadca77644a6532964fe`.
+- Public `v0.8.1 WEB` loaded, resumed the existing journey and entered live combat without a fatal/startup screen.
+- The control panel visibly reported `兼容渲染 · HD-2D 2.5D` in the constrained inspection browser.
+- Screenshot `devour-web-v081-houses-1789207771996.jpg` was inspected in context: all four village structures show roof depth, front/side wall separation, projected foundations and cast shadows rather than flat placeholder rectangles.
+- The inspection browser disables WebGL, so this is compatibility-renderer evidence only. It must not be represented as a real WebGL/GPU capture; the Three.js primary path is verified by code and automated tests, not by this screenshot.
 
 ## Rollback
 
