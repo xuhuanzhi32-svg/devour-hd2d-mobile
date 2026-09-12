@@ -30,6 +30,11 @@ test('pulse can destroy nearby supply and currency is only granted when actually
  g.skill('pulse');assert.equal(p.broken,true);assert.equal(g.meta.essence,before);
  const loot=g.state.pickups.find(p=>p.type==='essence');h.x=loot.x;h.z=loot.z;g.update(.05);assert.equal(g.meta.essence,before+1);g.update(.05);assert.equal(g.meta.essence,before+1);
 });
+test('pulse finishes supply damage when its enemy kill opens an upgrade',()=>{
+ const {g}=make(),p=g.state.props[0],h=g.state.hero;g.state.enemies=[];h.x=p.x;h.z=p.z+1;h.xp=h.nextXp-1;
+ const e=g._spawnEnemy('slime',false,{x:h.x,z:h.z});e.hp=1;g.skill('pulse');
+ assert.equal(g.state.mode,'upgrade');assert.equal(p.broken,true);assert.equal(g.attack(),false);assert.equal(g.skill('pulse'),false);
+});
 test('four-second chain grants capped extra energy from third kill; damage and expiration reset it',()=>{
  const {g}=make(),s=g.state,h=s.hero;s.enemies=[];h.nextXp=10000;h.ultimate=0;
  const kill=()=>{const e=g._spawnEnemy('slime',false,{x:0,z:5});g._devour(e);};

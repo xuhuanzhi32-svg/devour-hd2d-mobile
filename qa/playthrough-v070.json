@@ -7,12 +7,12 @@
       "difficulty": "story",
       "seed": 420,
       "result": "victory",
-      "seconds": 224.6,
+      "seconds": 225.18,
       "zones": 5,
-      "hp": 205,
-      "propsBroken": 12,
+      "hp": 173.78,
+      "propsBroken": 14,
       "maxChain": 21,
-      "attacks": 276
+      "attacks": 269
     },
     {
       "journey": "trial",

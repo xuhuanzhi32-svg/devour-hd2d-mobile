@@ -13,10 +13,10 @@ Desktop Web update, not a separate mobile build. Recovered the complete editable
 
 ## Checks before publication
 
-- node --test tests/web-runtime.test.cjs: 10/10 PASS (inline syntax, real combat, reach/arc/pause, loot ownership, duplicate prevention, save migration/invalid-save preservation, trial continuation, Three.js CPU geometry lifecycle).
-- node tests/playthrough.cjs: public-API-only accelerated simulation. Story campaign wins at 224.6 simulated seconds, five zones, 12 props broken, maximum chain 21. Fangborn story trial wins at 41.48 simulated seconds. No hero-position, health, level, unlock or reward injection. These are not natural-player time measurements.
+- node --test tests/web-runtime.test.cjs: 11/11 PASS (inline syntax, real combat, reach/arc/pause, loot ownership, duplicate prevention, save migration/invalid-save preservation, trial continuation, Three.js CPU geometry lifecycle).
+- node tests/playthrough.cjs: public-API-only accelerated simulation. Story campaign wins at 225.18 simulated seconds, five zones, 14 props broken, maximum chain 21. Fangborn story trial wins at 41.48 simulated seconds. No hero-position, health, level, unlock or reward injection. These are not natural-player time measurements.
 - All seven embedded PNG SHA-256 hashes equal prior release.
-- HTML: 19,955,949 bytes; SHA-256 3b75168a4ca782d9b1868eaa8b621dc74145e18f9a4cff423f92e624cf6d144d. Fifteen inline classic scripts; no external startup dependencies.
+- HTML: 19,955,969 bytes; SHA-256 c07995a2663ec07eecf48032e59535598898911739de451651392ef43d305f53. Fifteen inline classic scripts; no external startup dependencies.
 - Recovery migration adds new supply state to old v0.6 saves once; preserves HP/RNG and reserves new object IDs. Broken props cannot yield repeated loot after reload.
 
 ## Browser release check

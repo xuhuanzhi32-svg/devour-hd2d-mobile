@@ -842,7 +842,7 @@ class Game {
   }
 
   _damageProps(radius,damage,arc=null) {
-    const s=this.state,h=s.hero;if(s.mode!=='playing')return;let changed=false;
+    const s=this.state,h=s.hero;if(s.mode!=='playing'&&s.mode!=='upgrade')return;let changed=false;
     for(const p of s.props||[]){
       if(p.broken||Math.hypot(p.x-h.x,p.z-h.z)>radius+.55)continue;
       const a=Math.atan2(p.x-h.x,p.z-h.z)-h.angle;if(arc!==null&&Math.abs(Math.atan2(Math.sin(a),Math.cos(a)))>arc)continue;
