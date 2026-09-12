@@ -1,0 +1,68 @@
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
+const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');
+const scripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(m=>m[1]);
+const context=vm.createContext({window:{__HD2D_MODULES:{}},console});
+for(const name of ['progression','journey','game','navigation'])vm.runInContext(scripts.find(s=>s.startsWith('window.__HD2D_MODULES["'+name+'"]')),context);
+const {Game}=context.window.__HD2D_MODULES.game;
+const clone=v=>JSON.parse(JSON.stringify(v));
+function make(){const values=new Map(),storage={getItem:k=>values.get(k)??null,setItem:(k,v)=>values.set(k,v)};const g=new Game({storage});g.start({difficulty:'story'});return{g,storage};}
+function settle(g){for(let i=0;g.state.mode==='upgrade'&&i<100;i++)g.chooseUpgrade(0);}
+// Unit fixtures position actors to isolate distance, arc, save and reward boundaries.
+test('published HTML parses all inline scripts, preserves seven PNG sheets and has no external script dependency',()=>{
+ assert.equal(scripts.length,15);for(const s of scripts)new vm.Script(s);
+ assert.equal((html.match(/data:image\/png;base64,/g)||[]).length,7);
+ assert.doesNotMatch(html,/<script[^>]+src=|<script[^>]+type=["']module/);
+});
+test('directional attack breaks supplies in its arc and grants only one persistent pickup',()=>{
+ const {g,storage}=make(),p=g.state.props[0],h=g.state.hero;g.state.enemies=[];h.x=p.x;h.z=p.z+1;g.aim(p.x,p.z);
+ for(let i=0;i<4&&!p.broken;i++){h.biteCooldown=0;g.attack();}assert.equal(p.broken,true);assert.equal(g.state.pickups.length,1);
+ const n=g.state.pickups.length;h.biteCooldown=0;g.attack();assert.equal(g.state.pickups.length,n);
+ const reload=new Game({storage});assert.ok(reload.resume());assert.equal(reload.state.props[0].broken,true);assert.equal(reload.state.pickups.length,1);
+});
+test('melee arc, distance and pause prevent accidental destruction; valid aim rejects nonfinite input',()=>{
+ const {g}=make(),p=g.state.props[0],h=g.state.hero;g.state.enemies=[];h.x=p.x;h.z=p.z+1;g.aim(p.x,p.z+5);g.attack();assert.equal(p.hp,p.maxHp);
+ h.biteCooldown=0;h.x=0;h.z=16;g.aim(p.x,p.z);g.attack();assert.equal(p.hp,p.maxHp);
+ g.pause();const before=JSON.stringify(g.state);assert.equal(g.aim(p.x,p.z),false);assert.equal(g.attack(),false);assert.equal(JSON.stringify(g.state),before);
+ g.unpause();assert.equal(g.aim(NaN,0),false);assert.equal(g.aim(0,Infinity),false);
+});
+test('pulse can destroy nearby supply and currency is only granted when actually collected',()=>{
+ const {g}=make(),p=g.state.props.find(p=>p.kind==='essence'),h=g.state.hero;g.state.enemies=[];h.x=p.x;h.z=p.z+1;const before=g.meta.essence;
+ g.skill('pulse');assert.equal(p.broken,true);assert.equal(g.meta.essence,before);
+ const loot=g.state.pickups.find(p=>p.type==='essence');h.x=loot.x;h.z=loot.z;g.update(.05);assert.equal(g.meta.essence,before+1);g.update(.05);assert.equal(g.meta.essence,before+1);
+});
+test('four-second chain grants capped extra energy from third kill; damage and expiration reset it',()=>{
+ const {g}=make(),s=g.state,h=s.hero;s.enemies=[];h.nextXp=10000;h.ultimate=0;
+ const kill=()=>{const e=g._spawnEnemy('slime',false,{x:0,z:5});g._devour(e);};
+ kill();kill();const before=h.ultimate;kill();assert.equal(h.ultimate-before,5);assert.equal(s.chain.count,3);assert.equal(s.stats.maxChain,3);
+ h.invulnerable=0;g._hurt(5);assert.equal(s.chain.count,0);kill();s.enemies=[];s.spawnTimer=1000;s.hunt.status='failed';s.environmentTimer=1000;
+ for(let i=0;i<85;i++)g.update(.05);assert.equal(s.chain.count,0);assert.equal(s.chain.time,0);
+});
+test('damage numbers report applied damage, remain bounded, and pause freezes cosmetic time',()=>{
+ const {g}=make();g.state.enemies=[];const e=g._spawnEnemy('knight',false,{x:0,z:5});e.hp=e.maxHp=10000;
+ for(let i=0;i<220;i++)g._damageEnemy(e,1,'bite');assert.ok(g.state.effects.length<=180);
+ assert.ok(g.state.effects.some(f=>f.type==='number'&&f.value===1));g.pause();const before=JSON.stringify(g.state.effects);g.update(.15);assert.equal(JSON.stringify(g.state.effects),before);
+});
+test('v0.6 save migrates new supplies once and preserves old stats and RNG ID allocation',()=>{
+ const {g,storage}=make();g.pause();const raw=JSON.parse(storage.getItem('devourHD2D.v1'));delete raw.state.props;delete raw.state.chain;const id=raw.nextId;
+ storage.setItem('devourHD2D.v1',JSON.stringify(raw));const reload=new Game({storage});assert.ok(reload.resume());assert.equal(reload.state.props.length,6);assert.equal(reload.nextId,id+6);
+ assert.equal(reload.state.hero.hp,raw.state.hero.hp);reload.save();const again=new Game({storage});assert.ok(again.resume());assert.equal(again.nextId,reload.nextId);assert.deepEqual(clone(again.state.props),clone(reload.state.props));
+});
+test('corrupt supply state is rejected without overwriting the original save',()=>{
+ for(const change of [p=>p.hp=-1,p=>p.kind='script',p=>p.broken=true,p=>p.x=Infinity]){
+  const {storage}=make(),raw=JSON.parse(storage.getItem('devourHD2D.v1'));change(raw.state.props[0]);const str=JSON.stringify(raw);storage.setItem('devourHD2D.v1',str);
+  const g=new Game({storage});assert.equal(g.resume(),false);g.setSettings({muted:true});assert.equal(storage.getItem('devourHD2D.v1'),str);
+ }
+});
+test('trial and cleared portal save remain valid; new props do not respawn in boss trial',()=>{
+ const {g,storage}=make();g.meta.chronicle.unlockedTrial=true;g.start({journey:'trial'});assert.equal(g.state.props.length,0);settle(g);
+ g._devour(g.state.enemies.find(e=>e.boss));settle(g);for(let i=0;i<400;i++)g.update(.05);g.save();const reload=new Game({storage});assert.ok(reload.resume());assert.equal(reload.state.props.length,0);assert.ok(reload.state.portal.active);
+});
+test('Three.js supply visuals use shared real geometry, retain broken state and remove prior-zone meshes',()=>{
+ for(const name of ['three','art','animation','renderer'])vm.runInContext(scripts.find(s=>s.startsWith('window.__HD2D_MODULES["'+name+'"]')),context);
+ const T=context.window.__HD2D_MODULES.three,{WorldRenderer}=context.window.__HD2D_MODULES.renderer;
+ const r=Object.create(WorldRenderer.prototype);r.materials=new Map();r.dynamic=new T.Group();r.geometries=new Map([['box',new T.BoxGeometry(1,1,1)],['cylinder',new T.CylinderGeometry(1,1,1,8)],['octa',new T.OctahedronGeometry(1)]]);
+ const {g}=make();r.syncProps(g.state.props);assert.equal(r.dynamic.children.length,6);
+ const first=r.propMeshes.get(g.state.props[0].id);assert.equal(first.children.length,4);assert.equal(first.children[0].geometry,r.geometries.get('box'));
+ g.state.props[0].broken=true;r.syncProps(g.state.props);assert.equal(first.scale.y,.12);r.syncProps([]);assert.equal(r.dynamic.children.length,0);assert.equal(r.propMeshes.size,0);
+});
+module.exports={Game,context,make,html,scripts};

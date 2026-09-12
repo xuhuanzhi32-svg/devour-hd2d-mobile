@@ -119,6 +119,8 @@
 .preparation-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:min(430px,100%);margin:12px 0 6px}.preparation-row label{display:grid;gap:5px;font-size:10px;color:#c5cbb1}.preparation-row select{font-family:inherit;font-size:12px;color:var(--cream);background:#14271fec;border:1px solid var(--line);min-height:44px;padding:8px;max-width:100%;width:100%;border-radius:0}.setup-description{font-size:10px;line-height:1.7;color:#aebda6;max-width:430px;min-height:34px;margin:6px 0 14px}.record-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.record-card{border:1px solid #9da88244;background:#0b1f1777;padding:16px;display:grid;gap:9px}.record-card b{font:28px Georgia;color:var(--gold)}.record-card small,.record-card span{font-size:10px;color:#b8c7ac}.run-record>div:last-child{text-align:right;white-space:nowrap}.menu{overflow-y:auto;gap:18px}.menu-content{flex-shrink:0}.menu-top,.menu-bottom{flex-shrink:0}.end-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.end-stats b{font-size:24px}select:focus-visible{outline:2px solid #f6e6a5;outline-offset:3px}
 @media(max-height:700px){.menu h1{font-size:64px;margin:8px 0}.menu h2{margin-bottom:8px}.menu .intro{display:none}.menu .title-rule{margin-bottom:12px}.menu-links{margin:8px 0}.setup-description{margin-bottom:8px}.preparation-row{margin-top:8px}.menu{gap:10px}}
 @media(max-height:480px) and (orientation:landscape){.menu .menu-bottom{position:static;font-size:8px;padding-top:6px}.menu .preparation-row{width:100%;margin-top:4px}.menu .preparation-row label{display:flex;align-items:center;gap:6px;white-space:nowrap}.menu .preparation-row select{min-height:44px}.menu .setup-description{min-height:0;max-width:100%;font-size:9px;margin:4px 0 7px}.menu .menu-links{flex-wrap:wrap}.menu .menu-content{max-width:76vw}.menu .difficulty-row{flex-shrink:0}}
+.web-tools{position:fixed;right:24px;bottom:25px;z-index:12;display:grid;gap:8px;padding:12px;width:185px;font-size:10px}.web-tools button{min-height:36px;padding:7px 9px}.web-tools label{display:flex;gap:6px;align-items:center;color:#d6c690}.web-tools input{width:85px;accent-color:#d5b575}.web-tools small{color:#bac8aa;line-height:1.6}.damage-layer{position:fixed;inset:0;pointer-events:none;z-index:7;overflow:hidden}.damage-number{position:absolute;transform:translate(-50%,-100%);font:700 19px Georgia,serif;color:#ffe9b0;text-shadow:0 2px 2px #151b13,1px 0 #151b13}.damage-number.strong{font-size:27px;color:#ffce7b}.prop-label{position:absolute;transform:translate(-50%,-100%);font-size:9px;letter-spacing:1px;color:#e6d6a3;text-shadow:0 2px 3px #000}.combo-panel{position:fixed;right:24px;top:300px;z-index:7;text-align:right;pointer-events:none;border-right:2px solid #d8bd7e;padding:10px 13px;background:linear-gradient(90deg,transparent,#17271fd9);min-width:130px}.combo-panel b{font:32px Georgia;color:#f4d897}.combo-panel small{display:block;font-size:10px;color:#d7d7b9}.combo-panel i{display:block;height:3px;background:#d9b975;margin-top:8px;width:100%;transform-origin:right}.photo-exit{position:fixed;right:24px;top:24px;z-index:60;padding:12px 20px;background:#13271ed9}.photo-mode #hud,.photo-mode #objective,.photo-mode #hunt-panel,.photo-mode #minimap-wrap,.photo-mode #stat-rack,.photo-mode #target-panel,.photo-mode #skillbar,.photo-mode #build-strip,.photo-mode #move-help,.photo-mode #labels,.photo-mode #boss-ui,.photo-mode #pause-screen,.photo-mode #chapter-banner,.photo-mode #interact-button,.photo-mode #joystick,.photo-mode #toast,.photo-mode #damage-layer,.photo-mode #combo-panel{display:none!important}.photo-mode .web-tools small{display:none}.photo-mode .web-tools{opacity:.7}
+@media(max-width:1000px){.web-tools{width:150px;right:12px;bottom:120px}.combo-panel{right:12px;top:260px}.web-tools small{display:none}}
 </style>
 </head>
 <body>
@@ -143,13 +145,17 @@
 <div id="build-strip" class="build-strip glass hidden" aria-label="本局基因构筑"><span class="build-label">基因构筑</span><span id="relic-status" class="relic-status">遗物 0</span><div id="build-chips"><span class="empty-build">尚未选择进化</span></div></div>
 <div id="move-help" class="move-help hidden"><kbd>W A S D</kbd> 移动 <span>·</span> <kbd>Z</kbd> 三段撕咬 <span>·</span> <kbd>F</kbd> 调查 / 出口</div>
 <div id="joystick" class="joystick hidden" aria-label="移动摇杆"><div id="stick"></div></div><button id="interact-button" class="interact-button hidden">F · 进入下一区域</button>
+<div id="damage-layer" class="damage-layer" aria-hidden="true"></div>
+<div id="combo-panel" class="combo-panel hidden" role="status"><b id="combo-count">0</b><small id="combo-caption">连续吞噬</small><i id="combo-time"></i></div>
+<aside id="web-tools" class="web-tools glass hidden" aria-label="Web 镜头控制"><button id="photo-button">P · 暂停观景</button><label>镜头 <input id="camera-zoom" aria-label="镜头缩放" type="range" min="75" max="135" step="5" value="100"><span id="zoom-value">100%</span></label><small>右键定向撕咬 · 滚轮缩放<br>击碎场景补给，拾取掉落</small></aside>
+<button id="photo-exit" class="photo-exit hidden">退出观景 · P / Esc</button>
 <div id="menu" class="screen menu hidden">
- <div class="menu-top"><div class="wordmark">DEVOUR <span>/</span> EVOLVE</div><span class="edition">HD-2D EDITION · 01</span></div>
+ <div class="menu-top"><div class="wordmark">DEVOUR <span>/</span> EVOLVE</div><span class="edition">HD-2D · WEB EDITION</span></div>
  <section class="menu-content"><p class="eyebrow gold">一场从最底层开始的异世界冒险</p><h1>噬<span>界</span><sup>HD-2D</sup></h1><div class="title-rule"></div><h2>穿越后我竟成了米田共</h2><p class="intro">没有圣剑，也没有天赋。<br>只有一个胃，和一个等着被吞噬的世界。</p>
  <div class="preparation-row"><label>出身<select id="origin-select" aria-label="选择出身"><option value="unformed">初生之种 · 均衡</option><option value="fangborn">裂齿猎手 · 近战</option><option value="tideborn">腐潮行者 · 技能</option><option value="shellborn">磐壳守望 · 生存</option></select></label><label>旅程<select id="journey-select" aria-label="选择旅程"><option value="campaign">五区战役</option><option value="trial" id="trial-option" disabled>五王试炼 · 通关解锁</option></select></label></div><p id="origin-description" class="setup-description"></p><div class="menu-buttons"><button id="start-button" class="primary">开始新进化 <span>↗</span></button><button id="continue-button" class="secondary" disabled>继续旅程 <span id="save-label">暂无记录</span></button></div>
  <div class="menu-links"><button id="meta-button">永久进化</button><span>/</span><button id="how-button">冒险指南</button><span>/</span><button id="collection-button">遗物图鉴</button><span>/</span><button id="achievements-button">成就</button><span>/</span><button id="records-button">战绩</button><span>/</span><button id="settings-button">设置</button></div>
  <div class="difficulty-row"><span>冒险强度</span><label><input name="difficulty" type="radio" value="story" checked> 轻松旅程</label><label><input name="difficulty" type="radio" value="normal"> 标准挑战</label></div>
- </section><aside class="menu-route" aria-label="五区域冒险路线"><div class="eyebrow gold">WORLD ROUTE · 05</div><ol><li class="active"><i>01</i><span><b>新手村厕所</b><small>从最底层醒来</small></span></li><li><i>02</i><span><b>腐烂下水道</b><small>饥饿开始回响</small></span></li><li><i>03</i><span><b>新手村外围</b><small>第一次被世界看见</small></span></li><li><i>04</i><span><b>王国边境</b><small>击穿秩序的防线</small></span></li><li><i>05</i><span><b>圣域裂谷</b><small>吞下最后的规则</small></span></li></ol><div class="loop-card"><span>核心循环</span><b>吞噬 → 探索 → 构筑 → 挑战统治者</b><small>4 种出身 · 8 件遗物 · 通关解锁五王试炼</small></div></aside><div class="menu-bottom"><span>吞噬 · 进化 · 跨越五个世界</span><span>原创 HD-2D 可玩重制版 <b>v0.6.0</b></span></div>
+ </section><aside class="menu-route" aria-label="五区域冒险路线"><div class="eyebrow gold">WORLD ROUTE · 05</div><ol><li class="active"><i>01</i><span><b>新手村厕所</b><small>从最底层醒来</small></span></li><li><i>02</i><span><b>腐烂下水道</b><small>饥饿开始回响</small></span></li><li><i>03</i><span><b>新手村外围</b><small>第一次被世界看见</small></span></li><li><i>04</i><span><b>王国边境</b><small>击穿秩序的防线</small></span></li><li><i>05</i><span><b>圣域裂谷</b><small>吞下最后的规则</small></span></li></ol><div class="loop-card"><span>核心循环</span><b>吞噬 → 探索 → 构筑 → 挑战统治者</b><small>场景破坏 · 连噬反馈 · 镜头缩放 · 暂停观景</small></div></aside><div class="menu-bottom"><span>吞噬 · 进化 · 跨越五个世界</span><span>原创 HD-2D 可玩重制版 <b>v0.7.0 WEB</b></span></div>
 </div>
 <div id="upgrade-screen" class="screen modal hidden" role="dialog" aria-modal="true" aria-labelledby="upgrade-title"><section class="upgrade-panel"><div class="eyebrow gold">EVOLUTION</div><h2 id="upgrade-title">饥饿，让你蜕变。</h2><p id="upgrade-description">选择一项基因。每一次选择，都改变你的下一口。</p><div id="upgrade-cards" class="upgrade-cards"></div><small class="muted">按 1 / 2 / 3 选择 · 选择期间世界暂停</small></section></div>
 <div id="pause-screen" class="screen modal hidden" role="dialog" aria-modal="true" aria-labelledby="pause-title"><section class="panel compact"><div class="eyebrow gold">TAKE A BREATH</div><h2 id="pause-title">世界暂时安静了。</h2><p id="pause-stats"></p><button id="resume-button" class="primary">继续冒险</button><button id="pause-settings" class="secondary">设置</button><button id="save-menu-button" class="secondary">保存并返回主菜单</button><small id="save-warning" class="muted"></small></section></div>
@@ -441,6 +447,8 @@ function validSave(s) {
   if (g.journey !== undefined && !JOURNEYS.some(m=>m.id===g.journey)) return false;
   if (g.origin !== undefined && !ORIGINS.some(o=>o.id===g.origin)) return false;
   if (!integer(g.seed,1,4294967295)) return false;
+  if(g.props!==undefined&&(!Array.isArray(g.props)||g.props.length>6||new Set(g.props.map(p=>p.id)).size!==g.props.length||!g.props.every(p=>integer(p.id,1,1e9)&&finite(p.x)&&finite(p.z)&&Math.abs(p.x)<=17&&Math.abs(p.z)<=17&&['heal','essence','xp'].includes(p.kind)&&finite(p.hp)&&finite(p.maxHp)&&p.maxHp>0&&p.maxHp<=100&&p.hp>=0&&p.hp<=p.maxHp&&typeof p.broken==='boolean'&&p.broken===(p.hp===0))))return false;
+  if(g.chain!==undefined&&(!g.chain||!integer(g.chain.count,0,1e6)||!finite(g.chain.time)||g.chain.time<0||g.chain.time>4))return false;
   if (g.relics !== undefined && (!Array.isArray(g.relics) || g.relics.length>8 || new Set(g.relics).size!==g.relics.length || !g.relics.every(id=>RELICS.some(r=>r.id===id)))) return false;
   if (g.expeditionLog !== undefined && (!Array.isArray(g.expeditionLog) || g.expeditionLog.length>15 || new Set(g.expeditionLog.map(e=>e.id)).size!==g.expeditionLog.length || !g.expeditionLog.every(e=>EXPEDITIONS.some(x=>x.id===e.id&&x.zone<=g.zone)&&integer(e.choice,0,2)))) return false;
   if (g.activeExpedition != null && !EXPEDITIONS.some(e=>e.id===g.activeExpedition&&e.zone===g.zone)) return false;
@@ -586,6 +594,8 @@ class Game {
     s.stats={elitesKilled:0,huntsCompleted:0,lootCollected:0,hazardsTriggered:0,activeHits:0,...s.stats};
     s.relics ||= [];s.expeditionLog ||= [];s.activeExpedition ||= null;
     s.journey ||= 'campaign';s.origin ||= 'unformed';
+    s.props ||= s.journey==='trial'?[]:this._makeProps();s.chain ||= {count:0,time:0};
+    s.stats.propsBroken ||= 0;s.stats.maxChain ||= 0;
     h.wardCooldown ||= 0;
     s.landmarks.forEach((l,i)=>{l.eventId=EXPEDITIONS[s.zone*3+i].id;l.resolved=s.journey==='trial'||s.expeditionLog.some(e=>e.id===l.eventId);});
     for(const enemy of s.enemies)enemy.elite=ELITES[enemy.elite]?enemy.elite:null;
@@ -607,7 +617,7 @@ class Game {
       bossKilled: false, bossSpawned: false, spawnTimer: .8, autoAttackTimer: 0, saveTimer: 0, runRewarded: false,
       environmentTimer: 12, environmentIntroduced: false, hunt: { contract:HUNT_CONTRACTS[0].id, status:'pending', targetId:null, timeLeft:0 },
       meta: this.meta, settings: this.settings, story: ZONES[0].story,
-      relics:[],expeditionLog:[],activeExpedition:null,
+      relics:[],expeditionLog:[],activeExpedition:null,props:[],chain:{count:0,time:0},
       stats: { eaten: 0, kills: 0, damageTaken: 0, zonesCleared: 0, elapsed: 0, score: 0, elitesKilled:0, huntsCompleted:0, lootCollected:0, hazardsTriggered:0, activeHits:0 },
     };
   }
@@ -645,9 +655,9 @@ class Game {
   resume() {
     if (!this._stored || !validSave(this._stored) || !['playing','paused','upgrade','event'].includes(this._stored.state.mode)) return false;
     this.state = clone(this._stored.state);
-    this._ensureRuntimeState();
     this.rng = this._stored.rng;
     this.nextId = this._stored.nextId;
+    this._ensureRuntimeState();
     this.meta = clone(this._stored.meta);
     this.meta.progress ||= freshProgress();
     this.meta.chronicle ||= freshChronicle(this.meta.progress.totals.victories>0);
@@ -719,6 +729,7 @@ class Game {
     s.zone = zone; s.zoneTime = 0; s.bossKilled = false; s.bossSpawned = false;
     s.hero.x = 0; s.hero.z = 5; s.hero.hp = Math.min(s.hero.maxHp, s.hero.hp + s.hero.maxHp * .25);
     s.hero.invulnerable = 2; s.hero.dashTime = 0;
+    s.props=s.journey==='trial'?[]:this._makeProps();s.chain={count:0,time:0};
     s.enemies = []; s.pickups = []; s.effects = []; s.projectiles = [];
     s.portal = { x: 0, z: -14, active: false };
     s.objectives = { eaten: 0, target: ZONES[zone].target, landmarks: 0, targetLandmarks: 2 };
@@ -821,6 +832,26 @@ class Game {
   _warning(x,z,radius,delay,damage, extra={}) { return this._effect('telegraph',x,z,delay+.22,radius,'#ef735b',{ delay, damage, fired:false, ...extra }); }
   _eatThreshold() { return this.state.hero.power * 1.2 * (1+(this.state.upgrades.maw||0)*.08); }
 
+  aim(x,z) {
+    if(this.state.mode!=='playing'||!finite(x)||!finite(z))return false;
+    this.state.hero.angle=Math.atan2(x-this.state.hero.x,z-this.state.hero.z);return true;
+  }
+
+  _makeProps() {
+    return [[3.8,4],[-3.8,3],[-5,-12],[5,-12],[-5,11],[5,11]].map(([x,z],i)=>({id:this._id(),x,z,kind:['heal','essence','xp'][(i+this.state.zone)%3],hp:26+this.state.zone*6,maxHp:26+this.state.zone*6,broken:false}));
+  }
+
+  _damageProps(radius,damage,arc=null) {
+    const s=this.state,h=s.hero;if(s.mode!=='playing')return;let changed=false;
+    for(const p of s.props||[]){
+      if(p.broken||Math.hypot(p.x-h.x,p.z-h.z)>radius+.55)continue;
+      const a=Math.atan2(p.x-h.x,p.z-h.z)-h.angle;if(arc!==null&&Math.abs(Math.atan2(Math.sin(a),Math.cos(a)))>arc)continue;
+      changed=true;p.hp=Math.max(0,p.hp-damage);this._effect('hit',p.x,p.z,.25,.6,'#e6c48a');
+      if(p.hp===0){p.broken=true;s.stats.propsBroken=(s.stats.propsBroken||0)+1;this._drop(p.kind,p,p.kind==='heal'?18:p.kind==='essence'?1:12+s.zone*3);this._effect('pulse',p.x,p.z,.45,1.3,'#e6c48a');this._sound('pickup');}
+    }
+    if(changed)this.save();
+  }
+
   attack() {
     const s=this.state,h=s.hero;
     if(s.mode!=='playing'||h.biteCooldown>0)return false;
@@ -842,6 +873,7 @@ class Game {
     s.stats.activeHits+=hits;
     const fx=h.x+Math.sin(h.angle)*1.05,fz=h.z+Math.cos(h.angle)*1.05;
     this._effect('bite',fx,fz,.24,third?2.25:1.45,third?'#f2c776':'#d9eba3',{angle:h.angle,arc:halfArc,combo:step});
+    this._damageProps(reach+h.r,base,halfArc);
     this._sound(third?'bite-finisher':'bite');
     return true;
   }
@@ -856,6 +888,7 @@ class Game {
       h.attack=.3;
       this._effect('pulse',h.x,h.z,.5,radius,'#e4d18b');
       for (const e of [...s.enemies]) if (!e.dead && dist(h,e)<=radius+e.r) this._damageEnemy(e,(20+h.power*1.3)*(1+rank*.25));
+      this._damageProps(radius,(20+h.power*1.3)*(1+rank*.25));
       this._sound('pulse');
     } else if (kind === 'dash') {
       s.cooldowns.dash=3.5*reduction;
@@ -873,6 +906,7 @@ class Game {
       h.invulnerable=Math.max(h.invulnerable,1.2);
       for (const e of [...s.enemies]) if (!e.dead && dist(h,e)<radius+e.r) this._damageEnemy(e,(90+h.power*3)*(1+(s.upgrades.ultimate||0)*.3));
       h.hp=Math.min(h.maxHp,h.hp+18);
+      this._damageProps(radius,90+h.power*3);
       this._sound('ultimate');
     }
     return true;
@@ -884,7 +918,9 @@ class Game {
     if((e.elite||e.boss)&&(this.state.upgrades.hunter||0)>0)amount*=1+(this.state.upgrades.hunter||0)*.12;
     if(e.elite==='bulwark'&&!e.armorBroken){amount*=.72;if(e.hp-amount<=e.maxHp*.5){e.armorBroken=true;this._effect('evolve',e.x,e.z,.45,e.r*1.8,'#f1cf83');this._toast(`${e.eliteName||'铁壳精英'}的护甲破裂了！`);}}
     if (e.shield && !e.boss) amount *= .7;
+    const actual=Math.min(e.hp,amount);
     e.hp=Math.max(0,e.hp-amount); e.hit=.15;
+    this._effect('number',e.x,e.z,.72,.1,'#ffe9b0',{value:Math.ceil(actual),strong:source==='bite'&&this.state.hero.biteStep===3});
     e.edible=e.hp<=this._eatThreshold();
     this._effect('hit',e.x,e.z,.25,.45,'#fff1b5');
     if (e.hp<=0) this._devour(e);
@@ -902,6 +938,8 @@ class Game {
     const s=this.state,h=s.hero;
     e.dead=true; e.hp=0; h.devourTimer=.3;
     s.stats.kills++; s.stats.eaten++; s.objectives.eaten++;
+    s.chain ||= {count:0,time:0};s.chain.count=s.chain.time>0?s.chain.count+1:1;s.chain.time=4;s.stats.maxChain=Math.max(s.stats.maxChain||0,s.chain.count);
+    if(s.chain.count>=3){h.ultimate=clamp(h.ultimate+Math.min(5,s.chain.count-2),0,100);}
     this._progress('kills');if(e.elite)this._progress('elites');
     if(e.elite)s.stats.elitesKilled++;
     s.stats.score+=e.boss?500*(s.zone+1):10*(s.zone+1);
@@ -988,6 +1026,8 @@ class Game {
     if(this.hasRelic('ward')&&!(h.wardCooldown>0)){h.wardCooldown=12;h.invulnerable=.3;this._effect('pulse',h.x,h.z,.4,1.5,'#a8dce8');this._toast('守护残印抵挡了这次伤害。');this._sound('discover');return false;}
     const damage=Math.max(1,amount*(1-(s.upgrades.armor||0)*.08)*(s.difficulty==='story'?.58:1));
     h.hp=Math.max(0,h.hp-damage);h.hit=.22;h.invulnerable=.85;s.stats.damageTaken+=damage;
+    s.chain={count:0,time:0};
+    this._effect('number',h.x,h.z,.8,.1,'#ff9d8c',{value:-Math.ceil(damage),strong:true});
     this._sound('hurt');
     if(h.hp<=0) { this._mode('dead');this._finishRun(false); }
     return true;
@@ -1277,6 +1317,7 @@ class Game {
     if(h.moving)h.angle=Math.atan2(x,z);
     if(h.dashTime>0){h.dashTime=Math.max(0,h.dashTime-dt);this._move(h,h.dashX*23*dt,h.dashZ*23*dt);}
     else this._move(h,x*h.speed*dt,z*h.speed*dt);
+    s.chain ||= {count:0,time:0};s.chain.time=Math.max(0,s.chain.time-dt);if(s.chain.time===0)s.chain.count=0;
     this._updateHunt(dt);this._updateEnvironment(dt);
     for(const l of s.landmarks)if(!l.found && dist(h,l)<1.7){this._discover(l);if(s.mode!=='playing')return;}
     for(const e of s.enemies){
@@ -1788,7 +1829,7 @@ class WorldRenderer {
  resize(width,height){this.width=Math.max(1,width);this.height=Math.max(1,height);this.renderer.setSize(this.width,this.height,false);this.camera.aspect=this.width/this.height;this.camera.updateProjectionMatrix();if(this.target){const size=this.renderer.getDrawingBufferSize(new THREE.Vector2());this.target.setSize(size.x,size.y);this.postMaterial.uniforms.resolution.value.copy(size);}}
  syncPickups(items){const seen=new Set();for(const item of items||[]){seen.add(item.id);let mesh=this.pickupMeshes.get(item.id);if(!mesh){const color=item.type==='heal'?0xefaaa2:item.type==='essence'?0xf7d283:0x9fe4c2;mesh=new THREE.Mesh(this.geometries.get('octa'),this.basic(color));this.dynamic.add(mesh);this.pickupMeshes.set(item.id,mesh);}mesh.position.set(item.x,.34+(this.options.reducedMotion?0:Math.sin(this.time*3+(Number(item.id)||0))*.09),item.z);mesh.scale.setScalar(item.type==='essence'?.23:.16);mesh.rotation.set(.2,this.options.reducedMotion?0:this.time*1.5,Math.PI/4);}for(const [id,mesh]of this.pickupMeshes)if(!seen.has(id)){this.dynamic.remove(mesh);this.pickupMeshes.delete(id);}}
 	 syncEffects(effects){
-	  const seen=new Set();for(const effect of effects||[]){seen.add(effect.id);let visual=this.effectMeshes.get(effect.id);
+	  const seen=new Set();for(const effect of effects||[]){if(effect.type==='number')continue;seen.add(effect.id);let visual=this.effectMeshes.get(effect.id);
 	   if(!visual){
 	    const color=effect.color||({pulse:0xa9e7af,dash:0xffd28d,hit:0xffeac7,devour:0xbfea8c,ultimate:0xe1b2ff,evolve:0xffe2a0,telegraph:0xf18683,bite:0xd9eba3,hunt:0xe2c27d}[effect.type]||0xffdcab),group=new THREE.Group(),parts=[];
 	    const material=(opacity=.8)=>new THREE.MeshBasicMaterial({color,transparent:true,opacity,depthWrite:false,side:THREE.DoubleSide,blending:THREE.AdditiveBlending});
@@ -1812,6 +1853,19 @@ class WorldRenderer {
 	 }
  syncProjectiles(items){const seen=new Set();for(const item of items||[]){seen.add(item.id);let mesh=this.projectileMeshes.get(item.id);if(!mesh){mesh=new THREE.Mesh(this.geometries.get('octa'),this.basic(item.color||0xe0b1ff));this.dynamic.add(mesh);this.projectileMeshes.set(item.id,mesh);}mesh.position.set(item.x,.7,item.z);mesh.scale.setScalar(item.r||.2);mesh.rotation.set(this.options.reducedMotion?0:this.time*4,this.options.reducedMotion?0:this.time*3,0);}for(const[id,mesh]of this.projectileMeshes)if(!seen.has(id)){this.dynamic.remove(mesh);this.projectileMeshes.delete(id);}}
  syncLandmarks(items){const seen=new Set();for(const item of items||[]){seen.add(item.id);let group=this.landmarkMeshes.get(item.id);if(!group){group=new THREE.Group();const stone=new THREE.Mesh(this.geometries.get('cylinder'),this.mat(0xc4b7a0));stone.scale.set(.45,.2,.45);stone.position.y=.1;group.add(stone);const crystal=new THREE.Mesh(this.geometries.get('octa'),this.basic(0xf3dca2));crystal.scale.set(.19,.32,.19);crystal.position.y=.8;group.add(crystal);this.dynamic.add(group);this.landmarkMeshes.set(item.id,group);}group.position.set(item.x,0,item.z);group.children[1].position.y=.8+(this.options.reducedMotion?0:Math.sin(this.time*2)*.08);group.children[1].rotation.y=this.options.reducedMotion?0:this.time;group.visible=!item.resolved;}for(const[id,group]of this.landmarkMeshes)if(!seen.has(id)){this.dynamic.remove(group);this.landmarkMeshes.delete(id);}}
+ syncProps(items){
+  this.propMeshes ||= new Map();const seen=new Set();
+  for(const p of items||[]){seen.add(p.id);let g=this.propMeshes.get(p.id);
+   if(!g){g=new THREE.Group();const color={heal:0xa8c77a,essence:0xd5b575,xp:0x86bfce}[p.kind];
+    const body=new THREE.Mesh(this.geometries.get(p.kind==='heal'?'box':'cylinder'),this.mat(0x876443));body.position.y=.48;body.scale.set(p.kind==='heal'?1:.5,.85,p.kind==='heal'?1:.5);g.add(body);
+    for(const y of [.18,.77]){const band=new THREE.Mesh(this.geometries.get(p.kind==='heal'?'box':'cylinder'),this.mat(0x394842,{metalness:.5,roughness:.55}));band.position.y=y;band.scale.set(p.kind==='heal'?1.05:.53,.08,p.kind==='heal'?1.05:.53);g.add(band);}
+    const seal=new THREE.Mesh(this.geometries.get('octa'),this.mat(color,{emissive:color,emissiveIntensity:.35}));seal.position.set(0,.66,.46);seal.scale.set(.15,.18,.08);g.add(seal);
+    this.dynamic.add(g);this.propMeshes.set(p.id,g);
+   }
+   g.position.set(p.x,.02,p.z);g.scale.set(1,p.broken?.12:1,1);g.rotation.z=p.broken?.12:0;
+  }
+  for(const[id,g]of this.propMeshes)if(!seen.has(id)){this.dynamic.remove(g);this.propMeshes.delete(id);}
+ }
  syncActors(items,dt,effects=[]){
   const warningsByEnemy=new Map();
   for(const effect of effects){if(effect.type!=='telegraph'||effect.enemyId==null)continue;const list=warningsByEnemy.get(effect.enemyId)||[];list.push(effect);warningsByEnemy.set(effect.enemyId,list);}
@@ -1837,10 +1891,10 @@ class WorldRenderer {
   this.time=Number.isFinite(state.time)?state.time:this.time+visualDt;this.changeZone(state.zone);const h=state.hero||{x:0,z:5,r:.5,level:1};const isMenu=state.mode==='menu';
   const tx=isMenu?0:Math.max(-6,Math.min(6,(h.x||0)*.47)),tz=isMenu?-1:Math.max(-5,Math.min(6,(h.z||0)*.43));const smooth=1-Math.exp(-visualDt*3.8);this.follow.x+=(tx-this.follow.x)*smooth;this.follow.z+=(tz-this.follow.z)*smooth;
   // Portrait cameras rise to preserve both flanks; landscape cameras keep the toy-stage intimacy.
-  const distance=this.camera.aspect<.9?1.55:this.camera.aspect<1.25?1.18:1;this.cameraTarget.set(this.follow.x,0,this.follow.z);this.camera.position.set(this.follow.x+(isMenu&&!this.options.reducedMotion?Math.sin(this.time*.06)*1.2:0),25*distance,this.follow.z+30*distance);this.camera.lookAt(this.cameraTarget);this.camera.updateMatrixWorld();
+  const distance=(this.camera.aspect<.9?1.55:this.camera.aspect<1.25?1.18:1)*(this.options.cameraZoom||1);this.cameraTarget.set(this.follow.x,0,this.follow.z);this.camera.position.set(this.follow.x+(isMenu&&!this.options.reducedMotion?Math.sin(this.time*.06)*1.2:0),25*distance,this.follow.z+30*distance);this.camera.lookAt(this.cameraTarget);this.camera.updateMatrixWorld();
   this.updateActor(this.hero,h,visualDt,true);this.heroLight.position.set(h.x||0,1.5,h.z||0);const activeUltimate=(state.effects||[]).find(effect=>effect.type==='ultimate'&&(effect.age||0)<effect.duration);this.heroLight.intensity=activeUltimate?2+3*(1-(activeUltimate.age||0)/activeUltimate.duration):2;
   this.syncActors(state.enemies,visualDt,state.effects||[]);
-  this.syncPickups(state.pickups);this.syncEffects(state.effects);this.syncProjectiles(state.projectiles);this.syncLandmarks(state.landmarks);
+  this.syncProps(state.props);this.syncPickups(state.pickups);this.syncEffects(state.effects);this.syncProjectiles(state.projectiles);this.syncLandmarks(state.landmarks);
   const portal=state.portal||{x:0,z:-14,active:false};this.portal.group.position.set(portal.x||0,0,portal.z??-14);this.portal.ring.rotation.z=this.options.reducedMotion?0:this.time*.12;this.portal.ring.material.opacity=portal.active?.85:.19;this.portal.glow.material.opacity=portal.active?.37:.045;this.portal.light.intensity=portal.active?7:.2;this.portal.ring.scale.setScalar(portal.active&&!this.options.reducedMotion?1+Math.sin(this.time*2)*.035:1);
   if(!this.options.reducedMotion){const p=this.particles.geometry.attributes.position.array;for(let i=0;i<p.length/3;i++){p[i*3]=this.particleBase[i*3]+Math.sin(this.time*.2+i)*.6;p[i*3+1]=this.particleBase[i*3+1]+Math.sin(this.time*.35+i)*.2;}this.particles.geometry.attributes.position.needsUpdate=true;}
   if(this.usePost){this.renderer.setRenderTarget(this.target);this.renderer.render(this.scene,this.camera);this.renderer.setRenderTarget(null);this.renderer.render(this.postScene,this.postCamera);}else this.renderer.render(this.scene,this.camera);
@@ -1858,6 +1912,7 @@ class WorldRenderer {
  * startup gate.
  */
 class CanvasFallbackRenderer{
+ drawProps(items){const ctx=this.ctx;for(const p of items||[]){const q=this.project(p.x,p.z),w=this.scale*.85,h=this.scale*(p.broken?.12:.95);ctx.fillStyle='#2b211bbb';ctx.beginPath();ctx.ellipse(q.x,q.y,w*.75,w*.25,0,0,TAU);ctx.fill();ctx.fillStyle='#886748';ctx.fillRect(q.x-w/2,q.y-h,w,h);ctx.fillStyle='#c3a37b';for(let i=0;i<4;i++)ctx.fillRect(q.x-w/2+i*w/4,q.y-h,1,h);ctx.fillStyle='#33463d';ctx.fillRect(q.x-w/2,q.y-h*.8,w,3);ctx.fillRect(q.x-w/2,q.y-h*.2,w,3);if(!p.broken){ctx.fillStyle={heal:'#a8c77a',essence:'#d5b575',xp:'#86bfce'}[p.kind];ctx.fillRect(q.x-3,q.y-h*.65,6,8);}}}
  constructor(canvas,options={},reason=null){
   this.canvas=canvas;this.options={quality:'low',reducedMotion:false,...options};this._appliedQuality='low';this.reason=reason?.message||String(reason||'WebGL context unavailable');this.width=canvas.clientWidth||(typeof innerWidth==='number'?innerWidth:1280);this.height=canvas.clientHeight||(typeof innerHeight==='number'?innerHeight:720);this.time=0;this.zone=0;this.cameraX=0;this.cameraZ=0;this.scale=20;this.atlasImage=null;this.atlasFrames=[];this.animationActors=new Map();this.actorStates=new Map();this.drawCalls=0;this.disposed=false;
   this.ctx=canvas.getContext('2d',{alpha:false});
@@ -1889,7 +1944,7 @@ class CanvasFallbackRenderer{
 	  for(const landmark of state.landmarks||[]){if(landmark.resolved)continue;const p=this.project(landmark.x,landmark.z);ctx.save();ctx.translate(p.x,p.y-12);ctx.rotate(Math.PI/4);ctx.fillStyle='#f0d18a';ctx.fillRect(-7,-7,14,14);ctx.restore();}
 	  if(state.portal?.active){const p=this.project(state.portal.x||0,state.portal.z??-14);ctx.strokeStyle='#9ce2d2';ctx.lineWidth=4;ctx.beginPath();ctx.arc(p.x,p.y-22,18,0,Math.PI*2);ctx.stroke();}
 	  for(const pickup of state.pickups||[]){const p=this.project(pickup.x,pickup.z);ctx.fillStyle=pickup.type==='heal'?'#efaaa2':pickup.type==='essence'?'#f7d283':'#9fe4c2';ctx.beginPath();ctx.arc(p.x,p.y-7,4,0,Math.PI*2);ctx.fill();}
-	  for(const effect of state.effects||[]){
+	  for(const effect of state.effects||[]){if(effect.type==='number')continue;
 	   const p=this.project(effect.x,effect.z),progress=clamp01((effect.age||0)/(effect.duration||.5)),radius=Math.max(.05,Number(effect.radius)||2),rx=radius*this.scale,ry=rx*.62,color=typeof effect.color==='string'?effect.color:this.color(effect.color||0xd8efad);ctx.save();ctx.strokeStyle=color;ctx.fillStyle=color;
 	   if(effect.type==='telegraph'){ctx.globalAlpha=telegraphOpacity(effect);ctx.lineWidth=3;ctx.beginPath();ctx.ellipse(p.x,p.y,rx,ry,0,0,TAU);ctx.stroke();}
 	   else if(effect.type==='bite'){const angle=Number(effect.angle)||0,direction=Math.atan2(Math.cos(angle)*.62,Math.sin(angle)),arc=Math.max(.35,Math.min(1.25,Number(effect.arc)||.78)),growth=this.options.reducedMotion?1:.68+progress*.32;ctx.globalAlpha=(1-progress)*(.78+Math.min(3,Number(effect.combo)||1)*.06);ctx.lineWidth=effect.combo===3?5:3;ctx.beginPath();ctx.ellipse(p.x,p.y,rx*growth,ry*growth,0,direction-arc,direction+arc);ctx.stroke();}
@@ -1899,8 +1954,8 @@ class CanvasFallbackRenderer{
 	  }
 	  for(const projectile of state.projectiles||[]){const p=this.project(projectile.x,projectile.z),tail=this.project(projectile.x-(Number(projectile.vx)||0)*.13,projectile.z-(Number(projectile.vz)||0)*.13),color=typeof projectile.color==='string'?projectile.color:this.color(projectile.color||0xff9d75),r=Math.max(3,(Number(projectile.r)||.2)*this.scale);ctx.save();ctx.strokeStyle=color;ctx.fillStyle=color;ctx.globalAlpha=.42;ctx.lineWidth=Math.max(2,r*.65);ctx.beginPath();ctx.moveTo(tail.x,tail.y);ctx.lineTo(p.x,p.y);ctx.stroke();ctx.globalAlpha=.96;ctx.beginPath();ctx.arc(p.x,p.y,r*.55,0,TAU);ctx.fill();ctx.restore();}
 	 }
- render(state,dt=1/60){if(!state||this.disposed)return;this.drawCalls=0;const paused=state.mode==='paused'||state.mode==='upgrade'||state.mode==='event',visualDt=paused?0:Math.max(0,Number(dt)||0),hero=state.hero||{x:0,z:5};this.time=Number.isFinite(state.time)?state.time:this.time+visualDt;this.zone=state.zone||0;const targetX=state.mode==='menu'?0:Math.max(-6,Math.min(6,hero.x||0)),targetZ=state.mode==='menu'?0:Math.max(-5,Math.min(6,hero.z||0)),smooth=1-Math.exp(-visualDt*5);this.cameraX+=(targetX-this.cameraX)*smooth;this.cameraZ+=(targetZ-this.cameraZ)*smooth;this.drawWorld(state);
-  const warnings=new Map();for(const effect of state.effects||[]){if(effect.type==='telegraph'&&effect.enemyId!=null&&!warnings.has(effect.enemyId))warnings.set(effect.enemyId,effect);}const actors=(state.enemies||[]).filter(e=>!e.dead&&e.hp>0).map(item=>({item,isHero:false}));actors.push({item:hero,isHero:true});actors.sort((a,b)=>(a.item.z||0)-(b.item.z||0));for(const actor of actors)this.drawActor(actor.item,actor.isHero,visualDt,paused,warnings);const alive=new Set(actors.map(a=>a.isHero?'hero':String(a.item.id)));for(const id of this.actorStates.keys())if(!alive.has(id))this.actorStates.delete(id);
+ render(state,dt=1/60){if(!state||this.disposed)return;this.drawCalls=0;const paused=state.mode==='paused'||state.mode==='upgrade'||state.mode==='event',visualDt=paused?0:Math.max(0,Number(dt)||0),hero=state.hero||{x:0,z:5};this.time=Number.isFinite(state.time)?state.time:this.time+visualDt;this.zone=state.zone||0;const targetX=state.mode==='menu'?0:Math.max(-6,Math.min(6,hero.x||0)),targetZ=state.mode==='menu'?0:Math.max(-5,Math.min(6,hero.z||0)),smooth=1-Math.exp(-visualDt*5);this.cameraX+=(targetX-this.cameraX)*smooth;this.cameraZ+=(targetZ-this.cameraZ)*smooth;this.scale=Math.max(10,Math.min(this.width/42,this.height/34))/(this.options.cameraZoom||1);this.drawWorld(state);this.drawProps(state.props);
+  const warnings=new Map();for(const effect of state.effects||[]){if(effect.type==='number')continue;if(effect.type==='telegraph'&&effect.enemyId!=null&&!warnings.has(effect.enemyId))warnings.set(effect.enemyId,effect);}const actors=(state.enemies||[]).filter(e=>!e.dead&&e.hp>0).map(item=>({item,isHero:false}));actors.push({item:hero,isHero:true});actors.sort((a,b)=>(a.item.z||0)-(b.item.z||0));for(const actor of actors)this.drawActor(actor.item,actor.isHero,visualDt,paused,warnings);const alive=new Set(actors.map(a=>a.isHero?'hero':String(a.item.id)));for(const id of this.actorStates.keys())if(!alive.has(id))this.actorStates.delete(id);
  }
  getMetrics(){return{renderer:'Canvas 2D fallback · authored sprite animation',fallbackReason:this.reason,zone:this.zone,drawCalls:this.drawCalls,actors:this.actorStates.size,postprocessing:false,reducedMotion:this.options.reducedMotion,quality:'low',shadows:false,pixelRatio:Math.min(typeof devicePixelRatio==='number'?devicePixelRatio:1,1.35),atlas:!!this.atlasImage,animationActorCount:this.animationActors.size,animationAtlasCount:new Set([...this.animationActors.values()].map(a=>a.image)).size,animationClipNames:[...new Set([...this.animationActors.values()].flatMap(actor=>Object.keys(actor.clips||{})))].sort()};}
  dispose(){this.disposed=true;this.actorStates.clear();this.animationActors.clear();}
@@ -1950,6 +2005,23 @@ class AudioDirector{
  update(time,zone,active){if(!active||!prefs.sound||!prefs.music||!this.context||time<this.next)return;this.next=time+1.2;const notes=[0,7,12,10,3,7,15,12],root=[146.83,130.81,164.81,123.47,110][zone]||146.83;this.tone(root*2**(notes[(this.note++)%notes.length]/12),2.3,'sine',.035);if(this.note%4===0)this.tone(root*.5,4.7,'triangle',.035);}
 }
 const audio=new AudioDirector();
+let photoMode=false;
+function setZoom(percent){const value=Math.max(75,Math.min(135,Math.round(percent/5)*5));renderer.options.cameraZoom=100/value;$('camera-zoom').value=value;$('zoom-value').textContent=value+'%';}
+function enterPhoto(){if(game.state.mode!=='playing')return;game.pause();photoMode=true;document.body.classList.add('photo-mode');show('photo-exit',true);$('photo-exit').focus();keys.clear();moveTarget=null;}
+function exitPhoto(){if(!photoMode)return;photoMode=false;document.body.classList.remove('photo-mode');show('photo-exit',false);if(game.state.mode==='paused')game.unpause();}
+function bindWebControls(){
+ $('photo-button').onclick=enterPhoto;$('photo-exit').onclick=exitPhoto;$('camera-zoom').oninput=e=>setZoom(+e.target.value);
+ $('world').addEventListener('wheel',e=>{if(game.state.mode==='menu')return;e.preventDefault();setZoom(100/(renderer.options.cameraZoom||1)+(e.deltaY<0?5:-5));},{passive:false});
+ $('world').addEventListener('contextmenu',e=>{e.preventDefault();if(game.state.mode!=='playing')return;const p=renderer.groundPoint(e.clientX,e.clientY);if(p&&game.aim(p.x,p.z)){audio.unlock();game.attack();}});
+}
+function updateWebFX(){
+ const s=game.state,active=s.mode!=='menu',chain=s.chain||{count:0,time:0};show('web-tools',active);$('photo-button').disabled=s.mode!=='playing';
+ show('combo-panel',active&&chain.count>=2);$('combo-count').textContent=chain.count+' 连噬';$('combo-caption').textContent=chain.count>=3?'追加终极能量 +'+Math.min(5,chain.count-2):'4 秒内继续吞噬';$('combo-time').style.transform='scaleX('+(chain.time/4)+')';
+ if(photoMode||!active){$('damage-layer').innerHTML='';return;}
+ const out=[];for(const f of (s.effects||[]).filter(f=>f.type==='number').slice(-32)){const p=renderer.project(f.x,f.z,1.8+(prefs.reducedMotion?0:f.age*1.3));if(p.visible)out.push(`<span class="damage-number ${f.strong?'strong':''}" style="left:${p.x+(f.id%3-1)*12}px;top:${p.y}px;opacity:${Math.max(0,1-f.age/f.duration)};color:${f.value<0?'#ff9d8c':'#ffe9b0'}">${f.value}</span>`);}
+ for(const p of s.props||[]){if(p.broken||Math.hypot(p.x-s.hero.x,p.z-s.hero.z)>7)continue;const q=renderer.project(p.x,p.z,1.4);if(q.visible)out.push(`<span class="prop-label" style="left:${q.x}px;top:${q.y}px">${{heal:'补给箱',essence:'精华罐',xp:'经验罐'}[p.kind]} · ${Math.ceil(p.hp)}</span>`);}
+ $('damage-layer').innerHTML=out.join('');
+}
 function toast(text){if(!text)return;$('toast').textContent=text;show('toast',true);clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>show('toast',false),3400);}
 function onEvent(e){if(e.type==='toast'||e.type==='warn')toast(e.text||e.message);if(e.type==='sound')audio.play(e.sound||e.name);}
 function difficulty(){return document.querySelector('input[name="difficulty"]:checked')?.value||'story';}
@@ -1959,7 +2031,7 @@ function openInfo(type){if(!$('info-screen').classList.contains('hidden')){rende
 function hideInfo(){show('info-screen',false);if(game?.state.mode==='event')renderExpedition();if(infoResume&&game?.state.mode==='paused')game.unpause();infoResume=false;infoBack=null;}
 function renderInfo(type){$('info-content').dataset.view=type;
  document.querySelectorAll('[data-info]').forEach(button=>{const active=button.dataset.info===type;button.classList.toggle('active',active);button.setAttribute('aria-current',active?'page':'false');});
- if(type==='records'){renderRecords();return;}if(type==='collection'){renderCollection();return;}if(type==='achievements'){renderAchievements();return;}if(type==='how'){$('info-title').textContent='把世界，变成食物。';$('info-eyebrow').textContent='ADVENTURER’S GUIDE';$('info-content').innerHTML=`<div class="guide-grid"><div class="guide-card"><b>01 · 从弱小开始</b><p>WASD / 方向键移动，或点击地面自动前往。触屏使用左下摇杆。靠近小型生物会自动吞噬；大敌需要先削弱。</p></div><div class="guide-card"><b>02 · 把攻击接成三段</b><p>Z / 触屏「连牙撕咬」发动主动近战；在连段窗口内连续三次，终结击范围与伤害更高。Space 腐蚀脉冲，Q 冲刺，E 终极进化。</p></div><div class="guide-card"><b>03 · 狩猎与区域异变</b><p>每个区域都会出现一只带词缀的限时狩猎精英，击杀可得永久精华。清洁桶、污水喷口、巡逻队、弩炮与裂谷脉冲需要不同走位。</p></div><div class="guide-card"><b>04 · 探索与统治者</b><p>靠近地标可发现它；按 F / 触屏调查打开探索抉择，可获得遗物、休整或交换精华。选择时暂停战斗。完成吞噬与两个地标后，统治者出现。红色预警越亮越接近命中；击败后前往北侧出口，按 F 或触屏按钮继续。</p></div></div><p>开局可选均衡、近战、技能、生存四种出身。通关战役后解锁五王试炼：Lv.8、7 次初始基因选择，连战五位强化统治者；每过一关再选 2 次，入场总共回复 35% 最大生命并恢复 25% 终极能量。升级时按 1 / 2 / 3 · Esc 暂停 · J 旅途记录。精华可用于永久进化。</p>`;
+ if(type==='records'){renderRecords();return;}if(type==='collection'){renderCollection();return;}if(type==='achievements'){renderAchievements();return;}if(type==='how'){$('info-title').textContent='把世界，变成食物。';$('info-eyebrow').textContent='ADVENTURER’S GUIDE';$('info-content').innerHTML=`<div class="guide-grid"><div class="guide-card"><b>01 · 从弱小开始</b><p>WASD / 方向键移动，或点击地面自动前往。触屏使用左下摇杆。靠近小型生物会自动吞噬；大敌需要先削弱。</p></div><div class="guide-card"><b>02 · 把攻击接成三段</b><p>Z / 触屏「连牙撕咬」发动主动近战；在连段窗口内连续三次，终结击范围与伤害更高。Space 腐蚀脉冲，Q 冲刺，E 终极进化。</p></div><div class="guide-card"><b>03 · 狩猎与区域异变</b><p>每个区域都会出现一只带词缀的限时狩猎精英，击杀可得永久精华。清洁桶、污水喷口、巡逻队、弩炮与裂谷脉冲需要不同走位。</p></div><div class="guide-card"><b>04 · 探索与统治者</b><p>靠近地标可发现它；按 F / 触屏调查打开探索抉择，可获得遗物、休整或交换精华。选择时暂停战斗。完成吞噬与两个地标后，统治者出现。红色预警越亮越接近命中；击败后前往北侧出口，按 F 或触屏按钮继续。</p></div></div><p>开局可选均衡、近战、技能、生存四种出身。通关战役后解锁五王试炼：Lv.8、7 次初始基因选择，连战五位强化统治者；每过一关再选 2 次，入场总共回复 35% 最大生命并恢复 25% 终极能量。升级时按 1 / 2 / 3 · Esc 暂停 · J 旅途记录。精华可用于永久进化。Web 操作：右键定向撕咬、滚轮缩放、P 暂停观景。击碎补给箱/精华罐/经验罐获得掉落；4 秒内连续吞噬积累连噬，3 连起追加终极能量，受伤中断。</p>`;
  }else if(type==='settings'){$('info-title').textContent='让冒险适合你。';$('info-eyebrow').textContent='SETTINGS';$('info-content').innerHTML=`<div class="info-row"><div>画面质量<small>低档减少渲染分辨率，适合移动设备。</small></div><select id="quality-select" aria-label="画面质量"><option value="high">精致</option><option value="low">流畅</option></select></div><div class="info-row"><div>声音<small>首次操作后启用音频。</small></div><input id="sound-toggle" type="checkbox" aria-label="声音"></div><div class="info-row"><div>环境音乐<small>随区域变化的轻声旋律。</small></div><input id="music-toggle" type="checkbox" aria-label="环境音乐"></div><div class="info-row"><div>减少动态效果<small>减轻画面震动和镜头变化。</small></div><input id="motion-toggle" type="checkbox" aria-label="减少动态效果"></div><div class="info-row"><div>自动腐蚀脉冲<small>附近有敌人且冷却结束时自动施放。</small></div><input id="auto-toggle" type="checkbox" aria-label="自动腐蚀脉冲"></div>`;$('quality-select').value=prefs.quality;$('quality-select').onchange=e=>setPreference('quality',e.target.value);for(const [id,key] of [['sound-toggle','sound'],['music-toggle','music'],['motion-toggle','reducedMotion'],['auto-toggle','autoPulse']]){$(id).checked=!!prefs[key];$(id).onchange=e=>{audio.unlock();setPreference(key,e.target.checked);};}
  }else if(type==='meta'){$('info-title').textContent='把上一世，带入下一口。';$('info-eyebrow').textContent='PERMANENT EVOLUTION';const m=game.state.meta||{};$('info-content').innerHTML=`<p>现有精华：<strong>${m.essence||0}</strong>。永久进化会在下一次新旅程生效。</p>`+[['vitality','厚实生命','提升初始生命'],['power','锋利饥饿','提升初始攻击'],['speed','轻盈粘液','提升初始移动速度']].map(([id,title,desc])=>`<div class="info-row"><div>${title} <small>${desc} · 当前 ${m[id]||0} 级</small></div><button data-buy="${id}">升级 · ${metaCost(id)} 精华</button></div>`).join('');document.querySelectorAll('[data-buy]').forEach(b=>b.onclick=()=>{if(!game.buyMeta(b.dataset.buy))toast('精华不足，或这项进化已达到上限。');renderInfo('meta');});
  }else{$('info-title').textContent='你曾吞噬过的世界。';$('info-eyebrow').textContent='FIELD NOTES';const s=game.state,genes=Object.entries(s.upgrades||{}).filter(([,n])=>n>0),st=s.stats||{};$('info-content').innerHTML=`<p>${journeyName(s.journey)} · ${originName(s.origin)} · 种子 ${s.seed}<br>本局 Lv.${s.hero.level} · 吞噬 ${st.eaten||0} · 精英 ${st.elitesKilled||0} · 狩猎 ${st.huntsCompleted||0} · 战利品 ${st.lootCollected||0} · 游玩 ${fmt(s.time)} · ${s.difficulty==='normal'?'标准挑战':'轻松旅程'}</p>`+REGION.map((n,i)=>`<div class="info-row"><div>${ROMAN[i]}. ${n}<small>${MOTTO[i]}</small></div><span>${i<s.zone?'已突破':i===s.zone?'当前区域':'尚未抵达'}</span></div>`).join('')+(genes.length?`<div class="gene-summary">${genes.map(([id,n])=>`<span>${escapeHTML((Array.isArray(UPGRADES)?UPGRADES.find(u=>u.id===id):UPGRADES?.[id])?.name||id)} <b>×${n}</b></span>`).join('')}</div>`:'<div class="info-content-empty">尚未获得基因。继续吞噬，下一次升级将改变你的构筑。</div>');}}
@@ -2010,7 +2082,7 @@ function renderEnd(){
  $('end-eyebrow').textContent=s.newRecord?'NEW PERSONAL BEST':win?'THE WORLD HAS A NEW RULE':'THE JOURNEY CONTINUES';
  $('end-title').textContent=win?(trial?'五王俯首，饥饿未止。':'你吞下了，世界的规则。'):'这还不是你的终点。';
  $('end-story').textContent=`${journeyName(s.journey)} · ${originName(s.origin)} · ${s.difficulty==='story'?'轻松旅程':'标准挑战'}。 ${win?(trial?'强化五王试炼完成。更换出身，再创造你的个人纪录。':'五区域战役完成，五王试炼已解锁。继续挑战，或带着精华开始下一次进化。'):'本局已结算。留下的精华，会成为下一次醒来的力量。'}`;
- $('end-stats').innerHTML=[['最终等级',s.hero.level],['吞噬数量',st.eaten||0],['击败统治者',`${st.zonesCleared} / 5`],['旅程时长',fmt(s.time)],['本局积分',r?.score??Math.floor(st.score||0)],['结算精华',`+${r?.reward||0}`]].map(([label,value])=>`<div><b>${value}</b><small>${label}</small></div>`).join('');
+ $('end-stats').innerHTML=[['最终等级',s.hero.level],['吞噬数量',st.eaten||0],['击败统治者',`${st.zonesCleared} / 5`],['旅程时长',fmt(s.time)],['最高连噬',st.maxChain||0],['破坏补给',st.propsBroken||0],['本局积分',r?.score??Math.floor(st.score||0)],['结算精华',`+${r?.reward||0}`]].map(([label,value])=>`<div><b>${value}</b><small>${label}</small></div>`).join('');
  show('trial-button',win&&!trial&&game.canStartTrial());audio.play(win?'victory':'hit');
 }
 function refreshSave(){refreshSetup();const save=game.getSaveInfo?.();const ok=!!save?.available;$('continue-button').disabled=!ok;$('save-label').textContent=ok?`${REGION[save.zone||0]} · Lv.${save.level||save.hero?.level||1}`:'暂无记录';}
@@ -2026,20 +2098,20 @@ function updateHUD(){const s=game.state,h=s.hero,o=s.objectives||{},stats=game.g
  const nearest=s.enemies.filter(e=>!e.dead&&!e.boss).map(e=>({e,d:Math.hypot(e.x-h.x,e.z-h.z)})).filter(x=>x.d<9).sort((a,b)=>a.d-b.d)[0];show('target-panel',!!nearest&&s.mode!=='menu'&&!boss);if(nearest){const e=nearest.e,edible=!!e.edible,affix=ELITES[e.elite];$('target-panel').classList.toggle('edible',edible);$('target-panel').classList.toggle('elite',!!e.elite);$('target-distance').textContent=`${nearest.d.toFixed(1)}m`;$('target-name').textContent=e.elite?`${e.eliteName||affix?.name||'异变'} · ${NAMES[e.type]||e.type}`:NAMES[e.type]||e.type;$('target-state').textContent=edible?'可吞噬':e.elite?`${affix?.name||'精英'}词缀`:'需削弱';$('target-hint').textContent=edible?'靠近目标即可自动吞噬':e.elite==='bulwark'&&!e.armorBroken?'先击破半血铁壳，再压入吞噬线':e.elite==='frenzy'?'高速连击精英，使用冲刺拉开距离':e.elite==='plague'?'疫化攻击会追加范围预警':'攻击至生命低于吞噬线';$('target-bar').style.width=`${Math.max(0,Math.min(100,e.hp/e.maxHp*100))}%`;}
  const site=s.landmarks.find(l=>!l.resolved&&Math.hypot(h.x-l.x,h.z-l.z)<2.2);show('interact-button',stats.canInteract);$('interact-button').textContent=site?`F · 调查${site.name}`:s.zone===4?'F · 吞噬最后的规则':'F · 进入下一区域';$('relic-status').textContent=`遗物 ${s.relics.length} · 成就待领 ${game.getAchievements().filter(a=>a.ready).length}${game.hasRelic('ward')?` · 守护${h.wardCooldown>0?h.wardCooldown.toFixed(1)+'s':'就绪'}`:''}`;drawMinimap();updateLabels();
  // Read-only DOM diagnostics for QA: real state, never a gameplay control.
- $('world').dataset.mode=s.mode;$('world').dataset.journey=s.journey;$('world').dataset.origin=s.origin;$('world').dataset.zone=String(s.zone);$('world').dataset.hero=JSON.stringify({x:+h.x.toFixed(3),z:+h.z.toFixed(3),level:h.level,hp:+h.hp.toFixed(2)});$('world').dataset.metrics=JSON.stringify(renderer.getMetrics?.()||{});
+ $('world').dataset.props=JSON.stringify((s.props||[]).map(p=>({kind:p.kind,x:p.x,z:p.z,hp:p.hp,broken:p.broken})));$('world').dataset.mode=s.mode;$('world').dataset.journey=s.journey;$('world').dataset.origin=s.origin;$('world').dataset.zone=String(s.zone);$('world').dataset.hero=JSON.stringify({x:+h.x.toFixed(3),z:+h.z.toFixed(3),level:h.level,hp:+h.hp.toFixed(2)});$('world').dataset.metrics=JSON.stringify(renderer.getMetrics?.()||{});
  if(s.mode==='upgrade'&&choiceKey!==(s.upgradeChoices||[]).map(x=>typeof x==='string'?x:x.id||x.name).join(','))renderUpgrades();}
 function resize(){if(renderer)renderer.resize(innerWidth,innerHeight);}
 function togglePause(){if(game.state.mode==='playing')game.pause();else if(game.state.mode==='paused'&&$('info-screen').classList.contains('hidden'))game.unpause();}
-function bindings(){
+function bindings(){bindWebControls();
  $('expedition-close').onclick=()=>game.closeExpedition();$('collection-button').onclick=()=>openInfo('collection');$('achievements-button').onclick=()=>openInfo('achievements');$('origin-select').onchange=refreshSetup;$('journey-select').onchange=refreshSetup;$('records-button').onclick=()=>openInfo('records');$('end-records-button').onclick=()=>openInfo('records');$('trial-button').onclick=()=>start(true,true);$('start-button').onclick=()=>start();$('again-button').onclick=()=>start(true);$('continue-button').onclick=()=>{audio.unlock();game.resume();previousZone=-1;};$('pause-button').onclick=togglePause;$('resume-button').onclick=()=>game.unpause();$('save-menu-button').onclick=()=>{game.save();game.returnToMenu();refreshSave();};$('end-menu-button').onclick=()=>{game.returnToMenu();refreshSave();};$('how-button').onclick=()=>openInfo('how');$('guide-button').onclick=()=>openInfo('how');$('settings-button').onclick=()=>openInfo('settings');$('pause-settings').onclick=()=>openInfo('settings');$('meta-button').onclick=()=>openInfo('meta');$('journal-button').onclick=()=>openInfo('journal');document.querySelectorAll('[data-info]').forEach(button=>button.onclick=()=>renderInfo(button.dataset.info));$('info-close').onclick=()=>{const wasPaused=infoBack==='paused';hideInfo();if(wasPaused)show('pause-screen',true);};$('interact-button').onclick=()=>game.interact();$('bite').onclick=()=>{audio.unlock();game.attack();};for(const id of ['pulse','dash','ultimate'])$(id).onclick=()=>{audio.unlock();game.skill(id);};
- addEventListener('keydown',e=>{if(e.target instanceof HTMLInputElement||e.target instanceof HTMLSelectElement)return;const k=e.key.toLowerCase();if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k))e.preventDefault();if(k==='escape'){if(!$('info-screen').classList.contains('hidden'))$('info-close').click();else if(game.state.mode==='event')game.closeExpedition();else togglePause();return;}if(!$('info-screen').classList.contains('hidden'))return;if(k==='h'&&!e.repeat&&game.state.mode!=='menu'){openInfo('how');return;}if(k==='j'&&!e.repeat&&game.state.mode!=='menu'){openInfo('journal');return;}if(game.state.mode==='event'&&['1','2','3'].includes(k)&&!e.repeat){game.chooseExpedition(+k-1);return;}if(game.state.mode==='upgrade'&&['1','2','3'].includes(k)&&!e.repeat){game.chooseUpgrade(+k-1);renderUpgrades();return;}if(game.state.mode!=='playing')return;audio.unlock();keys.add(k);if(['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright'].includes(k))moveTarget=null;if(!e.repeat){if(k==='z')game.attack();if(k===' ')game.skill('pulse');if(k==='q')game.skill('dash');if(k==='e')game.skill('ultimate');if(k==='f')game.interact();}});
+ addEventListener('keydown',e=>{const k=e.key.toLowerCase();if(photoMode){if(k==='p'||k==='escape'){e.preventDefault();exitPhoto();}return;}if(e.target instanceof HTMLInputElement||e.target instanceof HTMLSelectElement)return;if(k==='p'&&!e.repeat&&game.state.mode==='playing'){enterPhoto();return;}if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k))e.preventDefault();if(k==='escape'){if(!$('info-screen').classList.contains('hidden'))$('info-close').click();else if(game.state.mode==='event')game.closeExpedition();else togglePause();return;}if(!$('info-screen').classList.contains('hidden'))return;if(k==='h'&&!e.repeat&&game.state.mode!=='menu'){openInfo('how');return;}if(k==='j'&&!e.repeat&&game.state.mode!=='menu'){openInfo('journal');return;}if(game.state.mode==='event'&&['1','2','3'].includes(k)&&!e.repeat){game.chooseExpedition(+k-1);return;}if(game.state.mode==='upgrade'&&['1','2','3'].includes(k)&&!e.repeat){game.chooseUpgrade(+k-1);renderUpgrades();return;}if(game.state.mode!=='playing')return;audio.unlock();keys.add(k);if(['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright'].includes(k))moveTarget=null;if(!e.repeat){if(k==='z')game.attack();if(k===' ')game.skill('pulse');if(k==='q')game.skill('dash');if(k==='e')game.skill('ultimate');if(k==='f')game.interact();}});
  addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));const clearInput=()=>{keys.clear();touch.x=touch.z=0;moveTarget=null;};addEventListener('blur',()=>{clearInput();if(game.state.mode==='playing')game.pause();});document.addEventListener('visibilitychange',()=>{if(document.hidden){clearInput();if(game.state.mode==='playing')game.pause();game.save();}});addEventListener('pagehide',()=>game.save());addEventListener('resize',resize);
- $('world').addEventListener('pointerdown',e=>{if(game.state.mode!=='playing')return;audio.unlock();const target=renderer.groundPoint?.(e.clientX,e.clientY);const route=target?navigate(game.state.hero,target,game.state.hero.r):[];moveTarget=route.length?{...route.shift(),route}:null;if(!moveTarget)toast('这里过不去，请选择一处开阔地面。');});
+ $('world').addEventListener('pointerdown',e=>{if(e.button!==0||game.state.mode!=='playing')return;audio.unlock();const target=renderer.groundPoint?.(e.clientX,e.clientY);const route=target?navigate(game.state.hero,target,game.state.hero.r):[];moveTarget=route.length?{...route.shift(),route}:null;if(!moveTarget)toast('这里过不去，请选择一处开阔地面。');});
  let pointer=null;const joy=$('joystick');const move=e=>{if(e.pointerId!==pointer)return;const b=joy.getBoundingClientRect(),dx=e.clientX-b.left-b.width/2,dz=e.clientY-b.top-b.height/2,len=Math.hypot(dx,dz),limit=b.width*.32,k=limit/Math.max(limit,len);touch.x=dx*k/limit;touch.z=dz*k/limit;$('stick').style.transform=`translate(${dx*k}px,${dz*k}px)`;moveTarget=null;};joy.onpointerdown=e=>{e.preventDefault();pointer=e.pointerId;joy.setPointerCapture(pointer);audio.unlock();move(e);};joy.onpointermove=move;const stop=e=>{if(e.pointerId!==pointer)return;pointer=null;touch.x=touch.z=0;$('stick').style.transform='';};joy.onpointerup=stop;joy.onpointercancel=stop;joy.onlostpointercapture=stop;
  // Tab stays within open dialog; Escape returns to the prior screen.
  addEventListener('keydown',e=>{if(e.key!=='Tab')return;const modal=!$('info-screen').classList.contains('hidden')?$('info-screen'):[...document.querySelectorAll('[role=dialog]')].find(d=>!d.classList.contains('hidden'));if(!modal)return;const f=[...modal.querySelectorAll('button:not(:disabled),input,select')].filter(x=>x.offsetParent);if(!f.length)return;const first=f[0],end=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();end.focus();}else if(!e.shiftKey&&document.activeElement===end){e.preventDefault();first.focus();}});
 }
-function frame(now){try{const dt=Math.min(.05,last?(now-last)/1000:1/60);last=now;let x=(keys.has('d')||keys.has('arrowright')?1:0)-(keys.has('a')||keys.has('arrowleft')?1:0)+touch.x,z=(keys.has('s')||keys.has('arrowdown')?1:0)-(keys.has('w')||keys.has('arrowup')?1:0)+touch.z;if(moveTarget&&!x&&!z){const dx=moveTarget.x-game.state.hero.x,dz=moveTarget.z-game.state.hero.z,dist=Math.hypot(dx,dz);if(dist<.35){const next=moveTarget.route?.shift();moveTarget=next?{...next,route:moveTarget.route}:null;}else{x=dx/dist;z=dz/dist;}}if(game.state.mode==='playing'){if(keys.has(' '))game.skill('pulse');if(prefs.autoPulse&&game.state.enemies.some(e=>!e.dead&&Math.hypot(e.x-game.state.hero.x,e.z-game.state.hero.z)<4))game.skill('pulse');}game.update(dt,{x,z});syncMode();renderer.render(game.state,dt);audio.update(game.state.time,game.state.zone,game.state.mode==='playing');hudClock+=dt;if(hudClock>.1){hudClock=0;updateHUD();}requestAnimationFrame(frame);}catch(error){fatal(error);}}
+function frame(now){try{const dt=Math.min(.05,last?(now-last)/1000:1/60);last=now;let x=(keys.has('d')||keys.has('arrowright')?1:0)-(keys.has('a')||keys.has('arrowleft')?1:0)+touch.x,z=(keys.has('s')||keys.has('arrowdown')?1:0)-(keys.has('w')||keys.has('arrowup')?1:0)+touch.z;if(moveTarget&&!x&&!z){const dx=moveTarget.x-game.state.hero.x,dz=moveTarget.z-game.state.hero.z,dist=Math.hypot(dx,dz);if(dist<.35){const next=moveTarget.route?.shift();moveTarget=next?{...next,route:moveTarget.route}:null;}else{x=dx/dist;z=dz/dist;}}if(game.state.mode==='playing'){if(keys.has(' '))game.skill('pulse');if(prefs.autoPulse&&game.state.enemies.some(e=>!e.dead&&Math.hypot(e.x-game.state.hero.x,e.z-game.state.hero.z)<4))game.skill('pulse');}game.update(dt,{x,z});syncMode();renderer.render(game.state,dt);updateWebFX();audio.update(game.state.time,game.state.zone,game.state.mode==='playing');hudClock+=dt;if(hudClock>.1){hudClock=0;updateHUD();}requestAnimationFrame(frame);}catch(error){fatal(error);}}
 function fatal(error){window.__HD2D_BOOT?.fail(error.message||String(error));console.error(error);show('loading',false);show('fatal',true);$('fatal-text').textContent=error.message||String(error);}
 async function loadAnimations(){
  $('load-status').textContent='装入角色动作 · 0 / 6';

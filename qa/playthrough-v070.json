@@ -1,0 +1,31 @@
+{
+  "kind": "public-api-accelerated-simulation",
+  "noStateInjection": true,
+  "notBrowserPlaythrough": true,
+  "results": [
+    {
+      "difficulty": "story",
+      "seed": 420,
+      "result": "victory",
+      "seconds": 224.6,
+      "zones": 5,
+      "hp": 205,
+      "propsBroken": 12,
+      "maxChain": 21,
+      "attacks": 276
+    },
+    {
+      "journey": "trial",
+      "difficulty": "story",
+      "origin": "fangborn",
+      "seed": 420,
+      "result": "victory",
+      "seconds": 41.48,
+      "zones": 5,
+      "hp": 278.79,
+      "propsBroken": 0,
+      "maxChain": 1,
+      "attacks": 53
+    }
+  ]
+}
