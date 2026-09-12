@@ -12,6 +12,7 @@ test('published HTML parses all inline scripts, preserves seven PNG sheets and h
  assert.equal(scripts.length,15);for(const s of scripts)new vm.Script(s);
  assert.equal((html.match(/data:image\/png;base64,/g)||[]).length,7);
  assert.doesNotMatch(html,/<script[^>]+src=|<script[^>]+type=["']module/);
+ assert.match(html,/v0\.8\.1 WEB/);assert.match(html,/id="renderer-mode"/);
 });
 test('directional attack breaks supplies in its arc and grants only one persistent pickup',()=>{
  const {g,storage}=make(),p=g.state.props[0],h=g.state.hero;g.state.enemies=[];h.x=p.x;h.z=p.z+1;g.aim(p.x,p.z);
@@ -90,5 +91,13 @@ test('Three.js supply visuals use shared real geometry, retain broken state and 
  const {g}=make();r.syncProps(g.state.props);assert.equal(r.dynamic.children.length,6);
  const first=r.propMeshes.get(g.state.props[0].id);assert.equal(first.children.length,4);assert.equal(first.children[0].geometry,r.geometries.get('box'));
  g.state.props[0].broken=true;r.syncProps(g.state.props);assert.equal(first.scale.y,.12);r.syncProps([]);assert.equal(r.dynamic.children.length,0);assert.equal(r.propMeshes.size,0);
+});
+test('Canvas compatibility renderer draws dimensional, zone-specific structures instead of flat house placeholders',()=>{
+ const {CanvasFallbackRenderer}=context.window.__HD2D_MODULES.renderer,calls=[];
+ const ctx=new Proxy({}, {get(target,key){if(!(key in target))target[key]=(...args)=>calls.push([key,...args]);return target[key];},set(target,key,value){target[key]=value;return true;}});
+ const r=Object.create(CanvasFallbackRenderer.prototype);Object.assign(r,{ctx,scale:20,width:1280,height:720,cameraX:0,cameraZ:0,drawCalls:0});
+ const palette={stone:0xa5a08b,plaster:0xd5bd8b,wood:0x665041,roof:0x555f5d,water:0x5e9d90,glow:0xffc571};
+ for(let zone=0;zone<5;zone++)r.drawStructure(zone*2,zone,palette,zone,zone);
+ assert.equal(r.drawCalls,5);assert.ok(calls.filter(c=>c[0]==='lineTo').length>30);assert.ok(calls.some(c=>c[0]==='quadraticCurveTo'));assert.ok(calls.some(c=>c[0]==='strokeRect'));assert.ok(calls.filter(c=>c[0]==='ellipse').length>=4);
 });
 module.exports={Game,context,make,html,scripts};
