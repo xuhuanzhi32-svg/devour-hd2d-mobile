@@ -21,7 +21,15 @@ Desktop Web update, not a separate mobile build. Recovered the complete editable
 
 ## Browser release check
 
-Pending publication. Do not count static or CPU checks as WebGL/GPU output evidence.
+Public Pages HTML checksum matches the final HTML above (runtime commit 6424678). Browser UI operations verified:
+
+- Menu shows v0.7.0 WEB; old save continues with HP and level preserved.
+- Damage labels and a three-devour chain with +1 energy appear during play.
+- Observation hides HUD and pauses simulation; slider reaches 135%; Escape exits even with slider focus. Hero position and HP remain unchanged during observation.
+- On final runtime, normal ground click moves the hero beside a supply. Two right-click attacks change its HP from 26 to 8.3744 to 0 (broken=true). Save/menu/reload/continue preserves broken=true and hero HP 161.52.
+- Browser testing exposed an upgrade-interruption bug in pulse supply damage. Fixed in 6424678 and covered by the eleventh regression test: an enemy kill may open upgrade selection without cancelling the already-started attack's prop damage. New attacks remain blocked during upgrade.
+
+Browser could not create WebGL context and used the existing animated Canvas fallback (18 actor definitions, six animation atlases). Online interaction checks are not GPU/HD-2D visual evidence. Three.js geometry lifecycle was tested on CPU only; real GPU visual QA remains outstanding.
 
 ## Rollback and follow-up
 
