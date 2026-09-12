@@ -116,6 +116,9 @@
 .collection-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.relic-card{padding:16px;background:#0b1f1777;border:1px solid #9da88244;position:relative}.relic-card.owned{border-color:#d8be83;background:#53613a44}.relic-card>b,.relic-card>small{display:block;margin:4px 0}.relic-card>b{font-size:14px}.relic-card>small{font-size:10px;color:#b7c4a7}.relic-card p{margin:10px 0}.relic-icon{float:right;color:#e6c988;font-size:25px}.achievement-row>div{flex:1}.achievement-row .thin-bar{margin-top:9px}.relic-status{font-size:10px;color:#d9c18d;white-space:nowrap}.info-tabs{flex-wrap:wrap}.menu-links{flex-wrap:wrap}
 @media(max-width:600px){.expedition-panel{padding:20px 16px}.expedition-panel h2{font-size:24px}.expedition-choice{padding:12px;gap:10px}.expedition-footer{align-items:stretch;flex-direction:column}.collection-grid{grid-template-columns:1fr}.relic-status{font-size:9px}.build-strip .build-label{display:none}}
 @media(max-height:500px){.expedition-panel{padding:16px 24px}.expedition-panel h2{font-size:22px;margin:6px 0}.expedition-panel>p{font-size:11px;margin:6px 0}.expedition-resources{margin-bottom:8px;padding:6px 0}#expedition-choices{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.expedition-choice{display:block;padding:10px;min-height:130px}.expedition-choice .choice-index{font-size:14px;display:block;margin-bottom:6px}.expedition-choice b{font-size:12px}.expedition-choice small{font-size:11px}.expedition-footer{margin-top:8px}.menu-links{gap:8px}.relic-status{max-width:220px;overflow:hidden;text-overflow:ellipsis}}
+.preparation-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:min(430px,100%);margin:12px 0 6px}.preparation-row label{display:grid;gap:5px;font-size:10px;color:#c5cbb1}.preparation-row select{font-family:inherit;font-size:12px;color:var(--cream);background:#14271fec;border:1px solid var(--line);min-height:44px;padding:8px;max-width:100%;width:100%;border-radius:0}.setup-description{font-size:10px;line-height:1.7;color:#aebda6;max-width:430px;min-height:34px;margin:6px 0 14px}.record-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.record-card{border:1px solid #9da88244;background:#0b1f1777;padding:16px;display:grid;gap:9px}.record-card b{font:28px Georgia;color:var(--gold)}.record-card small,.record-card span{font-size:10px;color:#b8c7ac}.run-record>div:last-child{text-align:right;white-space:nowrap}.menu{overflow-y:auto;gap:18px}.menu-content{flex-shrink:0}.menu-top,.menu-bottom{flex-shrink:0}.end-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.end-stats b{font-size:24px}select:focus-visible{outline:2px solid #f6e6a5;outline-offset:3px}
+@media(max-height:700px){.menu h1{font-size:64px;margin:8px 0}.menu h2{margin-bottom:8px}.menu .intro{display:none}.menu .title-rule{margin-bottom:12px}.menu-links{margin:8px 0}.setup-description{margin-bottom:8px}.preparation-row{margin-top:8px}.menu{gap:10px}}
+@media(max-height:480px) and (orientation:landscape){.menu .menu-bottom{position:static;font-size:8px;padding-top:6px}.menu .preparation-row{width:100%;margin-top:4px}.menu .preparation-row label{display:flex;align-items:center;gap:6px;white-space:nowrap}.menu .preparation-row select{min-height:44px}.menu .setup-description{min-height:0;max-width:100%;font-size:9px;margin:4px 0 7px}.menu .menu-links{flex-wrap:wrap}.menu .menu-content{max-width:76vw}.menu .difficulty-row{flex-shrink:0}}
 </style>
 </head>
 <body>
@@ -127,7 +130,7 @@
  <div class="location glass"><small id="chapter">CHAPTER I</small><b id="zone-name">新手村厕所</b><span id="zone-mood">从最底层，吞噬整个世界。</span></div>
  <div class="hud-actions"><button id="guide-button" class="icon-button" title="冒险指南 [H]" aria-label="冒险指南">?</button><button id="journal-button" class="icon-button" title="旅途记录 [J]" aria-label="旅途记录">▤</button><button id="pause-button" class="icon-button" title="暂停 [Esc]" aria-label="暂停游戏">Ⅱ</button></div>
 </header>
-<aside id="objective" class="quest glass hidden"><div class="eyebrow">当前旅程 <span id="zone-number">01 / 05</span></div><h3 id="quest-title">一个不太体面的开始</h3><p id="quest-description">靠近弱小生物，吞噬后获得经验。</p><div class="quest-row"><span>吞噬生物</span><b id="eat-progress">0 / 12</b></div><div class="thin-bar"><i id="goal-bar"></i></div><div class="quest-row"><span>发现地标</span><b id="landmark-progress">0 / 2</b></div><div id="hint" class="quest-note">绿色标记可直接吞噬</div></aside>
+<aside id="objective" class="quest glass hidden"><div class="eyebrow">当前旅程 <span id="zone-number">01 / 05</span></div><h3 id="quest-title">一个不太体面的开始</h3><p id="quest-description">靠近弱小生物，吞噬后获得经验。</p><div class="quest-row"><span id="eat-label">吞噬生物</span><b id="eat-progress">0 / 12</b></div><div class="thin-bar"><i id="goal-bar"></i></div><div class="quest-row"><span id="landmark-label">发现地标</span><b id="landmark-progress">0 / 2</b></div><div id="hint" class="quest-note">绿色标记可直接吞噬</div></aside>
 <aside id="hunt-panel" class="hunt-panel glass hidden" aria-live="polite"><div class="eyebrow">限时狩猎 <span id="hunt-state">追踪中</span></div><div class="hunt-head"><b id="hunt-name">污池金核</b><strong id="hunt-timer">--</strong></div><p id="hunt-description">区域异变正在聚集。</p><div class="thin-bar"><i id="hunt-bar"></i></div><small id="hunt-reward">奖励 2 永久精华</small></aside>
 <div id="boss-ui" class="boss-ui hidden"><div><small>区域统治者</small><b id="boss-name">老约翰</b><span id="boss-phase">阶段 I</span></div><div class="bar"><i id="boss-bar"></i><span id="boss-hp-text">0 / 0</span></div></div>
 <aside id="minimap-wrap" class="minimap glass hidden"><div class="eyebrow">区域地图 <span>实时</span></div><canvas id="minimap" width="160" height="160" aria-label="显示英雄、敌人、地标和出口的小地图"></canvas><div class="map-legend"><span><i class="me"></i>自己</span><span><i class="enemy"></i>敌人</span><span><i class="poi"></i>地标</span><span><i class="exit"></i>出口</span></div><small id="minimap-caption">新手村厕所</small></aside>
@@ -143,15 +146,15 @@
 <div id="menu" class="screen menu hidden">
  <div class="menu-top"><div class="wordmark">DEVOUR <span>/</span> EVOLVE</div><span class="edition">HD-2D EDITION · 01</span></div>
  <section class="menu-content"><p class="eyebrow gold">一场从最底层开始的异世界冒险</p><h1>噬<span>界</span><sup>HD-2D</sup></h1><div class="title-rule"></div><h2>穿越后我竟成了米田共</h2><p class="intro">没有圣剑，也没有天赋。<br>只有一个胃，和一个等着被吞噬的世界。</p>
- <div class="menu-buttons"><button id="start-button" class="primary">开始新进化 <span>↗</span></button><button id="continue-button" class="secondary" disabled>继续旅程 <span id="save-label">暂无记录</span></button></div>
- <div class="menu-links"><button id="meta-button">永久进化</button><span>/</span><button id="how-button">冒险指南</button><span>/</span><button id="collection-button">遗物图鉴</button><span>/</span><button id="achievements-button">成就</button><span>/</span><button id="settings-button">设置</button></div>
+ <div class="preparation-row"><label>出身<select id="origin-select" aria-label="选择出身"><option value="unformed">初生之种 · 均衡</option><option value="fangborn">裂齿猎手 · 近战</option><option value="tideborn">腐潮行者 · 技能</option><option value="shellborn">磐壳守望 · 生存</option></select></label><label>旅程<select id="journey-select" aria-label="选择旅程"><option value="campaign">五区战役</option><option value="trial" id="trial-option" disabled>五王试炼 · 通关解锁</option></select></label></div><p id="origin-description" class="setup-description"></p><div class="menu-buttons"><button id="start-button" class="primary">开始新进化 <span>↗</span></button><button id="continue-button" class="secondary" disabled>继续旅程 <span id="save-label">暂无记录</span></button></div>
+ <div class="menu-links"><button id="meta-button">永久进化</button><span>/</span><button id="how-button">冒险指南</button><span>/</span><button id="collection-button">遗物图鉴</button><span>/</span><button id="achievements-button">成就</button><span>/</span><button id="records-button">战绩</button><span>/</span><button id="settings-button">设置</button></div>
  <div class="difficulty-row"><span>冒险强度</span><label><input name="difficulty" type="radio" value="story" checked> 轻松旅程</label><label><input name="difficulty" type="radio" value="normal"> 标准挑战</label></div>
- </section><aside class="menu-route" aria-label="五区域冒险路线"><div class="eyebrow gold">WORLD ROUTE · 05</div><ol><li class="active"><i>01</i><span><b>新手村厕所</b><small>从最底层醒来</small></span></li><li><i>02</i><span><b>腐烂下水道</b><small>饥饿开始回响</small></span></li><li><i>03</i><span><b>新手村外围</b><small>第一次被世界看见</small></span></li><li><i>04</i><span><b>王国边境</b><small>击穿秩序的防线</small></span></li><li><i>05</i><span><b>圣域裂谷</b><small>吞下最后的规则</small></span></li></ol><div class="loop-card"><span>核心循环</span><b>吞噬 → 探索 → 构筑 → 挑战统治者</b><small>8 件遗物 · 15 处探索抉择 · 5 场 Boss 战</small></div></aside><div class="menu-bottom"><span>吞噬 · 进化 · 跨越五个世界</span><span>原创 HD-2D 可玩重制版 <b>v0.5.0</b></span></div>
+ </section><aside class="menu-route" aria-label="五区域冒险路线"><div class="eyebrow gold">WORLD ROUTE · 05</div><ol><li class="active"><i>01</i><span><b>新手村厕所</b><small>从最底层醒来</small></span></li><li><i>02</i><span><b>腐烂下水道</b><small>饥饿开始回响</small></span></li><li><i>03</i><span><b>新手村外围</b><small>第一次被世界看见</small></span></li><li><i>04</i><span><b>王国边境</b><small>击穿秩序的防线</small></span></li><li><i>05</i><span><b>圣域裂谷</b><small>吞下最后的规则</small></span></li></ol><div class="loop-card"><span>核心循环</span><b>吞噬 → 探索 → 构筑 → 挑战统治者</b><small>4 种出身 · 8 件遗物 · 通关解锁五王试炼</small></div></aside><div class="menu-bottom"><span>吞噬 · 进化 · 跨越五个世界</span><span>原创 HD-2D 可玩重制版 <b>v0.6.0</b></span></div>
 </div>
-<div id="upgrade-screen" class="screen modal hidden" role="dialog" aria-modal="true" aria-labelledby="upgrade-title"><section class="upgrade-panel"><div class="eyebrow gold">EVOLUTION</div><h2 id="upgrade-title">饥饿，让你蜕变。</h2><p>选择一项基因。每一次选择，都改变你的下一口。</p><div id="upgrade-cards" class="upgrade-cards"></div><small class="muted">按 1 / 2 / 3 选择 · 选择期间世界暂停</small></section></div>
+<div id="upgrade-screen" class="screen modal hidden" role="dialog" aria-modal="true" aria-labelledby="upgrade-title"><section class="upgrade-panel"><div class="eyebrow gold">EVOLUTION</div><h2 id="upgrade-title">饥饿，让你蜕变。</h2><p id="upgrade-description">选择一项基因。每一次选择，都改变你的下一口。</p><div id="upgrade-cards" class="upgrade-cards"></div><small class="muted">按 1 / 2 / 3 选择 · 选择期间世界暂停</small></section></div>
 <div id="pause-screen" class="screen modal hidden" role="dialog" aria-modal="true" aria-labelledby="pause-title"><section class="panel compact"><div class="eyebrow gold">TAKE A BREATH</div><h2 id="pause-title">世界暂时安静了。</h2><p id="pause-stats"></p><button id="resume-button" class="primary">继续冒险</button><button id="pause-settings" class="secondary">设置</button><button id="save-menu-button" class="secondary">保存并返回主菜单</button><small id="save-warning" class="muted"></small></section></div>
-<div id="info-screen" class="screen modal hidden" role="dialog" aria-modal="true" aria-labelledby="info-title"><section class="panel info-panel"><button id="info-close" class="close" aria-label="关闭面板">×</button><div class="eyebrow gold" id="info-eyebrow">FIELD NOTES</div><h2 id="info-title">冒险指南</h2><nav class="info-tabs" aria-label="冒险信息"><button data-info="how">指南</button><button data-info="journal">旅途</button><button data-info="collection">遗物</button><button data-info="achievements">成就</button><button data-info="meta">永久进化</button><button data-info="settings">设置</button></nav><div id="info-content"></div></section></div>
-<div id="end-screen" class="screen modal hidden" role="dialog" aria-modal="true" aria-labelledby="end-title"><section class="panel end-panel"><div class="eyebrow gold" id="end-eyebrow">THE JOURNEY CONTINUES</div><h2 id="end-title">这还不是你的终点。</h2><p id="end-story"></p><div class="end-stats" id="end-stats"></div><button id="again-button" class="primary">再开始一次进化</button><button id="end-menu-button" class="secondary">回到主菜单</button></section></div>
+<div id="info-screen" class="screen modal hidden" role="dialog" aria-modal="true" aria-labelledby="info-title"><section class="panel info-panel"><button id="info-close" class="close" aria-label="关闭面板">×</button><div class="eyebrow gold" id="info-eyebrow">FIELD NOTES</div><h2 id="info-title">冒险指南</h2><nav class="info-tabs" aria-label="冒险信息"><button data-info="how">指南</button><button data-info="journal">旅途</button><button data-info="collection">遗物</button><button data-info="achievements">成就</button><button data-info="meta">永久进化</button><button data-info="records">战绩</button><button data-info="settings">设置</button></nav><div id="info-content"></div></section></div>
+<div id="end-screen" class="screen modal hidden" role="dialog" aria-modal="true" aria-labelledby="end-title"><section class="panel end-panel"><div class="eyebrow gold" id="end-eyebrow">THE JOURNEY CONTINUES</div><h2 id="end-title">这还不是你的终点。</h2><p id="end-story"></p><div class="end-stats" id="end-stats"></div><button id="again-button" class="primary">再开始一次进化</button><button id="trial-button" class="secondary hidden">挑战五王试炼 ↗</button><button id="end-records-button" class="secondary">查看战绩</button><button id="end-menu-button" class="secondary">回到主菜单</button></section></div>
 <div id="expedition-screen" class="screen modal hidden" role="dialog" aria-modal="true" aria-labelledby="expedition-title"><section class="panel expedition-panel"><div class="eyebrow gold" id="expedition-kind">旅途抉择</div><h2 id="expedition-title">探索地标</h2><p id="expedition-story"></p><div id="expedition-resources" class="expedition-resources"></div><div id="expedition-choices"></div><div class="expedition-footer"><small class="muted">选择期间世界暂停 · 1 / 2 / 3 选择</small><button id="expedition-close">稍后再来 · Esc</button></div></section></div>
 <script>window.__HD2D_OFFLINE=true;// Classic script: remains available when the module graph cannot start.
 (()=>{
@@ -318,9 +321,44 @@ function validProgress(p){
 
 return {"RELICS":RELICS,"EXPEDITIONS":EXPEDITIONS,"ACHIEVEMENTS":ACHIEVEMENTS,"PROGRESS_KEYS":PROGRESS_KEYS,"freshProgress":freshProgress,"validProgress":validProgress};
 })();</script>
+<script>window.__HD2D_MODULES["journey"]=(()=>{
+
+/** New-run rules and bounded local records; no remote leaderboard or account. */
+const ORIGINS = [
+  {id:'unformed',name:'初生之种',tag:'均衡',hp:0,power:0,speed:1,genes:{},description:'原始配置，不预置基因，保留完整生命与移速。'},
+  {id:'fangborn',name:'裂齿猎手',tag:'近战',hp:-15,power:3,speed:1,genes:{fang:1},description:'初始攻击 +3、连牙撕咬 1 级；最大生命 -15。'},
+  {id:'tideborn',name:'腐潮行者',tag:'技能',hp:-20,power:0,speed:1,genes:{pulse:1,haste:1},description:'震荡胃袋与急速代谢各 1 级；最大生命 -20。'},
+  {id:'shellborn',name:'磐壳守望',tag:'生存',hp:15,power:0,speed:.90,genes:{armor:1,regen:1},description:'最大生命 +15，韧性表皮与缓慢再生各 1 级；移速 -10%。'},
+];
+const JOURNEYS = [
+  {id:'campaign',name:'五区战役',description:'探索、狩猎、收集遗物，突破五个区域。'},
+  {id:'trial',name:'五王试炼',description:'通关后解锁。Lv.8 开局、7 次基因选择，连续挑战强化五王；没有地标与狩猎。'},
+];
+const TRIAL_RULES = {hpBonus:100,powerBonus:16,level:8,drafts:7,bossHp:1.35,cadence:.85,intermissionHeal:.35,intermissionEnergy:25};
+const RECORD_KEYS = ['campaign:story','campaign:normal','trial:story','trial:normal'];
+const integer=(n,a,b)=>Number.isInteger(n)&&n>=a&&n<=b;
+function freshChronicle(unlockedTrial=false){return {unlockedTrial,history:[],best:{}};}
+function validRecord(r){
+  return !!r&&typeof r.runId==='string'&&r.runId.length>0&&r.runId.length<=100
+    &&JOURNEYS.some(m=>m.id===r.journey)&&ORIGINS.some(o=>o.id===r.origin)&&['story','normal'].includes(r.difficulty)
+    &&typeof r.victory==='boolean'&&integer(r.seed,1,4294967295)&&integer(r.score,0,1e12)
+    &&Number.isFinite(r.seconds)&&r.seconds>=0&&r.seconds<1e9&&integer(r.level,1,100)
+    &&integer(r.kills,0,1e9)&&integer(r.zones,0,5)&&(!r.victory||r.zones===5)&&integer(r.reward,0,1e9)
+    &&integer(r.relicCount,0,8)&&integer(r.finishedAt,0,1e15);
+}
+function validChronicle(c){
+  return !!c&&typeof c.unlockedTrial==='boolean'&&Array.isArray(c.history)&&c.history.length<=8
+    &&c.history.every(validRecord)&&new Set(c.history.map(r=>r.runId)).size===c.history.length
+    &&!!c.best&&!Array.isArray(c.best)&&Object.entries(c.best).every(([key,r])=>RECORD_KEYS.includes(key)&&validRecord(r)&&r.victory&&key===`${r.journey}:${r.difficulty}`);
+}
+
+return {"ORIGINS":ORIGINS,"JOURNEYS":JOURNEYS,"TRIAL_RULES":TRIAL_RULES,"RECORD_KEYS":RECORD_KEYS,"freshChronicle":freshChronicle,"validRecord":validRecord,"validChronicle":validChronicle};
+})();</script>
 <script>window.__HD2D_MODULES["game"]=(()=>{
 const {RELICS,EXPEDITIONS,ACHIEVEMENTS,freshProgress,validProgress}=window.__HD2D_MODULES["progression"];
+const {ORIGINS,JOURNEYS,TRIAL_RULES,freshChronicle,validChronicle}=window.__HD2D_MODULES["journey"];
 /** Deterministic, rendering-independent campaign simulation. Distances use world metres. */
+
 
 const ZONES = [
   { id: 'privy', name: '新手村厕所', subtitle: '从最不起眼的生命开始', boss: '老约翰', target: 20, color: '#b9bd69', story: '一团被遗忘的小东西醒了。吞噬，进化，然后走出这里。' },
@@ -399,6 +437,10 @@ function validSave(s) {
   if (!g || !m || !integer(g.zone, 0, 4) || !['menu', 'playing', 'paused', 'upgrade', 'event', 'dead', 'victory'].includes(g.mode)) return false;
   if (!integer(m.essence, 0, 1e9) || !['vitality', 'power', 'speed'].every(k => integer(m[k], 0, 10))) return false;
   if (m.progress !== undefined && !validProgress(m.progress)) return false;
+  if (m.chronicle !== undefined && !validChronicle(m.chronicle)) return false;
+  if (g.journey !== undefined && !JOURNEYS.some(m=>m.id===g.journey)) return false;
+  if (g.origin !== undefined && !ORIGINS.some(o=>o.id===g.origin)) return false;
+  if (!integer(g.seed,1,4294967295)) return false;
   if (g.relics !== undefined && (!Array.isArray(g.relics) || g.relics.length>8 || new Set(g.relics).size!==g.relics.length || !g.relics.every(id=>RELICS.some(r=>r.id===id)))) return false;
   if (g.expeditionLog !== undefined && (!Array.isArray(g.expeditionLog) || g.expeditionLog.length>15 || new Set(g.expeditionLog.map(e=>e.id)).size!==g.expeditionLog.length || !g.expeditionLog.every(e=>EXPEDITIONS.some(x=>x.id===e.id&&x.zone<=g.zone)&&integer(e.choice,0,2)))) return false;
   if (g.activeExpedition != null && !EXPEDITIONS.some(e=>e.id===g.activeExpedition&&e.zone===g.zone)) return false;
@@ -468,11 +510,12 @@ class Game {
     this.initialSeed = seed >>> 0 || 420;
     this.rng = this.initialSeed;
     this.nextId = 1;
+    this._runSerial = 0;
     this._warnedStorage = false;
     this._stored = null;
     this._saveWriteBlocked = false;
     this._invalidRaw = null;
-    this.meta = { essence: 0, vitality: 0, power: 0, speed: 0, progress:freshProgress() };
+    this.meta = { essence: 0, vitality: 0, power: 0, speed: 0, progress:freshProgress(),chronicle:freshChronicle() };
     this.settings = { muted: false, reducedMotion: false, screenShake: true };
     this._readSave();
     this.state = this._emptyState();
@@ -498,6 +541,7 @@ class Game {
       this._stored = parsed;
       this.meta = clone(parsed.meta);
       this.meta.progress ||= freshProgress();
+      this.meta.chronicle ||= freshChronicle(parsed.state.mode==='victory'||this.meta.progress.totals.victories>0);
       this.settings = { ...this.settings, ...parsed.state.settings };
     } catch {
       this._saveWriteBlocked = true;
@@ -541,8 +585,9 @@ class Game {
       :{contract:contract.id,status:'pending',targetId:null,timeLeft:0};
     s.stats={elitesKilled:0,huntsCompleted:0,lootCollected:0,hazardsTriggered:0,activeHits:0,...s.stats};
     s.relics ||= [];s.expeditionLog ||= [];s.activeExpedition ||= null;
+    s.journey ||= 'campaign';s.origin ||= 'unformed';
     h.wardCooldown ||= 0;
-    s.landmarks.forEach((l,i)=>{l.eventId=EXPEDITIONS[s.zone*3+i].id;l.resolved=s.expeditionLog.some(e=>e.id===l.eventId);});
+    s.landmarks.forEach((l,i)=>{l.eventId=EXPEDITIONS[s.zone*3+i].id;l.resolved=s.journey==='trial'||s.expeditionLog.some(e=>e.id===l.eventId);});
     for(const enemy of s.enemies)enemy.elite=ELITES[enemy.elite]?enemy.elite:null;
     return s;
   }
@@ -550,7 +595,7 @@ class Game {
   _emptyState() {
     return {
       zone: 0, time: 0, zoneTime: 0, mode: 'menu', seed: this.initialSeed,
-      runId: `run-${Date.now()}-${this.rng}`, difficulty: 'normal',
+      runId: `run-${Date.now()}-${this.rng}-${++this._runSerial}`, difficulty: 'normal',journey:'campaign',origin:'unformed',
       hero: { x: 0, z: 5, r: .48, hp: 120 + this.meta.vitality * 10, maxHp: 120 + this.meta.vitality * 10, level: 1, xp: 0, nextXp: 24, angle: Math.PI, moving: false, hit: 0, attack: 0, devourTimer: 0, ultimate: 0, ultimateActive: 0, power: 12 + this.meta.power * 1.5, speed: 4.25 * (1 + this.meta.speed * .025), invulnerable: 0, dashTime: 0, dashX: 0, dashZ: -1, biteCooldown:0, biteWindow:0, biteStep:0, wardCooldown:0 },
       enemies: [], pickups: [], effects: [], projectiles: [], landmarks: [
         { id:this._id(),x:-16,z:-12,found:false,name:'遗落的铜铃' },
@@ -567,21 +612,32 @@ class Game {
     };
   }
 
-  start({ difficulty = 'normal' } = {}) {
+  start({ difficulty = 'normal',origin='unformed',journey='campaign',seed=this.initialSeed } = {}) {
+    // Validate before touching a save or current run. A locked/invalid start is a no-op.
+    const profile=ORIGINS.find(o=>o.id===origin);
+    if(!profile||!JOURNEYS.some(m=>m.id===journey)||!integer(seed,1,4294967295))return false;
+    if(journey==='trial'&&!this.canStartTrial()){this._toast('完成一次五区战役后，即可解锁五王试炼。');return false;}
     // Explicitly starting a new journey authorizes replacing an unreadable save only
     // after its exact original contents have been safely preserved and read back.
     this._prepareNewSave();
-    this.rng = this.initialSeed;
+    this.rng = seed;
     this.nextId = 1;
     this.state = this._emptyState();
+    const s=this.state,h=s.hero;s.seed=seed;s.origin=origin;s.journey=journey;
     this.state.difficulty = difficulty === 'story' ? 'story' : 'normal';
     if (this.state.difficulty === 'story') {
       this.state.hero.maxHp += 60;
       this.state.hero.hp = this.state.hero.maxHp;
       this.state.hero.power += 3;
     }
+    h.maxHp+=profile.hp;h.hp=h.maxHp;h.power+=profile.power;h.speed*=profile.speed;s.upgrades={...profile.genes};
+    if(journey==='trial'){
+      h.maxHp+=TRIAL_RULES.hpBonus;h.hp=h.maxHp;h.power+=TRIAL_RULES.powerBonus;
+      h.level=TRIAL_RULES.level;h.nextXp=Math.round(24*Math.pow(h.level,1.12));h.ultimate=100;s.pendingUpgrades=TRIAL_RULES.drafts;
+    }
     this._enterZone(0);
     this._mode('playing');
+    if(s.pendingUpgrades>0)this._offerUpgrades();
     this.save();
     return true;
   }
@@ -594,6 +650,7 @@ class Game {
     this.nextId = this._stored.nextId;
     this.meta = clone(this._stored.meta);
     this.meta.progress ||= freshProgress();
+    this.meta.chronicle ||= freshChronicle(this.meta.progress.totals.victories>0);
     this.state.meta = this.meta;
     this.state.settings = this.settings;
     if (!['upgrade','event'].includes(this.state.mode)) this._mode('playing');
@@ -633,6 +690,10 @@ class Game {
     return { available: ['playing','paused','upgrade','event'].includes(s.mode), zone: s.zone, zoneName: ZONES[s.zone].name, level: s.hero.level, time: s.time, savedAt: this._stored.savedAt, mode: s.mode };
   }
 
+  canStartTrial(){return !!this.meta.chronicle?.unlockedTrial||this.meta.progress.totals.victories>0;}
+
+  getRecords(){return clone(this.meta.chronicle);}
+
   setSettings(partial = {}) {
     for (const k of ['muted','reducedMotion','screenShake']) if (typeof partial[k] === 'boolean') this.settings[k] = partial[k];
     this.state.settings = this.settings;
@@ -671,6 +732,14 @@ class Game {
     s.story = ZONES[zone].story;
     s.spawnTimer = 1.1;s.environmentTimer=10+zone*1.5;s.environmentIntroduced=false;
     s.hunt={contract:HUNT_CONTRACTS[zone].id,status:'pending',targetId:null,timeLeft:0};
+    if(s.journey==='trial'){
+      s.landmarks.forEach(l=>{l.found=true;l.resolved=true;});
+      s.objectives={eaten:0,target:0,landmarks:0,targetLandmarks:0};s.hunt.status='failed';
+      if(zone>0){s.hero.hp=Math.min(s.hero.maxHp,s.hero.hp+s.hero.maxHp*(TRIAL_RULES.intermissionHeal-.25));s.hero.ultimate=clamp(s.hero.ultimate+TRIAL_RULES.intermissionEnergy,0,100);}
+      s.cooldowns={pulse:0,dash:0,ultimate:0};s.hero.biteCooldown=0;s.hero.biteWindow=0;s.hero.biteStep=0;s.hero.wardCooldown=0;
+      this._spawnBoss();this._emit('zone',{zone,text:`五王试炼 ${zone+1}/5`});
+      this._toast(`五王试炼 ${zone+1}/5：${ZONES[zone].boss}。击破统治者后从北侧出口继续。`);return;
+    }
     for (let i = 0; i < 14 + zone * 2; i++) this._spawnEnemy(undefined, true);
     // A visible, approachable first meal; no surprise damage at the spawn point.
     if (zone === 0) {
@@ -729,7 +798,7 @@ class Game {
     s.bossSpawned = true;
     // Reserve one slot even if a wave is full.
     if (s.enemies.length >= 50) s.enemies.splice(s.enemies.findIndex(e => !e.boss),1);
-    const hp = [430,700,1050,1450,2050][s.zone] * (s.difficulty === 'story' ? .8 : 1);
+    const hp = [430,700,1050,1450,2050][s.zone] * (s.difficulty === 'story' ? .8 : 1) * (s.journey==='trial'?TRIAL_RULES.bossHp:1);
     const e = { id: this._id(), x: 0, z: -10.5, r: 1.0 + s.zone*.06, hp, maxHp: hp, type: ['goblin','rat','knight','soldier','mage'][s.zone], boss: true, bossIndex: s.zone, angle: 0, hit: 0, attack: 0, dead: false, edible: false, aiTimer: 2.3, wanderAngle: 0, chargeTime: 0, chargeX: 0, chargeZ: 0, phase: 1, attackCount: 0, shield: false };
     s.enemies.push(e);
     this._effect('evolve', e.x,e.z,2.0,2.8,'#edb667');
@@ -865,6 +934,10 @@ class Game {
       s.projectiles=[]; s.effects=s.effects.filter(f=>f.type!=='telegraph');
       this._toast(`${ZONES[s.zone].boss}已被吞噬。前往北方传送门，按 F 继续。`);
       this._sound('boss-defeated');
+      if(s.journey==='trial'){
+        s.enemies=s.enemies.filter(enemy=>enemy.boss);
+        if(s.zone<4){s.pendingUpgrades+=2;if(s.mode==='playing')this._offerUpgrades();}
+      }
       this.save();
     }
   }
@@ -924,10 +997,15 @@ class Game {
     const s=this.state;
     if(s.runRewarded) return;
     s.runRewarded=true;
-    if(victory)this._progress('victories');
-    const reward=Math.max(2,Math.floor(s.stats.eaten/5)+s.stats.zonesCleared*10+(victory?45:0));
+    if(victory){this._progress('victories');if(s.journey==='campaign')this.meta.chronicle.unlockedTrial=true;}
+    const reward=s.journey==='trial'?Math.max(2,s.stats.zonesCleared*8+(victory?40:0)):Math.max(2,Math.floor(s.stats.eaten/5)+s.stats.zonesCleared*10+(victory?45:0));
     this.meta.essence+=reward;
     s.lastReward=reward;s.stats.score+=victory?3000:0;
+    const record={runId:s.runId,journey:s.journey,origin:s.origin,difficulty:s.difficulty,seed:s.seed,victory,
+      seconds:+s.time.toFixed(3),score:Math.floor(s.stats.score),level:s.hero.level,kills:s.stats.kills,zones:s.stats.zonesCleared,relicCount:s.relics.length,reward,finishedAt:Date.now()};
+    const chronicle=this.meta.chronicle,key=`${s.journey}:${s.difficulty}`;
+    if(!chronicle.history.some(r=>r.runId===s.runId)){chronicle.history.unshift(record);chronicle.history=chronicle.history.slice(0,8);}
+    if(victory&&(!chronicle.best[key]||record.seconds<chronicle.best[key].seconds)){chronicle.best[key]=clone(record);s.newRecord=true;}
     this._toast(victory?`你走出了裂谷。世界很大，而你才刚刚开始。获得 ${reward} 进化精华。`:`旅程暂时结束。获得 ${reward} 进化精华，可在主菜单永久进化。`);
     this._sound(victory?'victory':'death');
     this.save();
@@ -1017,7 +1095,7 @@ class Game {
   }
 
   _updateHunt(dt) {
-    const s=this.state,hunt=s.hunt;if(!hunt||s.portal.active)return;
+    const s=this.state,hunt=s.hunt;if(!hunt||s.portal.active||s.journey==='trial')return;
     const contract=HUNT_CONTRACTS.find(c=>c.id===hunt.contract)||HUNT_CONTRACTS[s.zone];
     if(hunt.status==='pending'&&s.zoneTime>=7+s.zone){
       const target=this._spawnEnemy(contract.type,true,null,contract.affix);
@@ -1035,7 +1113,7 @@ class Game {
   }
 
   _updateEnvironment(dt) {
-    const s=this.state,h=s.hero;if(s.bossSpawned||s.portal.active)return;
+    const s=this.state,h=s.hero;if(s.bossSpawned||s.portal.active||s.journey==='trial')return;
     s.environmentTimer=Math.max(0,s.environmentTimer-dt);if(s.environmentTimer>0)return;
     const damage=8+s.zone*3;
     if(!s.environmentIntroduced){
@@ -1105,7 +1183,7 @@ class Game {
     if(d>3.6) this._move(e,dx/d*(1.3+s.zone*.12)*dt,dz/d*(1.3+s.zone*.12)*dt);
     e.aiTimer-=dt;
     if(e.aiTimer>0)return;
-    e.attack=.55;e.attackCount++;e.aiTimer=[0,3.2,2.7,2.15][phase];
+    e.attack=.55;e.attackCount++;e.aiTimer=[0,3.2,2.7,2.15][phase]*(s.journey==='trial'?TRIAL_RULES.cadence:1);
     const damage=15+s.zone*4+(phase-1)*2;
     switch(e.bossIndex) {
       case 0: {
@@ -1233,9 +1311,9 @@ class Game {
     if(collected)this.save();
     if(s.mode!=='playing')return;
     if(!s.bossSpawned && s.objectives.eaten>=s.objectives.target && s.objectives.landmarks>=s.objectives.targetLandmarks)this._spawnBoss();
-    s.spawnTimer-=dt;
-    const cap=s.bossSpawned?16:25+s.zone*3;
-    if(s.spawnTimer<=0 && !s.bossKilled){if(s.enemies.length<cap)this._spawnEnemy();s.spawnTimer=s.bossSpawned?3.2:1.35;}
+    s.spawnTimer=Math.max(0,s.spawnTimer-dt);
+    const cap=s.journey==='trial'?6:s.bossSpawned?16:25+s.zone*3;
+    if(s.spawnTimer<=0 && !s.bossKilled){if(s.enemies.length<cap)this._spawnEnemy();s.spawnTimer=s.journey==='trial'?6:s.bossSpawned?3.2:1.35;}
     if(s.saveTimer>=12){s.saveTimer=0;this.save();}
   }
 
@@ -1839,12 +1917,16 @@ const {navigate}=window.__HD2D_MODULES["navigation"];
 const {prepareAnimationAtlas}=window.__HD2D_MODULES["atlas-import"];
 const {loadImage,loadJSON}=window.__HD2D_MODULES["asset-loader"];
 const {RELICS,EXPEDITIONS}=window.__HD2D_MODULES["progression"];
+const {ORIGINS,JOURNEYS,RECORD_KEYS}=window.__HD2D_MODULES["journey"];
 
 
 
 
 
 
+
+const originName=id=>ORIGINS.find(o=>o.id===id)?.name||'初生之种';
+const journeyName=id=>JOURNEYS.find(m=>m.id===id)?.name||'五区战役';
 const $=id=>document.getElementById(id), show=(id,v)=>$(id).classList.toggle('hidden',!v);
 const escapeHTML=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=t=>`${String(Math.floor(t/60)).padStart(2,'0')}:${String(Math.floor(t%60)).padStart(2,'0')}`;
@@ -1871,16 +1953,34 @@ const audio=new AudioDirector();
 function toast(text){if(!text)return;$('toast').textContent=text;show('toast',true);clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>show('toast',false),3400);}
 function onEvent(e){if(e.type==='toast'||e.type==='warn')toast(e.text||e.message);if(e.type==='sound')audio.play(e.sound||e.name);}
 function difficulty(){return document.querySelector('input[name="difficulty"]:checked')?.value||'story';}
-function start(){audio.unlock();moveTarget=null;keys.clear();hideInfo();game.start({difficulty:difficulty()});audio.next=0;previousZone=-1;}
+function start(retry=false,trial=false){const s=game.state,options=retry?{difficulty:s.difficulty,origin:s.origin,journey:trial?'trial':s.journey}:{difficulty:difficulty(),origin:$('origin-select').value,journey:$('journey-select').value};audio.unlock();moveTarget=null;keys.clear();hideInfo();game.start({...options,seed:1+Math.floor(Math.random()*4294967295)});audio.next=0;previousZone=-1;}
 function setPreference(k,v){prefs[k]=v;try{storage?.setItem('devourHD2D.preferences',JSON.stringify(prefs));}catch{toast('设置在本次游玩中生效，浏览器未允许保存。');}game.setSettings?.(prefs);if(renderer){renderer.options={...renderer.options,...prefs};renderer.setQuality?.(prefs.quality);renderer.setReducedMotion?.(prefs.reducedMotion);resize();}}
 function openInfo(type){if(!$('info-screen').classList.contains('hidden')){renderInfo(type);return;}infoBack=game.state.mode;infoResume=infoBack==='playing';if(infoResume)game.pause();show('pause-screen',false);show('info-screen',true);renderInfo(type);$('info-close').focus();}
 function hideInfo(){show('info-screen',false);if(game?.state.mode==='event')renderExpedition();if(infoResume&&game?.state.mode==='paused')game.unpause();infoResume=false;infoBack=null;}
 function renderInfo(type){$('info-content').dataset.view=type;
  document.querySelectorAll('[data-info]').forEach(button=>{const active=button.dataset.info===type;button.classList.toggle('active',active);button.setAttribute('aria-current',active?'page':'false');});
- if(type==='collection'){renderCollection();return;}if(type==='achievements'){renderAchievements();return;}if(type==='how'){$('info-title').textContent='把世界，变成食物。';$('info-eyebrow').textContent='ADVENTURER’S GUIDE';$('info-content').innerHTML=`<div class="guide-grid"><div class="guide-card"><b>01 · 从弱小开始</b><p>WASD / 方向键移动，或点击地面自动前往。触屏使用左下摇杆。靠近小型生物会自动吞噬；大敌需要先削弱。</p></div><div class="guide-card"><b>02 · 把攻击接成三段</b><p>Z / 触屏「连牙撕咬」发动主动近战；在连段窗口内连续三次，终结击范围与伤害更高。Space 腐蚀脉冲，Q 冲刺，E 终极进化。</p></div><div class="guide-card"><b>03 · 狩猎与区域异变</b><p>每个区域都会出现一只带词缀的限时狩猎精英，击杀可得永久精华。清洁桶、污水喷口、巡逻队、弩炮与裂谷脉冲需要不同走位。</p></div><div class="guide-card"><b>04 · 探索与统治者</b><p>靠近地标可发现它；按 F / 触屏调查打开探索抉择，可获得遗物、休整或交换精华。选择时暂停战斗。完成吞噬与两个地标后，统治者出现。红色预警越亮越接近命中；击败后前往北侧出口，按 F 或触屏按钮继续。</p></div></div><p>升级时按 1 / 2 / 3 选择基因 · Esc 暂停 · J 旅途记录。精华可用于永久进化。</p>`;
+ if(type==='records'){renderRecords();return;}if(type==='collection'){renderCollection();return;}if(type==='achievements'){renderAchievements();return;}if(type==='how'){$('info-title').textContent='把世界，变成食物。';$('info-eyebrow').textContent='ADVENTURER’S GUIDE';$('info-content').innerHTML=`<div class="guide-grid"><div class="guide-card"><b>01 · 从弱小开始</b><p>WASD / 方向键移动，或点击地面自动前往。触屏使用左下摇杆。靠近小型生物会自动吞噬；大敌需要先削弱。</p></div><div class="guide-card"><b>02 · 把攻击接成三段</b><p>Z / 触屏「连牙撕咬」发动主动近战；在连段窗口内连续三次，终结击范围与伤害更高。Space 腐蚀脉冲，Q 冲刺，E 终极进化。</p></div><div class="guide-card"><b>03 · 狩猎与区域异变</b><p>每个区域都会出现一只带词缀的限时狩猎精英，击杀可得永久精华。清洁桶、污水喷口、巡逻队、弩炮与裂谷脉冲需要不同走位。</p></div><div class="guide-card"><b>04 · 探索与统治者</b><p>靠近地标可发现它；按 F / 触屏调查打开探索抉择，可获得遗物、休整或交换精华。选择时暂停战斗。完成吞噬与两个地标后，统治者出现。红色预警越亮越接近命中；击败后前往北侧出口，按 F 或触屏按钮继续。</p></div></div><p>开局可选均衡、近战、技能、生存四种出身。通关战役后解锁五王试炼：Lv.8、7 次初始基因选择，连战五位强化统治者；每过一关再选 2 次，入场总共回复 35% 最大生命并恢复 25% 终极能量。升级时按 1 / 2 / 3 · Esc 暂停 · J 旅途记录。精华可用于永久进化。</p>`;
  }else if(type==='settings'){$('info-title').textContent='让冒险适合你。';$('info-eyebrow').textContent='SETTINGS';$('info-content').innerHTML=`<div class="info-row"><div>画面质量<small>低档减少渲染分辨率，适合移动设备。</small></div><select id="quality-select" aria-label="画面质量"><option value="high">精致</option><option value="low">流畅</option></select></div><div class="info-row"><div>声音<small>首次操作后启用音频。</small></div><input id="sound-toggle" type="checkbox" aria-label="声音"></div><div class="info-row"><div>环境音乐<small>随区域变化的轻声旋律。</small></div><input id="music-toggle" type="checkbox" aria-label="环境音乐"></div><div class="info-row"><div>减少动态效果<small>减轻画面震动和镜头变化。</small></div><input id="motion-toggle" type="checkbox" aria-label="减少动态效果"></div><div class="info-row"><div>自动腐蚀脉冲<small>附近有敌人且冷却结束时自动施放。</small></div><input id="auto-toggle" type="checkbox" aria-label="自动腐蚀脉冲"></div>`;$('quality-select').value=prefs.quality;$('quality-select').onchange=e=>setPreference('quality',e.target.value);for(const [id,key] of [['sound-toggle','sound'],['music-toggle','music'],['motion-toggle','reducedMotion'],['auto-toggle','autoPulse']]){$(id).checked=!!prefs[key];$(id).onchange=e=>{audio.unlock();setPreference(key,e.target.checked);};}
  }else if(type==='meta'){$('info-title').textContent='把上一世，带入下一口。';$('info-eyebrow').textContent='PERMANENT EVOLUTION';const m=game.state.meta||{};$('info-content').innerHTML=`<p>现有精华：<strong>${m.essence||0}</strong>。永久进化会在下一次新旅程生效。</p>`+[['vitality','厚实生命','提升初始生命'],['power','锋利饥饿','提升初始攻击'],['speed','轻盈粘液','提升初始移动速度']].map(([id,title,desc])=>`<div class="info-row"><div>${title} <small>${desc} · 当前 ${m[id]||0} 级</small></div><button data-buy="${id}">升级 · ${metaCost(id)} 精华</button></div>`).join('');document.querySelectorAll('[data-buy]').forEach(b=>b.onclick=()=>{if(!game.buyMeta(b.dataset.buy))toast('精华不足，或这项进化已达到上限。');renderInfo('meta');});
- }else{$('info-title').textContent='你曾吞噬过的世界。';$('info-eyebrow').textContent='FIELD NOTES';const s=game.state,genes=Object.entries(s.upgrades||{}).filter(([,n])=>n>0),st=s.stats||{};$('info-content').innerHTML=`<p>本局 Lv.${s.hero.level} · 吞噬 ${st.eaten||0} · 精英 ${st.elitesKilled||0} · 狩猎 ${st.huntsCompleted||0} · 战利品 ${st.lootCollected||0} · 游玩 ${fmt(s.time)} · ${s.difficulty==='normal'?'标准挑战':'轻松旅程'}</p>`+REGION.map((n,i)=>`<div class="info-row"><div>${ROMAN[i]}. ${n}<small>${MOTTO[i]}</small></div><span>${i<s.zone?'已突破':i===s.zone?'当前区域':'尚未抵达'}</span></div>`).join('')+(genes.length?`<div class="gene-summary">${genes.map(([id,n])=>`<span>${escapeHTML((Array.isArray(UPGRADES)?UPGRADES.find(u=>u.id===id):UPGRADES?.[id])?.name||id)} <b>×${n}</b></span>`).join('')}</div>`:'<div class="info-content-empty">尚未获得基因。继续吞噬，下一次升级将改变你的构筑。</div>');}}
+ }else{$('info-title').textContent='你曾吞噬过的世界。';$('info-eyebrow').textContent='FIELD NOTES';const s=game.state,genes=Object.entries(s.upgrades||{}).filter(([,n])=>n>0),st=s.stats||{};$('info-content').innerHTML=`<p>${journeyName(s.journey)} · ${originName(s.origin)} · 种子 ${s.seed}<br>本局 Lv.${s.hero.level} · 吞噬 ${st.eaten||0} · 精英 ${st.elitesKilled||0} · 狩猎 ${st.huntsCompleted||0} · 战利品 ${st.lootCollected||0} · 游玩 ${fmt(s.time)} · ${s.difficulty==='normal'?'标准挑战':'轻松旅程'}</p>`+REGION.map((n,i)=>`<div class="info-row"><div>${ROMAN[i]}. ${n}<small>${MOTTO[i]}</small></div><span>${i<s.zone?'已突破':i===s.zone?'当前区域':'尚未抵达'}</span></div>`).join('')+(genes.length?`<div class="gene-summary">${genes.map(([id,n])=>`<span>${escapeHTML((Array.isArray(UPGRADES)?UPGRADES.find(u=>u.id===id):UPGRADES?.[id])?.name||id)} <b>×${n}</b></span>`).join('')}</div>`:'<div class="info-content-empty">尚未获得基因。继续吞噬，下一次升级将改变你的构筑。</div>');}}
+function refreshSetup(){
+ const unlocked=game.canStartTrial();$('trial-option').disabled=!unlocked;$('trial-option').textContent=unlocked?'五王试炼 · 已解锁':'五王试炼 · 通关解锁';
+ if(!unlocked&&$('journey-select').value==='trial')$('journey-select').value='campaign';
+ const o=ORIGINS.find(o=>o.id===$('origin-select').value)||ORIGINS[0],m=JOURNEYS.find(m=>m.id===$('journey-select').value)||JOURNEYS[0];
+ $('origin-description').textContent=`${o.description} ${m.description}`;
+}
+function renderRecords(){
+ const c=game.getRecords();$('info-title').textContent='每一趟旅程，都有回声。';$('info-eyebrow').textContent='PERSONAL RUN RECORDS';
+ $('info-content').innerHTML=`<p>按模式与难度分别记录最快通关。仅存于当前浏览器；永久进化会影响成绩，并非线上排行榜。</p><div class="record-grid">${RECORD_KEYS.map(key=>{const [mode,d]=key.split(':'),r=c.best[key];return `<article class="record-card"><small>${journeyName(mode)} · ${d==='story'?'轻松':'标准'}</small><b>${r?fmt(r.seconds):'— : —'}</b><span>${r?originName(r.origin)+' · '+r.score+' 分':'尚未通关'}</span></article>`;}).join('')}</div><h3>最近 ${c.history.length} / 8 次已结算旅程</h3>${c.history.length?c.history.map(r=>`<div class="info-row run-record"><div><b>${r.victory?'通关':'止步'} · ${journeyName(r.journey)}</b><small>${originName(r.origin)} · ${r.difficulty==='story'?'轻松':'标准'} · ${r.zones} / 5 王 · Lv.${r.level}</small><small>种子 ${r.seed} · 吞噬 ${r.kills} · 遗物 ${r.relicCount}</small></div><div>${fmt(r.seconds)}<small>${r.score} 分 · +${r.reward} 精华</small></div></div>`).join(''):'<p>完成或失败后自动留下战绩；中途退出的存档不会伪装成已结算旅程。</p>'}`;
+}
+function updateTrialHUD(s){
+ const trial=s.journey==='trial';$('eat-label').textContent=trial?'本轮统治者':'吞噬生物';$('landmark-label').textContent=trial?'已击败统治者':'发现地标';
+ if(!trial)return;
+ $('chapter').textContent=`BOSS TRIAL ${ROMAN[s.zone]}`;$('eat-progress').textContent=s.bossKilled?'已击败':'战斗中';$('eat-progress').classList.toggle('done',s.bossKilled);
+ $('landmark-progress').textContent=`${s.stats.zonesCleared} / 5`;$('landmark-progress').classList.toggle('done',s.stats.zonesCleared===5);
+ $('goal-bar').style.width=`${s.stats.zonesCleared/5*100}%`;$('quest-description').textContent='强化五王连战。击败本轮 Boss，选择基因后前往北侧出口。';
+ $('hint').textContent=s.portal.active?'北侧出口 · 入场恢复生命与能量':'没有地标与狩猎 · 留意 Boss 红色预警';
+}
 function renderCollection(){
  const s=game.state,p=game.meta.progress;
  $('info-title').textContent='把路过的世界，留在身上。';$('info-eyebrow').textContent='RELICS / CHRONICLE';
@@ -1902,29 +2002,36 @@ function renderExpedition(){
 }
 function metaCost(id){const m=game.state.meta||{};return game.getStats?.().metaCosts?.[id]??(5+(m[id]||0)*5);}
 function syncMode(){const s=game.state,m=s.mode;if(m!==previousMode){show('menu',m==='menu');show('upgrade-screen',m==='upgrade');show('expedition-screen',m==='event');show('pause-screen',m==='paused'&&$('info-screen').classList.contains('hidden'));show('end-screen',m==='victory'||m==='dead');for(const id of ['hud','objective','minimap-wrap','skillbar','move-help','stat-rack','build-strip','hunt-panel'])show(id,m!=='menu');show('joystick',m==='playing'&&matchMedia('(any-pointer:coarse)').matches);show('labels',m!=='menu');if(m!=='playing'){keys.clear();touch.x=touch.z=0;moveTarget=null;}if(m==='menu'){for(const id of ['boss-ui','target-panel','hunt-panel'])show(id,false);refreshSave();}if(m==='upgrade')renderUpgrades();if(m==='event')renderExpedition();if(m==='victory'||m==='dead')renderEnd();if(m==='paused'){$('pause-stats').textContent=`${REGION[s.zone]} · Lv.${s.hero.level} · ${fmt(s.time)}`;$('resume-button').focus();}previousMode=m;}
- if(m==='playing'&&s.zone!==previousZone){previousZone=s.zone;$('banner-number').textContent=`CHAPTER ${ROMAN[s.zone]}`;$('banner-title').textContent=REGION[s.zone];$('banner-text').textContent=MOTTO[s.zone];show('chapter-banner',true);clearTimeout(bannerTimeout);bannerTimeout=setTimeout(()=>show('chapter-banner',false),2600);audio.next=0;}
+ if(m==='playing'&&s.zone!==previousZone){previousZone=s.zone;$('banner-number').textContent=`${s.journey==='trial'?'BOSS TRIAL':'CHAPTER'} ${ROMAN[s.zone]}`;$('banner-title').textContent=REGION[s.zone];$('banner-text').textContent=MOTTO[s.zone];show('chapter-banner',true);clearTimeout(bannerTimeout);bannerTimeout=setTimeout(()=>show('chapter-banner',false),2600);audio.next=0;}
  if(m!=='playing'){show('interact-button',false);show('chapter-banner',false);}}
-let choiceKey='';function renderUpgrades(){const c=game.state.upgradeChoices||[];choiceKey=c.map(x=>typeof x==='string'?x:x.id||x.name).join(',');$('upgrade-cards').innerHTML=c.map((v,i)=>{const u=typeof v==='string'?(Array.isArray(UPGRADES)?UPGRADES.find(x=>x.id===v):UPGRADES[v])||{name:v}:v;return `<button class="upgrade-card" data-choice="${i}"><kbd>${i+1}</kbd><span>${['✦','◉','➶'][i]}</span><h3>${escapeHTML(u.name||u.title||u.id)}</h3><p>${escapeHTML(u.description||u.desc||u.text||'让你的下一口更加强大。')}</p><small>将基因融入身体 →</small></button>`;}).join('');document.querySelectorAll('[data-choice]').forEach(b=>b.onclick=()=>{game.chooseUpgrade(+b.dataset.choice);renderUpgrades();});document.querySelector('[data-choice]')?.focus();}
-function renderEnd(){const s=game.state,win=s.mode==='victory',st=s.stats||{};$('end-eyebrow').textContent=win?'THE WORLD HAS A NEW RULE':'THE JOURNEY CONTINUES';$('end-title').textContent=win?'你吞下了，世界的规则。':'这还不是你的终点。';$('end-story').textContent=win?'从新手村最不起眼的角落，到圣域的最后一束光。神明终于明白，能定义食物的，不只有神。五区域战役完成。':'更强的生命暂时终结了这次旅程。但留下的精华，会成为你下一次醒来的力量。';$('end-stats').innerHTML=`<div><b>${s.hero.level}</b><small>最终等级</small></div><div><b>${st.eaten||0}</b><small>吞噬数量</small></div><div><b>${st.elitesKilled||0}</b><small>精英猎杀</small></div><div><b>${st.huntsCompleted||0}</b><small>完成狩猎</small></div><div><b>${fmt(s.time)}</b><small>旅程时长</small></div>`;audio.play(win?'victory':'hit');}
-function refreshSave(){const save=game.getSaveInfo?.();const ok=!!save?.available;$('continue-button').disabled=!ok;$('save-label').textContent=ok?`${REGION[save.zone||0]} · Lv.${save.level||save.hero?.level||1}`:'暂无记录';}
-function drawMinimap(){const c=$('minimap'),ctx=c.getContext('2d'),s=game.state,to=(x,z)=>[80+x*3.6,80+z*3.6];ctx.clearRect(0,0,160,160);ctx.fillStyle='#09231a88';ctx.fillRect(8,8,144,144);ctx.strokeStyle='#afbd9740';ctx.strokeRect(8.5,8.5,143,143);ctx.fillStyle='#68836c33';ctx.fillRect(75,9,10,142);ctx.fillRect(9,75,142,10);for(const [x,z] of [[-10,-6],[10,-6],[-11,10],[11,10]]){const p=to(x,z);ctx.fillStyle='#7a8e6955';ctx.fillRect(p[0]-10,p[1]-10,20,20);}for(const l of s.landmarks){const p=to(l.x,l.z);ctx.fillStyle=l.resolved?'#6c927b':'#e6c988';ctx.save();ctx.translate(...p);ctx.rotate(Math.PI/4);ctx.fillRect(-2,-2,4,4);ctx.restore();}for(const e of s.enemies){if(e.dead)continue;const p=to(e.x,e.z);ctx.fillStyle=e.boss?'#ef9881':e.elite?(ELITES[e.elite]?.color||'#e6c988'):e.type==='slime'||e.type==='fly'||e.type==='larva'?'#9ebd7899':'#be765caa';ctx.beginPath();ctx.arc(...p,e.boss?3:e.elite?2.7:1.5,0,Math.PI*2);ctx.fill();if(e.elite){ctx.strokeStyle='#fff1b8';ctx.lineWidth=1;ctx.beginPath();ctx.arc(...p,4.2,0,Math.PI*2);ctx.stroke();}}const p=to(s.hero.x,s.hero.z);ctx.fillStyle='#fff1b8';ctx.shadowBlur=5;ctx.shadowColor='#ffe69f';ctx.beginPath();ctx.arc(...p,3,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;const portal=to(0,-14);ctx.strokeStyle=s.portal?.active?'#95dbcc':'#6b8271';ctx.strokeRect(portal[0]-3,portal[1]-3,6,6);}
+let choiceKey='';function renderUpgrades(){$('upgrade-description').textContent=game.state.journey==='trial'?`五王试炼 · 剩余 ${game.state.pendingUpgrades} 次基因选择。完成后开始战斗。`:'选择一项基因。每一次选择，都改变你的下一口。';const c=game.state.upgradeChoices||[];choiceKey=c.map(x=>typeof x==='string'?x:x.id||x.name).join(',');$('upgrade-cards').innerHTML=c.map((v,i)=>{const u=typeof v==='string'?(Array.isArray(UPGRADES)?UPGRADES.find(x=>x.id===v):UPGRADES[v])||{name:v}:v;return `<button class="upgrade-card" data-choice="${i}"><kbd>${i+1}</kbd><span>${['✦','◉','➶'][i]}</span><h3>${escapeHTML(u.name||u.title||u.id)}</h3><p>${escapeHTML(u.description||u.desc||u.text||'让你的下一口更加强大。')}</p><small>将基因融入身体 →</small></button>`;}).join('');document.querySelectorAll('[data-choice]').forEach(b=>b.onclick=()=>{game.chooseUpgrade(+b.dataset.choice);renderUpgrades();});document.querySelector('[data-choice]')?.focus();}
+function renderEnd(){
+ const s=game.state,win=s.mode==='victory',trial=s.journey==='trial',st=s.stats||{},r=game.getRecords().history.find(r=>r.runId===s.runId);
+ $('end-eyebrow').textContent=s.newRecord?'NEW PERSONAL BEST':win?'THE WORLD HAS A NEW RULE':'THE JOURNEY CONTINUES';
+ $('end-title').textContent=win?(trial?'五王俯首，饥饿未止。':'你吞下了，世界的规则。'):'这还不是你的终点。';
+ $('end-story').textContent=`${journeyName(s.journey)} · ${originName(s.origin)} · ${s.difficulty==='story'?'轻松旅程':'标准挑战'}。 ${win?(trial?'强化五王试炼完成。更换出身，再创造你的个人纪录。':'五区域战役完成，五王试炼已解锁。继续挑战，或带着精华开始下一次进化。'):'本局已结算。留下的精华，会成为下一次醒来的力量。'}`;
+ $('end-stats').innerHTML=[['最终等级',s.hero.level],['吞噬数量',st.eaten||0],['击败统治者',`${st.zonesCleared} / 5`],['旅程时长',fmt(s.time)],['本局积分',r?.score??Math.floor(st.score||0)],['结算精华',`+${r?.reward||0}`]].map(([label,value])=>`<div><b>${value}</b><small>${label}</small></div>`).join('');
+ show('trial-button',win&&!trial&&game.canStartTrial());audio.play(win?'victory':'hit');
+}
+function refreshSave(){refreshSetup();const save=game.getSaveInfo?.();const ok=!!save?.available;$('continue-button').disabled=!ok;$('save-label').textContent=ok?`${REGION[save.zone||0]} · Lv.${save.level||save.hero?.level||1}`:'暂无记录';}
+function drawMinimap(){const c=$('minimap'),ctx=c.getContext('2d'),s=game.state,to=(x,z)=>[80+x*3.6,80+z*3.6];ctx.clearRect(0,0,160,160);ctx.fillStyle='#09231a88';ctx.fillRect(8,8,144,144);ctx.strokeStyle='#afbd9740';ctx.strokeRect(8.5,8.5,143,143);ctx.fillStyle='#68836c33';ctx.fillRect(75,9,10,142);ctx.fillRect(9,75,142,10);for(const [x,z] of [[-10,-6],[10,-6],[-11,10],[11,10]]){const p=to(x,z);ctx.fillStyle='#7a8e6955';ctx.fillRect(p[0]-10,p[1]-10,20,20);}for(const l of s.landmarks){if(s.journey==='trial')continue;const p=to(l.x,l.z);ctx.fillStyle=l.resolved?'#6c927b':'#e6c988';ctx.save();ctx.translate(...p);ctx.rotate(Math.PI/4);ctx.fillRect(-2,-2,4,4);ctx.restore();}for(const e of s.enemies){if(e.dead)continue;const p=to(e.x,e.z);ctx.fillStyle=e.boss?'#ef9881':e.elite?(ELITES[e.elite]?.color||'#e6c988'):e.type==='slime'||e.type==='fly'||e.type==='larva'?'#9ebd7899':'#be765caa';ctx.beginPath();ctx.arc(...p,e.boss?3:e.elite?2.7:1.5,0,Math.PI*2);ctx.fill();if(e.elite){ctx.strokeStyle='#fff1b8';ctx.lineWidth=1;ctx.beginPath();ctx.arc(...p,4.2,0,Math.PI*2);ctx.stroke();}}const p=to(s.hero.x,s.hero.z);ctx.fillStyle='#fff1b8';ctx.shadowBlur=5;ctx.shadowColor='#ffe69f';ctx.beginPath();ctx.arc(...p,3,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;const portal=to(0,-14);ctx.strokeStyle=s.portal?.active?'#95dbcc':'#6b8271';ctx.strokeRect(portal[0]-3,portal[1]-3,6,6);}
 function updateLabels(){const s=game.state,list=[];for(const l of s.landmarks){if(l.resolved)continue;const p=renderer.project(l.x,l.z,1.4);if(p.visible)list.push(`<div class="world-label poi" style="left:${p.x}px;top:${p.y}px">◆ ${escapeHTML(l.name||'未知地标')}</div>`);}let close=s.enemies.filter(e=>!e.dead&&Math.hypot(e.x-s.hero.x,e.z-s.hero.z)<8).sort((a,b)=>Math.hypot(a.x-s.hero.x,a.z-s.hero.z)-Math.hypot(b.x-s.hero.x,b.z-s.hero.z)).slice(0,8);for(const e of close){const p=renderer.project(e.x,e.z,e.boss?3.3:e.elite?2.05:1.55);if(!p.visible)continue;const base=e.boss?BOSS[s.zone]:NAMES[e.type]||e.type,name=e.elite?(e.eliteName&&e.eliteName!==ELITES[e.elite]?.name?`${e.eliteName} · ${base}`:`${ELITES[e.elite]?.name||'异变'} ${base}`):base;list.push(`<div class="world-label ${e.edible?'edible':'enemy'} ${e.elite?'elite':''}" style="left:${p.x}px;top:${p.y}px">${e.elite?'◆ ':''}${escapeHTML(name)}<span class="label-hp"><i style="width:${Math.max(0,Math.min(100,e.hp/e.maxHp*100))}%"></i></span></div>`);}if(s.portal?.active){const p=renderer.project(0,-14,3);if(p.visible)list.push(`<div class="world-label poi" style="left:${p.x}px;top:${p.y}px">◇ ${s.zone===4?'世界的尽头':'通往下一区域'}</div>`);}$('labels').innerHTML=list.join('');}
-function updateHuntPanel(s){const hunt=s.hunt,contract=HUNTS[hunt?.contract]||HUNT_CONTRACTS[s.zone],visible=!!hunt&&s.mode!=='menu'&&!s.portal?.active;show('hunt-panel',visible);if(!visible)return;const affix=ELITES[contract.affix],states={pending:'追踪中',active:'限时目标',complete:'已完成',failed:'已失效'};$('hunt-state').textContent=states[hunt.status]||'追踪中';$('hunt-name').textContent=contract.name;$('hunt-reward').textContent=`奖励 ${contract.reward} 永久精华 · ${affix?.name||'异变'}词缀`;$('hunt-panel').dataset.status=hunt.status;if(hunt.status==='pending'){const wait=Math.max(0,7+s.zone-s.zoneTime);$('hunt-timer').textContent=wait>0?`${Math.ceil(wait)}s`:'即将出现';$('hunt-description').textContent='异变气息正在区域中聚集，准备迎战精英。';$('hunt-bar').style.width=`${Math.min(100,Math.max(0,100-wait/(7+s.zone)*100))}%`;}else if(hunt.status==='active'){$('hunt-timer').textContent=`${Math.ceil(hunt.timeLeft)}s`;$('hunt-description').textContent=`寻找金色标记的${affix?.name||'异变'}目标，在倒计时结束前将它吞噬。`;$('hunt-bar').style.width=`${Math.max(0,hunt.timeLeft/contract.time*100)}%`;}else{$('hunt-timer').textContent=hunt.status==='complete'?'完成':'超时';$('hunt-description').textContent=hunt.status==='complete'?'永久精华已经结算，本区域狩猎完成。':'目标仍可被吞噬，但永久精华悬赏已经失效。';$('hunt-bar').style.width=hunt.status==='complete'?'100%':'0%';}}
+function updateHuntPanel(s){const hunt=s.hunt,contract=HUNTS[hunt?.contract]||HUNT_CONTRACTS[s.zone],visible=s.journey!=='trial'&&!!hunt&&s.mode!=='menu'&&!s.portal?.active;show('hunt-panel',visible);if(!visible)return;const affix=ELITES[contract.affix],states={pending:'追踪中',active:'限时目标',complete:'已完成',failed:'已失效'};$('hunt-state').textContent=states[hunt.status]||'追踪中';$('hunt-name').textContent=contract.name;$('hunt-reward').textContent=`奖励 ${contract.reward} 永久精华 · ${affix?.name||'异变'}词缀`;$('hunt-panel').dataset.status=hunt.status;if(hunt.status==='pending'){const wait=Math.max(0,7+s.zone-s.zoneTime);$('hunt-timer').textContent=wait>0?`${Math.ceil(wait)}s`:'即将出现';$('hunt-description').textContent='异变气息正在区域中聚集，准备迎战精英。';$('hunt-bar').style.width=`${Math.min(100,Math.max(0,100-wait/(7+s.zone)*100))}%`;}else if(hunt.status==='active'){$('hunt-timer').textContent=`${Math.ceil(hunt.timeLeft)}s`;$('hunt-description').textContent=`寻找金色标记的${affix?.name||'异变'}目标，在倒计时结束前将它吞噬。`;$('hunt-bar').style.width=`${Math.max(0,hunt.timeLeft/contract.time*100)}%`;}else{$('hunt-timer').textContent=hunt.status==='complete'?'完成':'超时';$('hunt-description').textContent=hunt.status==='complete'?'永久精华已经结算，本区域狩猎完成。':'目标仍可被吞噬，但永久精华悬赏已经失效。';$('hunt-bar').style.width=hunt.status==='complete'?'100%':'0%';}}
 function setSkillButton(id,left,max,{name,charge=null,label=null}={}){const button=$(id),needsCharge=charge!==null&&charge<100,recovery=needsCharge&&left<=0?100-charge:Math.min(100,left/Math.max(.01,max)*100),status=left>0?`${left.toFixed(1)}s`:needsCharge?`充能 ${Math.floor(charge)}%`:label||'就绪';button.style.setProperty('--recovery',`${recovery}%`);button.querySelector('.cooldown').textContent=status;button.classList.toggle('cooling',left>0||needsCharge);button.classList.toggle('ready',left<=0&&!needsCharge);button.classList.toggle('charged',id==='ultimate'&&left<=0&&!needsCharge);button.setAttribute('aria-label',`${name}，${left>0?`冷却 ${left.toFixed(1)} 秒`:needsCharge?`充能 ${Math.floor(charge)}%`:label||'就绪'}`);}
 function updateHUD(){const s=game.state,h=s.hero,o=s.objectives||{},stats=game.getStats?.()||{},form=h.level>=12?'深渊形态':h.level>=6?'变异形态':'初生形态';$('hero-name').textContent=h.level>=12?'深渊粪泥兽':h.level>=6?'变异米田共':'米田共';$('level').textContent=`LV. ${h.level}`;$('hp-text').textContent=`${Math.ceil(h.hp)} / ${Math.round(h.maxHp)}`;$('hp-bar').style.width=`${Math.max(0,h.hp/h.maxHp*100)}%`;$('xp-bar').style.width=`${Math.min(100,h.xp/h.nextXp*100)}%`;$('xp-text').textContent=`${Math.floor(h.xp)} / ${Math.floor(h.nextXp)}`;$('form-name').textContent=form;$('next-form').textContent=h.level<6?`距离蜕变 ${6-h.level} 级`:h.level<12?`距离蜕变 ${12-h.level} 级`:'完全体';$('chapter').textContent=`CHAPTER ${ROMAN[s.zone]}`;$('zone-name').textContent=REGION[s.zone];$('zone-mood').textContent=MOTTO[s.zone];$('zone-number').textContent=`0${s.zone+1} / 05`;$('minimap-caption').textContent=REGION[s.zone];$('timer').textContent=fmt(s.time);$('kill-counter').textContent=`吞噬 ${s.stats?.eaten||0}`;$('essence').textContent=s.meta?.essence||0;$('eat-progress').textContent=`${o.eaten||0} / ${o.target||0}`;$('landmark-progress').textContent=`${o.landmarks||0} / ${o.targetLandmarks||2}`;$('eat-progress').classList.toggle('done',(o.eaten||0)>=(o.target||0));$('landmark-progress').classList.toggle('done',(o.landmarks||0)>=(o.targetLandmarks||2));$('goal-bar').style.width=`${Math.min(100,(o.eaten||0)/(o.target||1)*100)}%`;
  const boss=s.enemies.find(e=>e.boss&&!e.dead&&e.hp>0);show('boss-ui',!!boss&&s.mode!=='menu');if(boss){$('boss-name').textContent=BOSS[s.zone];$('boss-bar').style.width=`${Math.max(0,boss.hp/boss.maxHp*100)}%`;$('boss-hp-text').textContent=`${Math.ceil(boss.hp)} / ${Math.ceil(boss.maxHp)}`;$('boss-phase').textContent=`阶段 ${ROMAN[boss.phase?boss.phase-1:boss.hp/boss.maxHp<.33?2:boss.hp/boss.maxHp<.66?1:0]}`;}
- $('quest-title').textContent=boss?'击败区域统治者':s.portal?.active?'前往北侧出口':['一个不太体面的开始','水道中的秘密','村落的最后防线','突破王国封锁','吞噬世界的规则'][s.zone];$('quest-description').textContent=boss?'留意红色预警。移动躲避后，抓住空隙发动技能。':s.portal?.active?'统治者已经倒下。前往地图上方的传送门。':'吞噬弱小生物，靠近金色地标进行调查。';$('hint').textContent=boss?'红圈变亮 → 离开范围 → Z 三段反击':s.portal?.active?'靠近出口，按 F 或点击进入按钮':'绿色单位可吞噬 · 金色菱形是地标';updateHuntPanel(s);
+ $('quest-title').textContent=boss?'击败区域统治者':s.portal?.active?'前往北侧出口':['一个不太体面的开始','水道中的秘密','村落的最后防线','突破王国封锁','吞噬世界的规则'][s.zone];$('quest-description').textContent=boss?'留意红色预警。移动躲避后，抓住空隙发动技能。':s.portal?.active?'统治者已经倒下。前往地图上方的传送门。':'吞噬弱小生物，靠近金色地标进行调查。';$('hint').textContent=boss?'红圈变亮 → 离开范围 → Z 三段反击':s.portal?.active?'靠近出口，按 F 或点击进入按钮':'绿色单位可吞噬 · 金色菱形是地标';updateHuntPanel(s);updateTrialHUD(s);
  const biteLeft=Math.max(0,h.biteCooldown||0),combo=h.biteWindow>0&&h.biteStep>0;setSkillButton('bite',biteLeft,stats.cooldownMax?.bite||.34,{name:'连牙撕咬',label:combo?`连段 ${h.biteStep}/3`:null});$('bite').classList.toggle('combo',combo);$('bite').dataset.combo=String(combo?h.biteStep:0);setSkillButton('pulse',Math.max(0,s.cooldowns?.pulse||0),stats.cooldownMax?.pulse||6,{name:'腐蚀脉冲'});setSkillButton('dash',Math.max(0,s.cooldowns?.dash||0),stats.cooldownMax?.dash||3.5,{name:'暴食冲刺'});setSkillButton('ultimate',Math.max(0,s.cooldowns?.ultimate||0),stats.cooldownMax?.ultimate||14,{name:'终极进化',charge:h.ultimate});
  $('power-stat').textContent=Number(stats.power||h.power||0).toFixed(1);$('speed-stat').textContent=Number(stats.speed||h.speed||0).toFixed(2);$('devour-stat').textContent=`${Math.round(stats.edibleThreshold||0)} HP`;const genes=Object.entries(s.upgrades||{}).filter(([,rank])=>rank>0);$('journal-button').title=`旅途 / 遗物 ${s.relics.length} / 可领取成就 ${game.getAchievements().filter(a=>a.ready).length}`;$('gene-stat').textContent=genes.reduce((sum,[,rank])=>sum+rank,0);$('build-chips').innerHTML=genes.length?genes.slice(-4).map(([id,rank])=>`<span class="build-chip">${escapeHTML((Array.isArray(UPGRADES)?UPGRADES.find(u=>u.id===id):UPGRADES?.[id])?.name||id)} <b>×${rank}</b></span>`).join(''):'<span class="empty-build">尚未选择进化</span>';
  const nearest=s.enemies.filter(e=>!e.dead&&!e.boss).map(e=>({e,d:Math.hypot(e.x-h.x,e.z-h.z)})).filter(x=>x.d<9).sort((a,b)=>a.d-b.d)[0];show('target-panel',!!nearest&&s.mode!=='menu'&&!boss);if(nearest){const e=nearest.e,edible=!!e.edible,affix=ELITES[e.elite];$('target-panel').classList.toggle('edible',edible);$('target-panel').classList.toggle('elite',!!e.elite);$('target-distance').textContent=`${nearest.d.toFixed(1)}m`;$('target-name').textContent=e.elite?`${e.eliteName||affix?.name||'异变'} · ${NAMES[e.type]||e.type}`:NAMES[e.type]||e.type;$('target-state').textContent=edible?'可吞噬':e.elite?`${affix?.name||'精英'}词缀`:'需削弱';$('target-hint').textContent=edible?'靠近目标即可自动吞噬':e.elite==='bulwark'&&!e.armorBroken?'先击破半血铁壳，再压入吞噬线':e.elite==='frenzy'?'高速连击精英，使用冲刺拉开距离':e.elite==='plague'?'疫化攻击会追加范围预警':'攻击至生命低于吞噬线';$('target-bar').style.width=`${Math.max(0,Math.min(100,e.hp/e.maxHp*100))}%`;}
  const site=s.landmarks.find(l=>!l.resolved&&Math.hypot(h.x-l.x,h.z-l.z)<2.2);show('interact-button',stats.canInteract);$('interact-button').textContent=site?`F · 调查${site.name}`:s.zone===4?'F · 吞噬最后的规则':'F · 进入下一区域';$('relic-status').textContent=`遗物 ${s.relics.length} · 成就待领 ${game.getAchievements().filter(a=>a.ready).length}${game.hasRelic('ward')?` · 守护${h.wardCooldown>0?h.wardCooldown.toFixed(1)+'s':'就绪'}`:''}`;drawMinimap();updateLabels();
  // Read-only DOM diagnostics for QA: real state, never a gameplay control.
- $('world').dataset.mode=s.mode;$('world').dataset.zone=String(s.zone);$('world').dataset.hero=JSON.stringify({x:+h.x.toFixed(3),z:+h.z.toFixed(3),level:h.level,hp:+h.hp.toFixed(2)});$('world').dataset.metrics=JSON.stringify(renderer.getMetrics?.()||{});
+ $('world').dataset.mode=s.mode;$('world').dataset.journey=s.journey;$('world').dataset.origin=s.origin;$('world').dataset.zone=String(s.zone);$('world').dataset.hero=JSON.stringify({x:+h.x.toFixed(3),z:+h.z.toFixed(3),level:h.level,hp:+h.hp.toFixed(2)});$('world').dataset.metrics=JSON.stringify(renderer.getMetrics?.()||{});
  if(s.mode==='upgrade'&&choiceKey!==(s.upgradeChoices||[]).map(x=>typeof x==='string'?x:x.id||x.name).join(','))renderUpgrades();}
 function resize(){if(renderer)renderer.resize(innerWidth,innerHeight);}
 function togglePause(){if(game.state.mode==='playing')game.pause();else if(game.state.mode==='paused'&&$('info-screen').classList.contains('hidden'))game.unpause();}
 function bindings(){
- $('expedition-close').onclick=()=>game.closeExpedition();$('collection-button').onclick=()=>openInfo('collection');$('achievements-button').onclick=()=>openInfo('achievements');$('start-button').onclick=start;$('again-button').onclick=start;$('continue-button').onclick=()=>{audio.unlock();game.resume();previousZone=-1;};$('pause-button').onclick=togglePause;$('resume-button').onclick=()=>game.unpause();$('save-menu-button').onclick=()=>{game.save();game.returnToMenu();refreshSave();};$('end-menu-button').onclick=()=>{game.returnToMenu();refreshSave();};$('how-button').onclick=()=>openInfo('how');$('guide-button').onclick=()=>openInfo('how');$('settings-button').onclick=()=>openInfo('settings');$('pause-settings').onclick=()=>openInfo('settings');$('meta-button').onclick=()=>openInfo('meta');$('journal-button').onclick=()=>openInfo('journal');document.querySelectorAll('[data-info]').forEach(button=>button.onclick=()=>renderInfo(button.dataset.info));$('info-close').onclick=()=>{const wasPaused=infoBack==='paused';hideInfo();if(wasPaused)show('pause-screen',true);};$('interact-button').onclick=()=>game.interact();$('bite').onclick=()=>{audio.unlock();game.attack();};for(const id of ['pulse','dash','ultimate'])$(id).onclick=()=>{audio.unlock();game.skill(id);};
+ $('expedition-close').onclick=()=>game.closeExpedition();$('collection-button').onclick=()=>openInfo('collection');$('achievements-button').onclick=()=>openInfo('achievements');$('origin-select').onchange=refreshSetup;$('journey-select').onchange=refreshSetup;$('records-button').onclick=()=>openInfo('records');$('end-records-button').onclick=()=>openInfo('records');$('trial-button').onclick=()=>start(true,true);$('start-button').onclick=()=>start();$('again-button').onclick=()=>start(true);$('continue-button').onclick=()=>{audio.unlock();game.resume();previousZone=-1;};$('pause-button').onclick=togglePause;$('resume-button').onclick=()=>game.unpause();$('save-menu-button').onclick=()=>{game.save();game.returnToMenu();refreshSave();};$('end-menu-button').onclick=()=>{game.returnToMenu();refreshSave();};$('how-button').onclick=()=>openInfo('how');$('guide-button').onclick=()=>openInfo('how');$('settings-button').onclick=()=>openInfo('settings');$('pause-settings').onclick=()=>openInfo('settings');$('meta-button').onclick=()=>openInfo('meta');$('journal-button').onclick=()=>openInfo('journal');document.querySelectorAll('[data-info]').forEach(button=>button.onclick=()=>renderInfo(button.dataset.info));$('info-close').onclick=()=>{const wasPaused=infoBack==='paused';hideInfo();if(wasPaused)show('pause-screen',true);};$('interact-button').onclick=()=>game.interact();$('bite').onclick=()=>{audio.unlock();game.attack();};for(const id of ['pulse','dash','ultimate'])$(id).onclick=()=>{audio.unlock();game.skill(id);};
  addEventListener('keydown',e=>{if(e.target instanceof HTMLInputElement||e.target instanceof HTMLSelectElement)return;const k=e.key.toLowerCase();if([' ','arrowup','arrowdown','arrowleft','arrowright'].includes(k))e.preventDefault();if(k==='escape'){if(!$('info-screen').classList.contains('hidden'))$('info-close').click();else if(game.state.mode==='event')game.closeExpedition();else togglePause();return;}if(!$('info-screen').classList.contains('hidden'))return;if(k==='h'&&!e.repeat&&game.state.mode!=='menu'){openInfo('how');return;}if(k==='j'&&!e.repeat&&game.state.mode!=='menu'){openInfo('journal');return;}if(game.state.mode==='event'&&['1','2','3'].includes(k)&&!e.repeat){game.chooseExpedition(+k-1);return;}if(game.state.mode==='upgrade'&&['1','2','3'].includes(k)&&!e.repeat){game.chooseUpgrade(+k-1);renderUpgrades();return;}if(game.state.mode!=='playing')return;audio.unlock();keys.add(k);if(['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright'].includes(k))moveTarget=null;if(!e.repeat){if(k==='z')game.attack();if(k===' ')game.skill('pulse');if(k==='q')game.skill('dash');if(k==='e')game.skill('ultimate');if(k==='f')game.interact();}});
  addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));const clearInput=()=>{keys.clear();touch.x=touch.z=0;moveTarget=null;};addEventListener('blur',()=>{clearInput();if(game.state.mode==='playing')game.pause();});document.addEventListener('visibilitychange',()=>{if(document.hidden){clearInput();if(game.state.mode==='playing')game.pause();game.save();}});addEventListener('pagehide',()=>game.save());addEventListener('resize',resize);
  $('world').addEventListener('pointerdown',e=>{if(game.state.mode!=='playing')return;audio.unlock();const target=renderer.groundPoint?.(e.clientX,e.clientY);const route=target?navigate(game.state.hero,target,game.state.hero.r):[];moveTarget=route.length?{...route.shift(),route}:null;if(!moveTarget)toast('这里过不去，请选择一处开阔地面。');});
