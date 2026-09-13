@@ -177,6 +177,15 @@ body:not([data-game-mode=playing]) #touch-rotate,.photo-mode #touch-rotate{displ
  .touch-ui .menu-content{max-width:100%;width:min(650px,100%)}.touch-ui .upgrade-panel h2{font-size:23px;margin:8px 0}.touch-ui .upgrade-cards{margin:12px 0;gap:10px}.touch-ui .upgrade-card{min-height:165px;padding:14px}.touch-ui .upgrade-card>span{margin-bottom:12px}
 }
 </style>
+<style>
+.world-label.npc{color:#f1d99d;z-index:2;transform:translate(-50%,-100%);pointer-events:none}
+.world-label.npc .npc-name{display:block;font-size:9px;letter-spacing:1px;color:#f4dba3}
+.world-label.npc .npc-bubble{display:block;position:relative;max-width:min(230px,32vw);margin:5px auto 0;padding:7px 10px;border:1px solid #d5b5759c;border-radius:10px;background:linear-gradient(135deg,#182c20f5,#101d17ef);box-shadow:0 5px 15px #0005;color:#f2e7c6;font-size:10px;line-height:1.45;white-space:normal}
+.world-label.npc .npc-bubble:before{content:\"\";position:absolute;left:50%;bottom:-6px;width:10px;height:10px;background:#14251dec;border-right:1px solid #d5b5759c;border-bottom:1px solid #d5b5759c;transform:translateX(-50%) rotate(45deg)}
+.world-label.npc.active .npc-bubble{border-color:#f6e6a5;box-shadow:0 0 18px #e9c87955,0 5px 15px #0005}
+.world-label.npc.active .npc-name{color:#fff0bd}
+@media(max-width:600px){.world-label.npc .npc-bubble{max-width:180px;font-size:9px;padding:6px 8px}.world-label.npc .npc-name{font-size:8px}}
+</style>
 </head>
 <body>
 <section id="launch-help" style="padding:28px;max-width:640px;margin:auto;line-height:1.8">
@@ -218,7 +227,7 @@ body:not([data-game-mode=playing]) #touch-rotate,.photo-mode #touch-rotate{displ
  <div class="preparation-row"><label>出身<select id="origin-select" aria-label="选择出身"><option value="unformed">初生之种 · 均衡</option><option value="fangborn">裂齿猎手 · 近战</option><option value="tideborn">腐潮行者 · 技能</option><option value="shellborn">磐壳守望 · 生存</option></select></label><label>旅程<select id="journey-select" aria-label="选择旅程"><option value="campaign">五区战役</option><option value="trial" id="trial-option" disabled>五王试炼 · 通关解锁</option></select></label></div><p id="origin-description" class="setup-description"></p><div class="menu-buttons"><button id="start-button" class="primary">开始新进化 <span>↗</span></button><button id="continue-button" class="secondary" disabled>继续旅程 <span id="save-label">暂无记录</span></button></div>
  <div class="menu-links"><button id="meta-button">永久进化</button><span>/</span><button id="how-button">冒险指南</button><span>/</span><button id="collection-button">遗物图鉴</button><span>/</span><button id="achievements-button">成就</button><span>/</span><button id="records-button">战绩</button><span>/</span><button id="settings-button">设置</button></div>
  <div class="difficulty-row"><span>冒险强度</span><label><input name="difficulty" type="radio" value="story" checked> 轻松旅程</label><label><input name="difficulty" type="radio" value="normal"> 标准挑战</label></div>
- </section><aside class="menu-route" aria-label="五区域冒险路线"><div class="eyebrow gold">WORLD ROUTE · 05</div><ol><li class="active"><i>01</i><span><b>新手村厕所</b><small>从最底层醒来</small></span></li><li><i>02</i><span><b>腐烂下水道</b><small>饥饿开始回响</small></span></li><li><i>03</i><span><b>新手村外围</b><small>第一次被世界看见</small></span></li><li><i>04</i><span><b>王国边境</b><small>击穿秩序的防线</small></span></li><li><i>05</i><span><b>圣域裂谷</b><small>吞下最后的规则</small></span></li></ol><div class="loop-card"><span>核心循环</span><b>吞噬 → 探索 → 构筑 → 挑战统治者</b><small>精准闪避 · 统治者破势 · 场景破坏 · 暂停观景</small></div></aside><div class="menu-bottom"><span>吞噬 · 进化 · 跨越五个世界</span><span>原创 HD-2D 可玩重制版 <b>v0.9.1 WEB</b></span></div>
+ </section><aside class="menu-route" aria-label="五区域冒险路线"><div class="eyebrow gold">WORLD ROUTE · 05</div><ol><li class="active"><i>01</i><span><b>新手村厕所</b><small>从最底层醒来</small></span></li><li><i>02</i><span><b>腐烂下水道</b><small>饥饿开始回响</small></span></li><li><i>03</i><span><b>新手村外围</b><small>第一次被世界看见</small></span></li><li><i>04</i><span><b>王国边境</b><small>击穿秩序的防线</small></span></li><li><i>05</i><span><b>圣域裂谷</b><small>吞下最后的规则</small></span></li></ol><div class="loop-card"><span>核心循环</span><b>吞噬 → 探索 → 构筑 → 挑战统治者</b><small>精准闪避 · 统治者破势 · 场景破坏 · NPC 梗气泡</small></div></aside><div class="menu-bottom"><span>吞噬 · 进化 · 跨越五个世界</span><span>原创 HD-2D 可玩重制版 <b>v0.10.0 WEB</b></span></div>
 </div>
 <div id="upgrade-screen" class="screen modal hidden" role="dialog" aria-modal="true" aria-labelledby="upgrade-title"><section class="upgrade-panel"><div class="eyebrow gold">EVOLUTION</div><h2 id="upgrade-title">饥饿，让你蜕变。</h2><p id="upgrade-description">选择一项基因。每一次选择，都改变你的下一口。</p><div id="upgrade-cards" class="upgrade-cards"></div><small class="muted">按 1 / 2 / 3 选择 · 选择期间世界暂停</small></section></div>
 <div id="pause-screen" class="screen modal hidden" role="dialog" aria-modal="true" aria-labelledby="pause-title"><section class="panel compact"><div class="eyebrow gold">TAKE A BREATH</div><h2 id="pause-title">世界暂时安静了。</h2><p id="pause-stats"></p><button id="resume-button" class="primary">继续冒险</button><button id="pause-settings" class="secondary">设置</button><button id="save-menu-button" class="secondary">保存并返回主菜单</button><small id="save-warning" class="muted"></small></section></div>
@@ -426,9 +435,43 @@ function validChronicle(c){
 
 return {"ORIGINS":ORIGINS,"JOURNEYS":JOURNEYS,"TRIAL_RULES":TRIAL_RULES,"RECORD_KEYS":RECORD_KEYS,"freshChronicle":freshChronicle,"validRecord":validRecord,"validChronicle":validChronicle};
 })();</script>
+<script>window.__HD2D_MODULES["narrative"]=(()=>{
+
+// Abstract worldbuilding plus short, repeatable NPC head-bubbles. The data is
+// intentionally bounded and deterministic so it remains safe to persist and
+// behaves identically in WebGL, Canvas compatibility mode and unit tests.
+const STORY_BEATS=[
+ {id:'discarded-thought',zone:0,title:'序 · 被丢弃的意识',thesis:'你不是从世界里出生，而是从世界的遗漏里醒来。',line:'厕所不是起点，是世界第一次试着把你冲走。'},
+ {id:'nameless-hunger',zone:1,title:'章一 · 无名的饥饿',thesis:'流水会冲淡名字，却冲不掉一群生物对明天的误解。',line:'下水道把所有名字冲淡，只留下饥饿。'},
+ {id:'hero-shaped-hole',zone:2,title:'章二 · 英雄形状的空洞',thesis:'当村民需要一个英雄时，敌人和英雄会一起被制造出来。',line:'他们需要英雄，你只需要一张嘴。'},
+ {id:'agreed-fear',zone:3,title:'章三 · 被同意的边界',thesis:'边界不是墙，是一群人共同同意要害怕什么。',line:'红色长枪守住的不是国土，是集体的自尊。'},
+ {id:'rule-aftertaste',zone:4,title:'章四 · 规则的余味',thesis:'裂隙没有尽头；所谓尽头，只是规则拒绝继续生长。',line:'如果规则有味道，就把它也吞下。'},
+];
+const ENDING_BEAT={id:'aftertaste',title:'尾声 · 世界的解释',thesis:'你吞下的不是世界，而是它对自己的解释。',line:'胃里没有终点，只有下一条还没被命名的路。'};
+const NPCS=[
+ {id:'bubble-prophet',zone:0,name:'桶边先知·泡泡',role:'冲水哲学家',glyph:'◎',color:'#d5b575',x:-2.8,z:5.8,reward:{type:'heal',value:12,label:'恢复 12 生命'},bubbles:['别急着进化，先确认自己不是冲水按钮。','我观察过 1,024 次冲水，唯一没冲走的是房租。','世界说你是废物，我说你是可移动的剧情节点。']},
+ {id:'door-gap-sage',zone:0,name:'门缝里的阿塞',role:'兼职伏笔',glyph:'◇',color:'#9fd19b',x:2.8,z:5.8,reward:{type:'xp',value:10,label:'获得 10 经验'},bubbles:['英雄一般从门里进场，意外一般从门缝进场。','我不是 NPC，我只是被剧情放在这里的一个逗号。','靠近一点，我的存在感需要加载。']},
+ {id:'rat-accountant',zone:1,name:'七号鼠账房',role:'末日资产配置师',glyph:'✦',color:'#9ae5be',x:-3.1,z:5.6,reward:{type:'essence',value:1,label:'获得 1 永久精华'},bubbles:['我们不是囤粮，是在做末日资产配置。','鼠群没有国王，只有一份永远对不上的账。','别问利率，问就是下一口会复利。']},
+ {id:'mold-streamer',zone:1,name:'绿点菌盖',role:'下水道实况主',glyph:'◉',color:'#8ed49b',x:3.1,z:5.6,reward:{type:'heal',value:14,label:'恢复 14 生命'},bubbles:['下水道的光不是希望，是我的直播补光灯。','今天的主题是：如何优雅地在污水里保持高光。','关注我，下一次发霉就不迷路。']},
+ {id:'scarecrow-pm',zone:2,name:'稻哥·稻草人产品经理',role:'村口流程设计师',glyph:'▣',color:'#f1d184',x:-3.2,z:5.9,reward:{type:'xp',value:16,label:'获得 16 经验'},bubbles:['英雄请从左边绕行，右边是剧情伏笔，踩了要加班。','需求已确认：勇者打史莱姆，史莱姆负责被打。','村口的路牌不是路牌，是世界的用户协议。']},
+ {id:'intern-hero',zone:2,name:'实习勇者·小罗',role:'未转正的救世主',glyph:'⚔',color:'#eab780',x:3.2,z:5.9,reward:{type:'heal',value:18,label:'恢复 18 生命'},bubbles:['勇者不打史莱姆，会被系统判定为缺少新手引导。','我的圣剑还在审批，先用木棍维护世界和平。','如果我倒下，请把我的工牌交给下一个剧情。']},
+ {id:'border-stamp',zone:3,name:'红章门卫',role:'边境合规专员',glyph:'▤',color:'#f5b39f',x:-3.4,z:5.8,reward:{type:'essence',value:2,label:'获得 2 永久精华'},bubbles:['通行证没有，体检报告也没有，倒是很会吃。','王国的预算只够修一面墙，所以我们把恐惧涂成红色。','请在被吞噬前完成满意度调查，满分是活着。']},
+ {id:'flag-auditor',zone:3,name:'小旗审计员',role:'军旗损耗核算师',glyph:'△',color:'#a2dcf6',x:3.4,z:5.8,reward:{type:'xp',value:20,label:'获得 20 经验'},bubbles:['军旗不是倒了，是在进行一次大规模横向躺平。','预算表显示：敌人太多，解决方案是把你写进资产负债表。','边境没有漏洞，只有等待被发现的入口。']},
+ {id:'footnote-priest',zone:4,name:'脚注祭司',role:'神谕免责声明专员',glyph:'✧',color:'#e6c7ff',x:-3.5,z:5.8,reward:{type:'heal',value:22,label:'恢复 22 生命'},bubbles:['神谕说你会拯救世界；脚注写着：先别把祭坛吃了。','神明负责发光，祭司负责解释为什么没发工资。','请把终极进化留给终极，普通进化也很有礼貌。']},
+ {id:'rift-support',zone:4,name:'阿零·星蚀客服',role:'宇宙故障受理员',glyph:'?',color:'#d7afff',x:3.5,z:5.8,reward:{type:'essence',value:3,label:'获得 3 永久精华'},bubbles:['如果规则有味道，说明它已经开始发霉，请尽快吞下。','您好，您的世界正在排队崩溃，预计还要五个 Boss。','感谢选择裂谷服务，您的反馈会被回响到下一个纪元。']},
+];
+const byZone=zone=>NPCS.filter(n=>n.zone===zone);
+const getNpc=(id)=>NPCS.find(n=>n.id===id)||null;
+const getZoneNPCs=(zone,talked=[])=>byZone(zone).map(n=>({...n,talked:talked.includes(n.id)}));
+const storyBeat=zone=>STORY_BEATS[zone]||STORY_BEATS[0];
+const validNpcLog=log=>Array.isArray(log)&&log.length<=NPCS.length&&new Set(log).size===log.length&&log.every(id=>!!getNpc(id));
+const validStoryState=(beat,seen)=> (beat===undefined||!!STORY_BEATS.some(b=>b.id===beat))&&(seen===undefined||Array.isArray(seen)&&seen.length<=STORY_BEATS.length&&new Set(seen).size===seen.length&&seen.every(id=>!!STORY_BEATS.some(b=>b.id===id)));
+return {STORY_BEATS,ENDING_BEAT,NPCS,byZone,getNpc,getZoneNPCs,storyBeat,validNpcLog,validStoryState};
+})();</script>
 <script>window.__HD2D_MODULES["game"]=(()=>{
 const {RELICS,EXPEDITIONS,ACHIEVEMENTS,freshProgress,validProgress}=window.__HD2D_MODULES["progression"];
 const {ORIGINS,JOURNEYS,TRIAL_RULES,freshChronicle,validChronicle}=window.__HD2D_MODULES["journey"];
+const {STORY_BEATS,getZoneNPCs,getNpc,storyBeat,validNpcLog,validStoryState}=window.__HD2D_MODULES["narrative"];
 /** Deterministic, rendering-independent campaign simulation. Distances use world metres. */
 
 
@@ -510,6 +553,9 @@ function validSave(s) {
   if (!integer(m.essence, 0, 1e9) || !['vitality', 'power', 'speed'].every(k => integer(m[k], 0, 10))) return false;
   if (m.progress !== undefined && !validProgress(m.progress)) return false;
   if (m.chronicle !== undefined && !validChronicle(m.chronicle)) return false;
+  if (!validStoryState(g.storyBeat, g.storySeen)) return false;
+  if (g.npcLog !== undefined && !validNpcLog(g.npcLog)) return false;
+  if (g.npcDialogue !== undefined && g.npcDialogue !== null && (!g.npcDialogue || !getNpc(g.npcDialogue.npcId) || typeof g.npcDialogue.text !== 'string' || g.npcDialogue.text.length > 240 || !finite(g.npcDialogue.until) || g.npcDialogue.until < 0 || g.npcDialogue.until > 1e9)) return false;
   if (g.journey !== undefined && !JOURNEYS.some(m=>m.id===g.journey)) return false;
   if (g.origin !== undefined && !ORIGINS.some(o=>o.id===g.origin)) return false;
   if (!integer(g.seed,1,4294967295)) return false;
@@ -535,7 +581,7 @@ function validSave(s) {
   if (!g.cooldowns || !['pulse', 'dash', 'ultimate'].every(k => finite(g.cooldowns[k]) && g.cooldowns[k] >= 0 && g.cooldowns[k] <= 120)) return false;
   if (!g.upgrades || !Object.entries(g.upgrades).every(([k,v]) => UPGRADES.some(u => u.id === k && integer(v, 0, u.max)))) return false;
   if (!g.stats || !['eaten','kills','damageTaken','zonesCleared','elapsed','score'].every(k => finite(g.stats[k]) && g.stats[k] >= 0)) return false;
-  if (['elitesKilled','huntsCompleted','lootCollected','hazardsTriggered','activeHits','perfectDodges','bossBreaks'].some(k => g.stats[k] !== undefined && (!finite(g.stats[k]) || g.stats[k] < 0))) return false;
+  if (['elitesKilled','huntsCompleted','lootCollected','hazardsTriggered','activeHits','perfectDodges','bossBreaks','npcTalks'].some(k => g.stats[k] !== undefined && (!finite(g.stats[k]) || g.stats[k] < 0))) return false;
   if (!g.portal || !finite(g.portal.x) || !finite(g.portal.z) || typeof g.portal.active !== 'boolean') return false;
   if (!['time','zoneTime','spawnTimer','autoAttackTimer','saveTimer'].every(k => finite(g[k]) && g[k] >= 0 && g[k] < 1e9)) return false;
   if (g.environmentTimer !== undefined && (!finite(g.environmentTimer) || g.environmentTimer < 0 || g.environmentTimer > 1e9)) return false;
@@ -663,11 +709,14 @@ class Game {
     s.hunt=hunt&&HUNT_CONTRACTS.some(c=>c.id===hunt.contract)&&['pending','active','complete','failed'].includes(hunt.status)
       ?{contract:hunt.contract,status:hunt.status,targetId:integer(hunt.targetId,1,1e9)?hunt.targetId:null,timeLeft:finite(hunt.timeLeft)?Math.max(0,hunt.timeLeft):0}
       :{contract:contract.id,status:'pending',targetId:null,timeLeft:0};
-    s.stats={elitesKilled:0,huntsCompleted:0,lootCollected:0,hazardsTriggered:0,activeHits:0,perfectDodges:0,bossBreaks:0,...s.stats};
+    s.stats={elitesKilled:0,huntsCompleted:0,lootCollected:0,hazardsTriggered:0,activeHits:0,perfectDodges:0,bossBreaks:0,npcTalks:0,...s.stats};
     s.relics ||= [];s.expeditionLog ||= [];s.activeExpedition ||= null;
     s.journey ||= 'campaign';s.origin ||= 'unformed';
     s.props ||= s.journey==='trial'?[]:this._makeProps();s.chain ||= {count:0,time:0};
     s.stats.propsBroken ||= 0;s.stats.maxChain ||= 0;
+    s.npcLog=validNpcLog(s.npcLog)?s.npcLog:[];s.storySeen=Array.isArray(s.storySeen)?s.storySeen.filter(id=>STORY_BEATS.some(b=>b.id===id)).slice(0,STORY_BEATS.length):[];
+    s.storyBeat=STORY_BEATS.some(b=>b.id===s.storyBeat)?s.storyBeat:storyBeat(s.zone).id;s.npcs=s.journey==='trial'?[]:getZoneNPCs(s.zone,s.npcLog);
+    if(s.npcDialogue&&!getNpc(s.npcDialogue.npcId))s.npcDialogue=null;
     h.wardCooldown ||= 0;
     s.landmarks.forEach((l,i)=>{l.eventId=EXPEDITIONS[s.zone*3+i].id;l.resolved=s.journey==='trial'||s.expeditionLog.some(e=>e.id===l.eventId);});
     for(const enemy of s.enemies){enemy.elite=ELITES[enemy.elite]?enemy.elite:null;if(enemy.boss){enemy.guard=integer(enemy.guard,0,3)?enemy.guard:3;enemy.stagger=finite(enemy.stagger)?Math.max(0,enemy.stagger):0;}}
@@ -688,9 +737,9 @@ class Game {
       cooldowns: { pulse: 0, dash: 0, ultimate: 0 }, upgradeChoices: [], pendingUpgrades: 0, upgrades: {},
       bossKilled: false, bossSpawned: false, spawnTimer: .8, autoAttackTimer: 0, saveTimer: 0, runRewarded: false,
       environmentTimer: 12, environmentIntroduced: false, hunt: { contract:HUNT_CONTRACTS[0].id, status:'pending', targetId:null, timeLeft:0 },
-      meta: this.meta, settings: this.settings, story: ZONES[0].story,
+      meta: this.meta, settings: this.settings, story: ZONES[0].story, storyBeat:STORY_BEATS[0].id, storySeen:[], npcs:[], npcLog:[], npcDialogue:null,
       relics:[],expeditionLog:[],activeExpedition:null,props:[],chain:{count:0,time:0},
-      stats: { eaten: 0, kills: 0, damageTaken: 0, zonesCleared: 0, elapsed: 0, score: 0, elitesKilled:0, huntsCompleted:0, lootCollected:0, hazardsTriggered:0, activeHits:0, perfectDodges:0, bossBreaks:0 },
+      stats: { eaten: 0, kills: 0, damageTaken: 0, zonesCleared: 0, elapsed: 0, score: 0, elitesKilled:0, huntsCompleted:0, lootCollected:0, hazardsTriggered:0, activeHits:0, perfectDodges:0, bossBreaks:0, npcTalks:0 },
     };
   }
 
@@ -813,6 +862,7 @@ class Game {
     s.landmarks.forEach((l,i)=>{l.eventId=EXPEDITIONS[zone*3+i].id;l.resolved=false;});
     s.activeExpedition=null;
     s.story = ZONES[zone].story;
+    s.storyBeat=storyBeat(zone).id;s.storySeen ||= [];if(!s.storySeen.includes(s.storyBeat))s.storySeen.push(s.storyBeat);s.npcs=s.journey==='trial'?[]:getZoneNPCs(zone,s.npcLog||[]);s.npcDialogue=null;
     s.spawnTimer = 1.1;s.environmentTimer=10+zone*1.5;s.environmentIntroduced=false;
     s.hunt={contract:HUNT_CONTRACTS[zone].id,status:'pending',targetId:null,timeLeft:0};
     if(s.journey==='trial'){
@@ -1139,9 +1189,38 @@ class Game {
     this.save();
   }
 
+  nearestNpc(max=2.2,freshOnly=false) {
+    const s=this.state;
+    return (s.npcs||[]).filter(n=>Math.hypot(n.x-s.hero.x,n.z-s.hero.z)<max&&(!freshOnly||!n.talked)).sort((a,b)=>Math.hypot(a.x-s.hero.x,a.z-s.hero.z)-Math.hypot(b.x-s.hero.x,b.z-s.hero.z))[0]||null;
+  }
+
+  _talkToNpc(npc) {
+    const s=this.state,definition=getNpc(npc?.id);
+    if(!definition)return false;
+    s.npcLog ||= [];
+    const first=!s.npcLog.includes(definition.id);
+    const index=Math.floor((s.time+definition.zone*3)/5.5)%definition.bubbles.length;
+    const line=definition.bubbles[index];
+    if(first){
+      s.npcLog.push(definition.id);
+      const reward=definition.reward;
+      if(reward.type==='heal')s.hero.hp=Math.min(s.hero.maxHp,s.hero.hp+reward.value);
+      if(reward.type==='essence'){this.meta.essence+=reward.value;s.meta=this.meta;}
+      if(reward.type==='xp')this._gainXp(reward.value);
+      s.stats.npcTalks=(s.stats.npcTalks||0)+1;
+    }
+    s.npcs=getZoneNPCs(s.zone,s.npcLog);
+    s.npcDialogue={npcId:definition.id,speaker:definition.name,text:line,until:s.time+5.5,reward:first?definition.reward.label:'这句梗已经听过了，但它还在自我循环。'};
+    this._effect('evolve',definition.x,definition.z,.7,1.15,definition.color);
+    this._toast(definition.name+'：'+line+(first?' · '+definition.reward.label:''));
+    this._sound('discover');this.save();return true;
+  }
+
   interact() {
     const s=this.state;
     if(s.mode!=='playing') return false;
+    const npc=this.nearestNpc(2.2,true);
+    if(npc)return this._talkToNpc(npc);
     const near=s.landmarks.find(l=>!l.resolved && dist(l,s.hero)<2.2);
     if(near) {
       if(!near.found)this._discover(near);
@@ -1457,7 +1536,10 @@ class Game {
       hp:h.hp,maxHp:h.maxHp,level:h.level,xp:h.xp,nextXp:h.nextXp,xpRatio:clamp(h.xp/h.nextXp,0,1),ultimate:h.ultimate,
       power:h.power,speed:h.speed,time:s.time,objectives:{...s.objectives},boss:boss?{hp:boss.hp,maxHp:boss.maxHp,name:ZONES[s.zone].boss,phase:boss.phase,guard:boss.guard??3,stagger:boss.stagger||0}:null,
       cooldowns:{...s.cooldowns,bite:h.biteCooldown},cooldownMax:{bite:h.biteStep===3?.48:.34,pulse:6*reduction,dash:3.5*reduction,ultimate:14*reduction},
-      canInteract:s.mode==='playing' && ((s.portal.active && dist(h,s.portal)<2.35)||s.landmarks.some(l=>!l.resolved && dist(h,l)<2.2)),
+      canInteract:s.mode==='playing' && (!!this.nearestNpc(2.2,true)||(s.portal.active && dist(h,s.portal)<2.35)||s.landmarks.some(l=>!l.resolved && dist(h,l)<2.2)),
+      nearbyNpc:s.mode==='playing'&&this.nearestNpc(2.2,true)?{...this.nearestNpc(2.2,true)}:null,
+      storyBeat:{...storyBeat(s.zone),seen:(s.storySeen||[]).includes(s.storyBeat)},
+      npcDialogue:s.npcDialogue?{...s.npcDialogue}:null,npcTalks:s.stats.npcTalks||0,
       portalActive:s.portal.active,edibleThreshold:this._eatThreshold(),pendingUpgrades:s.pendingUpgrades,
       meta:{...this.meta},metaCosts:Object.fromEntries(['vitality','power','speed'].map(k=>[k,12+this.meta[k]*10])),
       upgrades:{...s.upgrades},save:this.getSaveInfo(),reward:s.lastReward||0,
@@ -1719,7 +1801,7 @@ function randomRange(rng,min,max){return min+rng()*(max-min);}
 class WorldRenderer {
  constructor(canvas,options={}){
   if(options.compatibilityConfirmed===true)return new CanvasFallbackRenderer(canvas,options,new Error('玩家主动选择 2D 兼容画面'));
-  this.canvas=canvas;this.options={quality:'high',reducedMotion:false,...options};this._appliedQuality=this.options.quality;this.width=canvas.clientWidth||1280;this.height=canvas.clientHeight||800;this.zone=-1;this.time=0;this.zoneCache=new Map();this.entities=new Map();this.pickupMeshes=new Map();this.effectMeshes=new Map();this.projectileMeshes=new Map();this.landmarkMeshes=new Map();this.textures=new Set();this.materials=new Map();this.geometries=new Map();this.atlasTextures=[];this.atlasFrames=[];this.staticAtlasSheet=null;this.spriteTextures=new Map();this.resources=[];this.tmpV=new THREE.Vector3();this.sizeV=new THREE.Vector3();this.tmpObject=new THREE.Object3D();
+  this.canvas=canvas;this.options={quality:'high',reducedMotion:false,...options};this._appliedQuality=this.options.quality;this.width=canvas.clientWidth||1280;this.height=canvas.clientHeight||800;this.zone=-1;this.time=0;this.zoneCache=new Map();this.entities=new Map();this.pickupMeshes=new Map();this.effectMeshes=new Map();this.projectileMeshes=new Map();this.landmarkMeshes=new Map();this.npcMeshes=new Map();this.textures=new Set();this.materials=new Map();this.geometries=new Map();this.atlasTextures=[];this.atlasFrames=[];this.staticAtlasSheet=null;this.spriteTextures=new Map();this.resources=[];this.tmpV=new THREE.Vector3();this.sizeV=new THREE.Vector3();this.tmpObject=new THREE.Object3D();
   this.animationActors=new Map();this.animationSheets=[];this.ghosts=new Map();this.animationPaused=false;
   try{this.renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:'high-performance'});}
   catch(error){const failure=new Error('当前浏览器未能建立 WebGL 三维场景。已停止启动并保留原画质；请在 Safari/Chrome 的在线页面重试。'+(error?.message?' 详情：'+error.message:''));failure.code='HD2D_WEBGL_UNAVAILABLE';throw failure;}
@@ -1950,6 +2032,24 @@ class WorldRenderer {
 	 }
  syncProjectiles(items){const seen=new Set();for(const item of items||[]){seen.add(item.id);let mesh=this.projectileMeshes.get(item.id);if(!mesh){mesh=new THREE.Mesh(this.geometries.get('octa'),this.basic(item.color||0xe0b1ff));this.dynamic.add(mesh);this.projectileMeshes.set(item.id,mesh);}mesh.position.set(item.x,.7,item.z);mesh.scale.setScalar(item.r||.2);mesh.rotation.set(this.options.reducedMotion?0:this.time*4,this.options.reducedMotion?0:this.time*3,0);}for(const[id,mesh]of this.projectileMeshes)if(!seen.has(id)){this.dynamic.remove(mesh);this.projectileMeshes.delete(id);}}
  syncLandmarks(items){const seen=new Set();for(const item of items||[]){seen.add(item.id);let group=this.landmarkMeshes.get(item.id);if(!group){group=new THREE.Group();const stone=new THREE.Mesh(this.geometries.get('cylinder'),this.mat(0xc4b7a0));stone.scale.set(.45,.2,.45);stone.position.y=.1;group.add(stone);const crystal=new THREE.Mesh(this.geometries.get('octa'),this.basic(0xf3dca2));crystal.scale.set(.19,.32,.19);crystal.position.y=.8;group.add(crystal);this.dynamic.add(group);this.landmarkMeshes.set(item.id,group);}group.position.set(item.x,0,item.z);group.children[1].position.y=.8+(this.options.reducedMotion?0:Math.sin(this.time*2)*.08);group.children[1].rotation.y=this.options.reducedMotion?0:this.time;group.visible=!item.resolved;}for(const[id,group]of this.landmarkMeshes)if(!seen.has(id)){this.dynamic.remove(group);this.landmarkMeshes.delete(id);}}
+ syncNPCs(items){
+  this.npcMeshes ||= new Map();const seen=new Set();
+  for(const item of items||[]){
+   seen.add(item.id);let group=this.npcMeshes.get(item.id);
+   if(!group){
+    const tone=Number.parseInt(String(item.color||'#d5b575').replace('#',''),16)||0xd5b575;
+    group=new THREE.Group();group.userData.npcId=item.id;
+    const aura=new THREE.Mesh(this.geometries.get('ring'),this.basic(tone,{transparent:true,opacity:.46,depthWrite:false,side:THREE.DoubleSide,blending:THREE.AdditiveBlending}));aura.rotation.x=-Math.PI/2;aura.position.y=.055;group.add(aura);
+    const body=new THREE.Mesh(this.geometries.get('cylinder'),this.mat(tone));body.scale.set(.28,.72,.28);body.position.y=.52;body.castShadow=true;group.add(body);
+    const head=new THREE.Mesh(this.geometries.get('rock'),this.mat(0xe5d5aa));head.scale.set(.34,.3,.34);head.position.y=1.12;head.castShadow=true;group.add(head);
+    const badge=new THREE.Mesh(this.geometries.get('octa'),this.basic(tone,{transparent:true,opacity:.94}));badge.scale.set(.11,.18,.11);badge.position.set(0,1.53,.16);group.add(badge);
+    this.dynamic.add(group);this.npcMeshes.set(item.id,group);
+   }
+   const bob=this.options.reducedMotion?0:Math.sin(this.time*2.1+(Number(item.zone)||0))*.035;
+   group.position.set(item.x,0,item.z);group.children[1].position.y=.52+bob;group.children[2].position.y=1.12+bob;group.children[3].position.y=1.53+bob;group.children[3].rotation.y=this.options.reducedMotion?0:this.time*1.2;group.children[0].scale.setScalar(item.talked?.68:.75+(this.options.reducedMotion?0:Math.sin(this.time*2.1)*.04));
+  }
+  for(const[id,group]of this.npcMeshes)if(!seen.has(id)){this.dynamic.remove(group);this.npcMeshes.delete(id);}
+ }
  syncProps(items){
   this.propMeshes ||= new Map();const seen=new Set();
   for(const p of items||[]){seen.add(p.id);let g=this.propMeshes.get(p.id);
@@ -1998,14 +2098,14 @@ class WorldRenderer {
   const distance=(this.camera.aspect<.9?1.55:this.camera.aspect<1.25?1.18:1)*(this.options.cameraZoom||1);this.cameraTarget.set(this.follow.x,0,this.follow.z);this.camera.position.set(this.follow.x+(isMenu&&!this.options.reducedMotion?Math.sin(this.time*.06)*1.2:0),25*distance,this.follow.z+30*distance);this.camera.lookAt(this.cameraTarget);this.camera.updateMatrixWorld();
   this.updateActor(this.hero,h,visualDt,true);this.heroLight.position.set(h.x||0,1.5,h.z||0);const activeUltimate=(state.effects||[]).find(effect=>effect.type==='ultimate'&&(effect.age||0)<effect.duration);this.heroLight.intensity=activeUltimate?2+3*(1-(activeUltimate.age||0)/activeUltimate.duration):2;
   this.syncActors(state.enemies,visualDt,state.effects||[]);
-  this.syncProps(state.props);this.syncPickups(state.pickups);this.syncEffects(state.effects);this.syncProjectiles(state.projectiles);this.syncLandmarks(state.landmarks);
+  this.syncProps(state.props);this.syncPickups(state.pickups);this.syncEffects(state.effects);this.syncProjectiles(state.projectiles);this.syncLandmarks(state.landmarks);this.syncNPCs(state.npcs);
   const portal=state.portal||{x:0,z:-14,active:false};this.portal.group.position.set(portal.x||0,0,portal.z??-14);this.portal.ring.rotation.z=this.options.reducedMotion?0:this.time*.12;this.portal.ring.material.opacity=portal.active?.85:.19;this.portal.glow.material.opacity=portal.active?.37:.045;this.portal.light.intensity=portal.active?7:.2;this.portal.ring.scale.setScalar(portal.active&&!this.options.reducedMotion?1+Math.sin(this.time*2)*.035:1);
   if(!this.options.reducedMotion){const p=this.particles.geometry.attributes.position.array;for(let i=0;i<p.length/3;i++){p[i*3]=this.particleBase[i*3]+Math.sin(this.time*.2+i)*.6;p[i*3+1]=this.particleBase[i*3+1]+Math.sin(this.time*.35+i)*.2;}this.particles.geometry.attributes.position.needsUpdate=true;}
   if(this.usePost){this.renderer.setRenderTarget(this.target);this.renderer.render(this.scene,this.camera);this.renderer.setRenderTarget(null);this.renderer.render(this.postScene,this.postCamera);}else this.renderer.render(this.scene,this.camera);
  }
  groundPoint(clientX,clientY){const rect=this.canvas.getBoundingClientRect();const ray=new THREE.Raycaster();ray.setFromCamera(new THREE.Vector2((clientX-rect.left)/rect.width*2-1,-(clientY-rect.top)/rect.height*2+1),this.camera);const hit=ray.ray.intersectPlane(new THREE.Plane(new THREE.Vector3(0,1,0),0),new THREE.Vector3());return hit?{x:hit.x,z:hit.z}:null;}
  project(x,z,y=0){this.tmpV.set(x,y,z).project(this.camera);return{x:(this.tmpV.x*.5+.5)*this.width,y:(-.5*this.tmpV.y+.5)*this.height,visible:this.tmpV.z>-1&&this.tmpV.z<1&&Math.abs(this.tmpV.x)<1.15&&Math.abs(this.tmpV.y)<1.15};}
-  getMetrics(){return{renderer:'Three.js WebGL · perspective 3D + pixel billboards',threeRevision:THREE.REVISION,zone:this.zone,drawCalls:this.renderer.info.render.calls,triangles:this.renderer.info.render.triangles,geometries:this.renderer.info.memory.geometries,textures:this.renderer.info.memory.textures,actors:this.entities.size+1,postprocessing:this.usePost,postprocessingUnavailableReason:this.postUnavailableReason||null,reducedMotion:this.options.reducedMotion,quality:this._appliedQuality,shadows:this.renderer.shadowMap.enabled,pixelRatio:this.renderer.getPixelRatio(),atlas:!!this.staticAtlasSheet,staticAtlasTextureCount:this.atlasTextures.length,staticAtlasFrameCount:this.atlasFrames.length,staticAtlasShared:this.atlasTextures.length===1,animationActorCount:this.animationActors.size,animationAtlasCount:this.animationSheets.length,animationClipNames:[...new Set([...this.animationActors.values()].flatMap(actor=>Object.keys(actor.clips)))].sort(),animatedEntities:[this.hero,...this.entities.values()].filter(actor=>this.animationActors.has(actor.animationKey)).length,deathGhosts:this.ghosts.size,heroAnimation:this.hero.playback?.intent||null};}
+  getMetrics(){return{renderer:'Three.js WebGL · perspective 3D + pixel billboards',threeRevision:THREE.REVISION,zone:this.zone,drawCalls:this.renderer.info.render.calls,triangles:this.renderer.info.render.triangles,geometries:this.renderer.info.memory.geometries,textures:this.renderer.info.memory.textures,actors:this.entities.size+1,npcs:this.npcMeshes?.size||0,postprocessing:this.usePost,postprocessingUnavailableReason:this.postUnavailableReason||null,reducedMotion:this.options.reducedMotion,quality:this._appliedQuality,shadows:this.renderer.shadowMap.enabled,pixelRatio:this.renderer.getPixelRatio(),atlas:!!this.staticAtlasSheet,staticAtlasTextureCount:this.atlasTextures.length,staticAtlasFrameCount:this.atlasFrames.length,staticAtlasShared:this.atlasTextures.length===1,animationActorCount:this.animationActors.size,animationAtlasCount:this.animationSheets.length,animationClipNames:[...new Set([...this.animationActors.values()].flatMap(actor=>Object.keys(actor.clips)))].sort(),animatedEntities:[this.hero,...this.entities.values()].filter(actor=>this.animationActors.has(actor.animationKey)).length,deathGhosts:this.ghosts.size,heroAnimation:this.hero.playback?.intent||null};}
 	 dispose(){if(this.disposed)return;this.disposed=true;for(const a of[this.hero,...this.entities.values(),...this.ghosts.values()]){a.materials.forEach(m=>m.dispose());a.mesh.geometry.dispose();}for(const m of this.materials.values())m.dispose();for(const g of this.geometries.values())g.dispose();for(const t of this.textures)t.dispose();for(const r of this.resources)r.dispose?.();for(const visual of this.effectMeshes.values())for(const part of visual.userData.parts||[])part.material?.dispose();this.target?.dispose();this.renderer.dispose();this.scene.clear();}
 }
 
@@ -2023,8 +2123,9 @@ class CanvasFallbackRenderer{
  drawFortress(x,z,palette,index=0){const c=this.ctx,p=this.project(x,z),s=this.scale,w=s*5.7,h=s*4.25,top=p.y-h,stone=this.color(palette.stone),plaster=this.color(palette.plaster),accent=this.color(palette.glow);c.save();c.fillStyle='#11192366';c.beginPath();c.ellipse(p.x+s*.4,p.y+s*.35,w*.65,s*.5,0,0,TAU);c.fill();this.polygon([[p.x-w/2,top],[p.x+w/2,top],[p.x+w/2+s*.7,top-s*.45],[p.x+w/2+s*.7,p.y-s*.45],[p.x+w/2,p.y],[p.x-w/2,p.y]],stone,'#3c4650',2);c.fillStyle=plaster;for(let i=0;i<6;i++)c.fillRect(p.x-w/2+i*w/5.2,top-s*.48,s*.72,s*.62);for(let row=0;row<3;row++)for(let col=0;col<5;col++){c.strokeStyle=this.color(palette.wood,.42);c.strokeRect(p.x-w*.45+col*w*.18+(row%2?s*.18:0),top+s*.42+row*s*1.03,s*.9,s*.78);}c.fillStyle=this.color(palette.roof);c.fillRect(p.x-s*.66,p.y-s*1.9,s*1.32,s*1.9);c.fillStyle=accent;c.fillRect(p.x-s*.08,p.y-s*1.58,s*.16,s*.95);c.fillRect(p.x-s*.48,p.y-s*1.2,s*.96,s*.14);c.restore();this.drawCalls++;}
  drawShrine(x,z,palette,index=0){const c=this.ctx,p=this.project(x,z),s=this.scale,stone=this.color(palette.stone),plaster=this.color(palette.plaster),glow=this.color(palette.glow);c.save();c.fillStyle='#16132666';c.beginPath();c.ellipse(p.x+s*.3,p.y+s*.2,s*3.5,s*.62,0,0,TAU);c.fill();this.polygon([[p.x-s*3,p.y],[p.x+s*3,p.y],[p.x+s*3.6,p.y-s*.55],[p.x-s*2.4,p.y-s*.55]],stone,'#4b435c',2);for(const dx of [-2.15,2.15]){c.fillStyle=plaster;c.fillRect(p.x+s*dx-s*.34,p.y-s*4.1,s*.68,s*3.7);c.fillStyle=stone;c.fillRect(p.x+s*dx-s*.5,p.y-s*4.25,s,s*.28);c.fillRect(p.x+s*dx-s*.5,p.y-s*.7,s,s*.28);}this.polygon([[p.x-s*2.75,p.y-s*4.25],[p.x+s*2.75,p.y-s*4.25],[p.x+s*2.1,p.y-s*4.85],[p.x-s*2.1,p.y-s*4.85]],this.color(palette.roof),'#443b55',2);c.shadowColor=glow;c.shadowBlur=s*.8;this.polygon([[p.x,p.y-s*3.9],[p.x+s*.58,p.y-s*2.65],[p.x,p.y-s*1.7],[p.x-s*.58,p.y-s*2.65]],glow,'#f3ddff',1);c.shadowBlur=0;c.restore();this.drawCalls++;}
  drawStructure(x,z,palette,zone,index){if(zone===1)this.drawSewer(x,z,palette,index);else if(zone===3)this.drawFortress(x,z,palette,index);else if(zone===4)this.drawShrine(x,z,palette,index);else this.drawHouse(x,z,palette,index);}
+ drawNPCs(items=[]){const c=this.ctx;this.npcCount=items.length;for(const item of items){const p=this.project(item.x,item.z),s=this.scale,tone=item.color||'#d5b575';c.save();c.globalAlpha=.92;c.fillStyle=tone;c.beginPath();c.ellipse(p.x,p.y+s*.08,s*.34,s*.12,0,0,TAU);c.fill();c.fillRect(p.x-s*.14,p.y-s*.78,s*.28,s*.72);c.fillStyle='#eadbb4';c.beginPath();c.arc(p.x,p.y-s*.98,s*.2,0,TAU);c.fill();c.fillStyle=tone;c.save();c.translate(p.x,p.y-s*1.24);c.rotate(Math.PI/4);c.fillRect(-s*.07,-s*.07,s*.14,s*.14);c.restore();if(!item.talked){c.globalAlpha=.35;c.strokeStyle=tone;c.lineWidth=2;c.beginPath();c.arc(p.x,p.y-s*.98,s*.32,0,TAU);c.stroke();}c.restore();this.drawCalls++;}}
  constructor(canvas,options={},reason=null){
-  this.canvas=canvas;this.options={quality:'low',reducedMotion:false,...options};this._appliedQuality='low';this.reason=reason?.message||String(reason||'WebGL context unavailable');this.width=canvas.clientWidth||(typeof innerWidth==='number'?innerWidth:1280);this.height=canvas.clientHeight||(typeof innerHeight==='number'?innerHeight:720);this.time=0;this.zone=0;this.cameraX=0;this.cameraZ=0;this.scale=20;this.atlasImage=null;this.atlasFrames=[];this.animationActors=new Map();this.actorStates=new Map();this.drawCalls=0;this.disposed=false;
+  this.canvas=canvas;this.options={quality:'low',reducedMotion:false,...options};this._appliedQuality='low';this.reason=reason?.message||String(reason||'WebGL context unavailable');this.width=canvas.clientWidth||(typeof innerWidth==='number'?innerWidth:1280);this.height=canvas.clientHeight||(typeof innerHeight==='number'?innerHeight:720);this.time=0;this.zone=0;this.cameraX=0;this.cameraZ=0;this.scale=20;this.atlasImage=null;this.atlasFrames=[];this.animationActors=new Map();this.actorStates=new Map();this.npcCount=0;this.drawCalls=0;this.disposed=false;
   this.ctx=canvas.getContext('2d',{alpha:false});
   if(!this.ctx&&canvas.parentNode){const replacement=canvas.cloneNode(true);canvas.replaceWith(replacement);this.canvas=replacement;this.ctx=replacement.getContext('2d',{alpha:false});}
   if(!this.ctx)throw new Error('WebGL 与 Canvas 2D 均不可用。请关闭浏览器省电模式后重试。');
@@ -2051,7 +2152,7 @@ class CanvasFallbackRenderer{
   const nw=this.project(-20,-20),se=this.project(20,20);ctx.fillStyle=ground;ctx.fillRect(nw.x,nw.y,se.x-nw.x,se.y-nw.y);const r1=this.project(-2.2,-20),r2=this.project(2.2,20);ctx.fillStyle=road;ctx.fillRect(r1.x,nw.y,r2.x-r1.x,se.y-nw.y);const h1=this.project(-20,-2.2),h2=this.project(20,2.2);ctx.fillRect(nw.x,h1.y,se.x-nw.x,h2.y-h1.y);
   ctx.fillStyle=this.color(palette.leaf[0],.65);for(let i=0;i<90;i++){const x=((i*47+state.zone*19)%380)/10-19,z=((i*83+state.zone*31)%380)/10-19;if(Math.abs(x)<3||Math.abs(z)<3)continue;const p=this.project(x,z);ctx.fillRect(p.x,p.y,2+(i%3),2+(i%2));}
   let structureIndex=0;for(const[x,z]of[[-10,-6],[10,-6],[-11,10],[11,10]])this.drawStructure(x,z,palette,state.zone,structureIndex++);
-	  for(const landmark of state.landmarks||[]){if(landmark.resolved)continue;const p=this.project(landmark.x,landmark.z);ctx.save();ctx.translate(p.x,p.y-12);ctx.rotate(Math.PI/4);ctx.fillStyle='#f0d18a';ctx.fillRect(-7,-7,14,14);ctx.restore();}
+	  this.drawNPCs(state.npcs||[]);for(const landmark of state.landmarks||[]){if(landmark.resolved)continue;const p=this.project(landmark.x,landmark.z);ctx.save();ctx.translate(p.x,p.y-12);ctx.rotate(Math.PI/4);ctx.fillStyle='#f0d18a';ctx.fillRect(-7,-7,14,14);ctx.restore();}
 	  if(state.portal?.active){const p=this.project(state.portal.x||0,state.portal.z??-14);ctx.strokeStyle='#9ce2d2';ctx.lineWidth=4;ctx.beginPath();ctx.arc(p.x,p.y-22,18,0,Math.PI*2);ctx.stroke();}
 	  for(const pickup of state.pickups||[]){const p=this.project(pickup.x,pickup.z);ctx.fillStyle=pickup.type==='heal'?'#efaaa2':pickup.type==='essence'?'#f7d283':'#9fe4c2';ctx.beginPath();ctx.arc(p.x,p.y-7,4,0,Math.PI*2);ctx.fill();}
 	  for(const effect of state.effects||[]){if(effect.type==='number')continue;
@@ -2067,7 +2168,7 @@ class CanvasFallbackRenderer{
  render(state,dt=1/60){if(!state||this.disposed)return;this.drawCalls=0;const paused=state.mode==='paused'||state.mode==='upgrade'||state.mode==='event',visualDt=paused?0:Math.max(0,Number(dt)||0),hero=state.hero||{x:0,z:5};this.time=Number.isFinite(state.time)?state.time:this.time+visualDt;this.zone=state.zone||0;const targetX=state.mode==='menu'?0:Math.max(-6,Math.min(6,hero.x||0)),targetZ=state.mode==='menu'?0:Math.max(-5,Math.min(6,hero.z||0)),smooth=1-Math.exp(-visualDt*5);this.cameraX+=(targetX-this.cameraX)*smooth;this.cameraZ+=(targetZ-this.cameraZ)*smooth;this.scale=Math.max(10,Math.min(this.width/42,this.height/34))/(this.options.cameraZoom||1);this.drawWorld(state);this.drawProps(state.props);
   const warnings=new Map();for(const effect of state.effects||[]){if(effect.type==='number')continue;if(effect.type==='telegraph'&&effect.enemyId!=null&&!warnings.has(effect.enemyId))warnings.set(effect.enemyId,effect);}const actors=(state.enemies||[]).filter(e=>!e.dead&&e.hp>0).map(item=>({item,isHero:false}));actors.push({item:hero,isHero:true});actors.sort((a,b)=>(a.item.z||0)-(b.item.z||0));for(const actor of actors)this.drawActor(actor.item,actor.isHero,visualDt,paused,warnings);const alive=new Set(actors.map(a=>a.isHero?'hero':String(a.item.id)));for(const id of this.actorStates.keys())if(!alive.has(id))this.actorStates.delete(id);
  }
- getMetrics(){return{renderer:'Canvas 2D fallback · authored sprite animation',fallbackReason:this.reason,zone:this.zone,drawCalls:this.drawCalls,actors:this.actorStates.size,postprocessing:false,reducedMotion:this.options.reducedMotion,quality:'low',shadows:false,pixelRatio:Math.min(typeof devicePixelRatio==='number'?devicePixelRatio:1,1.35),atlas:!!this.atlasImage,animationActorCount:this.animationActors.size,animationAtlasCount:new Set([...this.animationActors.values()].map(a=>a.image)).size,animationClipNames:[...new Set([...this.animationActors.values()].flatMap(actor=>Object.keys(actor.clips||{})))].sort()};}
+ getMetrics(){return{renderer:'Canvas 2D fallback · authored sprite animation',fallbackReason:this.reason,zone:this.zone,drawCalls:this.drawCalls,actors:this.actorStates.size,npcs:this.npcCount,postprocessing:false,reducedMotion:this.options.reducedMotion,quality:'low',shadows:false,pixelRatio:Math.min(typeof devicePixelRatio==='number'?devicePixelRatio:1,1.35),atlas:!!this.atlasImage,animationActorCount:this.animationActors.size,animationAtlasCount:new Set([...this.animationActors.values()].map(a=>a.image)).size,animationClipNames:[...new Set([...this.animationActors.values()].flatMap(actor=>Object.keys(actor.clips||{})))].sort()};}
  dispose(){this.disposed=true;this.actorStates.clear();this.animationActors.clear();}
 }
 
@@ -2103,6 +2204,7 @@ const {prepareAnimationAtlas}=window.__HD2D_MODULES["atlas-import"];
 const {loadImage,loadJSON}=window.__HD2D_MODULES["asset-loader"];
 const {RELICS,EXPEDITIONS}=window.__HD2D_MODULES["progression"];
 const {ORIGINS,JOURNEYS,RECORD_KEYS}=window.__HD2D_MODULES["journey"];
+const {STORY_BEATS,ENDING_BEAT,NPCS}=window.__HD2D_MODULES["narrative"];
 
 
 
@@ -2174,7 +2276,9 @@ function renderInfo(type){$('info-content').dataset.view=type;
  }else if(type==='settings'){$('info-title').textContent='让冒险适合你。';$('info-eyebrow').textContent='SETTINGS';$('info-content').innerHTML=`<div class="info-row"><div>画面质量<small>默认与电脑版相同；仅你主动选择流畅档才降低画质。</small></div><select id="quality-select" aria-label="画面质量"><option value="high">精致</option><option value="low">流畅</option></select></div><div class="info-row"><div>声音<small>首次操作后启用音频。</small></div><input id="sound-toggle" type="checkbox" aria-label="声音"></div><div class="info-row"><div>环境音乐<small>随区域变化的轻声旋律。</small></div><input id="music-toggle" type="checkbox" aria-label="环境音乐"></div><div class="info-row"><div>减少动态效果<small>减轻画面震动和镜头变化。</small></div><input id="motion-toggle" type="checkbox" aria-label="减少动态效果"></div><div class="info-row"><div>自动腐蚀脉冲<small>附近有敌人且冷却结束时自动施放。</small></div><input id="auto-toggle" type="checkbox" aria-label="自动腐蚀脉冲"></div>`;$('quality-select').value=prefs.quality;$('quality-select').onchange=e=>setPreference('quality',e.target.value);for(const [id,key] of [['sound-toggle','sound'],['music-toggle','music'],['motion-toggle','reducedMotion'],['auto-toggle','autoPulse']]){$(id).checked=!!prefs[key];$(id).onchange=e=>{audio.unlock();setPreference(key,e.target.checked);};}
  }else if(type==='meta'){$('info-title').textContent='把上一世，带入下一口。';$('info-eyebrow').textContent='PERMANENT EVOLUTION';const m=game.state.meta||{};$('info-content').innerHTML=`<p>现有精华：<strong>${m.essence||0}</strong>。永久进化会在下一次新旅程生效。</p>`+[['vitality','厚实生命','提升初始生命'],['power','锋利饥饿','提升初始攻击'],['speed','轻盈粘液','提升初始移动速度']].map(([id,title,desc])=>`<div class="info-row"><div>${title} <small>${desc} · 当前 ${m[id]||0} 级</small></div><button data-buy="${id}">升级 · ${metaCost(id)} 精华</button></div>`).join('');document.querySelectorAll('[data-buy]').forEach(b=>b.onclick=()=>{if(!game.buyMeta(b.dataset.buy))toast('精华不足，或这项进化已达到上限。');renderInfo('meta');});
  }else{$('info-title').textContent='你曾吞噬过的世界。';$('info-eyebrow').textContent='FIELD NOTES';const s=game.state,genes=Object.entries(s.upgrades||{}).filter(([,n])=>n>0),st=s.stats||{};$('info-content').innerHTML=`<p>${journeyName(s.journey)} · ${originName(s.origin)} · 种子 ${s.seed}<br>本局 Lv.${s.hero.level} · 吞噬 ${st.eaten||0} · 精英 ${st.elitesKilled||0} · 狩猎 ${st.huntsCompleted||0} · 战利品 ${st.lootCollected||0} · 游玩 ${fmt(s.time)} · ${s.difficulty==='normal'?'标准挑战':'轻松旅程'}</p>`+REGION.map((n,i)=>`<div class="info-row"><div>${ROMAN[i]}. ${n}<small>${MOTTO[i]}</small></div><span>${i<s.zone?'已突破':i===s.zone?'当前区域':'尚未抵达'}</span></div>`).join('')+(genes.length?`<div class="gene-summary">${genes.map(([id,n])=>`<span>${escapeHTML((Array.isArray(UPGRADES)?UPGRADES.find(u=>u.id===id):UPGRADES?.[id])?.name||id)} <b>×${n}</b></span>`).join('')}</div>`:'<div class="info-content-empty">尚未获得基因。继续吞噬，下一次升级将改变你的构筑。</div>');}}
-function refreshSetup(){
+ const baseRenderInfo=renderInfo;renderInfo=type=>{baseRenderInfo(type);if(type!=='journal')return;const s=game.state,seen=s.storySeen||[];const storyRows=STORY_BEATS.map((beat,index)=>'<div class="info-row"><div>'+escapeHTML(beat.title)+'<small>'+escapeHTML(beat.thesis)+'</small></div><span>'+((seen.includes(beat.id)||index<s.zone)?'已听见':index===s.zone?'当前回声':'未抵达')+'</span></div>').join('');const npcRows=NPCS.filter(n=>n.zone<=s.zone).map(n=>'<div class="info-row"><div>'+escapeHTML(n.name)+'<small>'+escapeHTML(n.role)+' · '+escapeHTML(n.bubbles[0])+'</small></div><span>'+((s.npcLog||[]).includes(n.id)?'已交谈':'待发现')+'</span></div>').join('');$('info-content').innerHTML+='<h3>抽象剧情 · 世界回声</h3><p>'+escapeHTML(ENDING_BEAT.thesis)+' 当前已记录 '+seen.length+' / '+STORY_BEATS.length+' 个区域回声。</p>'+storyRows+'<h3>NPC 梗气泡 · '+(s.npcLog||[]).length+' / '+NPCS.length+'</h3>'+npcRows;};
+ const baseSyncMode=syncMode;syncMode=()=>{baseSyncMode();if(game.state.mode==='playing'){const beat=STORY_BEATS[game.state.zone];$('banner-text').textContent=beat.line+' · '+beat.thesis;}};
+ function refreshSetup(){
  const unlocked=game.canStartTrial();$('trial-option').disabled=!unlocked;$('trial-option').textContent=unlocked?'五王试炼 · 已解锁':'五王试炼 · 通关解锁';
  if(!unlocked&&$('journey-select').value==='trial')$('journey-select').value='campaign';
  const o=ORIGINS.find(o=>o.id===$('origin-select').value)||ORIGINS[0],m=JOURNEYS.find(m=>m.id===$('journey-select').value)||JOURNEYS[0];
@@ -2212,6 +2316,22 @@ function renderExpedition(){
  document.querySelector('[data-expedition]:not(:disabled)')?.focus();
 }
 function metaCost(id){const m=game.state.meta||{};return game.getStats?.().metaCosts?.[id]??(5+(m[id]||0)*5);}
+function appendNpcLabels(){
+ const s=game.state,list=[];if(s.mode==='menu')return;
+ for(const npc of s.npcs||[]){
+  if(Math.hypot(npc.x-s.hero.x,npc.z-s.hero.z)>11)continue;
+  const p=renderer.project(npc.x,npc.z,2.05);if(!p.visible)continue;
+  const active=s.npcDialogue?.npcId===npc.id&&s.npcDialogue.until>s.time,lines=npc.bubbles||[],line=active?s.npcDialogue.text:lines[Math.floor((s.time+npc.zone*3)/5.5)%Math.max(1,lines.length)]||'我在这里，负责让世界看起来有伏笔。';
+  list.push('<div class="world-label npc '+(active?'active':'')+'" style="left:'+p.x+'px;top:'+p.y+'px"><span class="npc-name">'+escapeHTML(npc.glyph||'◉')+' '+escapeHTML(npc.name)+'</span><span class="npc-bubble">'+escapeHTML(line)+'</span></div>');
+ }
+ if(list.length)$('labels').insertAdjacentHTML('beforeend',list.join(''));
+}
+const baseUpdateLabels=updateLabels;updateLabels=()=>{baseUpdateLabels();appendNpcLabels();};
+function overlayNpcMinimap(){
+ const s=game.state,c=$('minimap'),ctx=c.getContext('2d'),to=(x,z)=>[80+x*3.6,80+z*3.6];
+ for(const npc of s.npcs||[]){const p=to(npc.x,npc.z);ctx.fillStyle=npc.talked?'#78917d':'#f1d184';ctx.fillRect(p[0]-2.5,p[1]-2.5,5,5);ctx.strokeStyle='#15271f';ctx.lineWidth=1;ctx.strokeRect(p[0]-3.5,p[1]-3.5,7,7);}
+}
+const baseDrawMinimap=drawMinimap;drawMinimap=()=>{baseDrawMinimap();overlayNpcMinimap();};
 function syncMode(){const s=game.state,m=s.mode;if(m!==previousMode){show('menu',m==='menu');show('upgrade-screen',m==='upgrade');show('expedition-screen',m==='event');show('pause-screen',m==='paused'&&$('info-screen').classList.contains('hidden'));show('end-screen',m==='victory'||m==='dead');for(const id of ['hud','objective','minimap-wrap','skillbar','move-help','stat-rack','build-strip','hunt-panel'])show(id,m!=='menu');show('joystick',m==='playing'&&matchMedia('(any-pointer:coarse)').matches);show('labels',m!=='menu');if(m!=='playing'){keys.clear();touch.x=touch.z=0;moveTarget=null;}if(m==='menu'){for(const id of ['boss-ui','target-panel','hunt-panel'])show(id,false);refreshSave();}if(m==='upgrade')renderUpgrades();if(m==='event')renderExpedition();if(m==='victory'||m==='dead')renderEnd();if(m==='paused'){$('pause-stats').textContent=`${REGION[s.zone]} · Lv.${s.hero.level} · ${fmt(s.time)}`;$('resume-button').focus();}previousMode=m;}
  if(m==='playing'&&s.zone!==previousZone){previousZone=s.zone;$('banner-number').textContent=`${s.journey==='trial'?'BOSS TRIAL':'CHAPTER'} ${ROMAN[s.zone]}`;$('banner-title').textContent=REGION[s.zone];$('banner-text').textContent=MOTTO[s.zone];show('chapter-banner',true);clearTimeout(bannerTimeout);bannerTimeout=setTimeout(()=>show('chapter-banner',false),2600);audio.next=0;}
  if(m!=='playing'){show('interact-button',false);show('chapter-banner',false);}syncTouchUI();}
@@ -2239,7 +2359,8 @@ function updateHUD(){const s=game.state,h=s.hero,o=s.objectives||{},stats=game.g
  // Read-only DOM diagnostics for QA: real state, never a gameplay control.
  $('world').dataset.props=JSON.stringify((s.props||[]).map(p=>({kind:p.kind,x:p.x,z:p.z,hp:p.hp,broken:p.broken})));$('world').dataset.mode=s.mode;$('world').dataset.journey=s.journey;$('world').dataset.origin=s.origin;$('world').dataset.zone=String(s.zone);$('world').dataset.hero=JSON.stringify({x:+h.x.toFixed(3),z:+h.z.toFixed(3),level:h.level,hp:+h.hp.toFixed(2)});$('world').dataset.metrics=JSON.stringify(renderer.getMetrics?.()||{});$('world').dataset.combat=JSON.stringify({perfectDodges:s.stats.perfectDodges||0,bossBreaks:s.stats.bossBreaks||0,dodgeWindow:+(h.dodgeWindow||0).toFixed(3),dodgeReady:!!h.dodgeReady,bossGuard:boss?.guard??null,bossStagger:+(boss?.stagger||0).toFixed(3)});
  if(s.mode==='upgrade'&&choiceKey!==(s.upgradeChoices||[]).map(x=>typeof x==='string'?x:x.id||x.name).join(','))renderUpgrades();}
-function resize(){const w=Math.max(1,Math.round(window.visualViewport?.width||innerWidth)),h=Math.max(1,Math.round(window.visualViewport?.height||innerHeight));document.documentElement.style.setProperty('--view-height',h+'px');if(renderer)renderer.resize(w,h);resetInput();syncTouchUI();}
+ const baseUpdateHUD=updateHUD;updateHUD=()=>{baseUpdateHUD();const s=game.state,stats=game.getStats?.()||{},beat=stats.storyBeat||STORY_BEATS[s.zone];$('zone-mood').textContent=beat?.thesis||MOTTO[s.zone];const npc=stats.nearbyNpc;if(npc)$('interact-button').textContent='F · 与'+npc.name+'对话';$('world').dataset.storyBeat=beat?.id||'';$('world').dataset.npcTalks=String(stats.npcTalks||0);};
+ function resize(){const w=Math.max(1,Math.round(window.visualViewport?.width||innerWidth)),h=Math.max(1,Math.round(window.visualViewport?.height||innerHeight));document.documentElement.style.setProperty('--view-height',h+'px');if(renderer)renderer.resize(w,h);resetInput();syncTouchUI();}
 function togglePause(){if(game.state.mode==='playing')game.pause();else if(game.state.mode==='paused'&&$('info-screen').classList.contains('hidden'))game.unpause();}
 function bindings(){bindWebControls();
  $('expedition-close').onclick=()=>game.closeExpedition();$('collection-button').onclick=()=>openInfo('collection');$('achievements-button').onclick=()=>openInfo('achievements');$('origin-select').onchange=refreshSetup;$('journey-select').onchange=refreshSetup;$('records-button').onclick=()=>openInfo('records');$('end-records-button').onclick=()=>openInfo('records');$('trial-button').onclick=()=>start(true,true);$('start-button').onclick=()=>start();$('again-button').onclick=()=>start(true);$('continue-button').onclick=()=>{audio.unlock();game.resume();previousZone=-1;};$('pause-button').onclick=togglePause;$('resume-button').onclick=()=>game.unpause();$('save-menu-button').onclick=()=>{game.save();game.returnToMenu();refreshSave();};$('end-menu-button').onclick=()=>{game.returnToMenu();refreshSave();};$('how-button').onclick=()=>openInfo('how');$('guide-button').onclick=()=>openInfo('how');$('settings-button').onclick=()=>openInfo('settings');$('pause-settings').onclick=()=>openInfo('settings');$('meta-button').onclick=()=>openInfo('meta');$('journal-button').onclick=()=>openInfo('journal');document.querySelectorAll('[data-info]').forEach(button=>button.onclick=()=>renderInfo(button.dataset.info));$('info-close').onclick=()=>{const wasPaused=infoBack==='paused';hideInfo();if(wasPaused)show('pause-screen',true);};$('interact-button').onclick=()=>game.interact();$('bite').onclick=()=>{audio.unlock();game.attack();};for(const id of ['pulse','dash','ultimate'])$(id).onclick=()=>{audio.unlock();game.skill(id);};

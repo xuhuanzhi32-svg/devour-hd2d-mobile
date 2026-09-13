@@ -3,20 +3,25 @@ const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');
 const scripts=[...html.matchAll(/<script(?![^>]*\bsrc=)(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(m=>m[1]);
 const assetScripts=[...html.matchAll(/<script src="(assets\/embedded\/asset-[^"]+\.js)"><\/script>/g)].map(m=>m[1]);
 const context=vm.createContext({window:{__HD2D_MODULES:{}},console});
-for(const name of ['progression','journey','game','navigation'])vm.runInContext(scripts.find(s=>s.startsWith('window.__HD2D_MODULES["'+name+'"]')),context);
+for(const name of ['progression','journey','narrative','game','navigation'])vm.runInContext(scripts.find(s=>s.startsWith('window.__HD2D_MODULES["'+name+'"]')),context);
 const {Game}=context.window.__HD2D_MODULES.game;
 const clone=v=>JSON.parse(JSON.stringify(v));
 function make(){const values=new Map(),storage={getItem:k=>values.get(k)??null,setItem:(k,v)=>values.set(k,v)};const g=new Game({storage});g.start({difficulty:'story'});return{g,storage};}
 function settle(g){for(let i=0;g.state.mode==='upgrade'&&i<100;i++)g.chooseUpgrade(0);}
+test('abstract story beats and NPC head bubbles are deterministic, bounded and rewarded once',()=>{
+ const {g,storage}=make(),h=g.state.hero,npc=g.state.npcs[0];assert.equal(g.state.npcs.length,2);assert.equal(g.state.storyBeat,'discarded-thought');assert.equal(g.state.storySeen.length,1);
+ h.x=npc.x;h.z=npc.z;assert.equal(g.interact(),true);assert.equal(g.state.npcLog.length,1);assert.equal(g.state.npcLog[0],npc.id);assert.equal(g.state.stats.npcTalks,1);assert.equal(g.state.npcDialogue.npcId,npc.id);assert.ok(npc.bubbles.includes(g.state.npcDialogue.text));assert.equal(g.interact(),false);
+ const reload=new Game({storage});assert.ok(reload.resume());assert.equal(reload.state.storyBeat,'discarded-thought');assert.equal(reload.state.npcs[0].talked,true);assert.equal(reload.state.stats.npcTalks,1);assert.equal(reload.state.npcLog.length,1);
+});
 // Unit fixtures position actors to isolate distance, arc, save and reward boundaries.
 test('published HTML parses all inline scripts and references every local PNG data chunk',()=>{
- assert.equal(scripts.length,18);for(const s of scripts)new vm.Script(s);
+ assert.equal(scripts.length,19);for(const s of scripts)new vm.Script(s);
  assert.equal(assetScripts.length,30);
  assert.equal(new Set(assetScripts).size,30);
  for(const source of assetScripts){assert.ok(fs.existsSync(path.join(__dirname,'..',source)));assert.ok(fs.statSync(path.join(__dirname,'..',source)).size<1024*1024);}
  assert.doesNotMatch(html,/<script[^>]+type=["']module/);
  assert.doesNotMatch(html,/<script src="(?!assets\/embedded\/asset-)/);
- assert.match(html,/v0\.9\.1 WEB/);assert.match(html,/id="renderer-mode"/);
+ assert.match(html,/v0\.10\.0 WEB/);assert.match(html,/id="renderer-mode"/);
 });
 test('directional attack breaks supplies in its arc and grants only one persistent pickup',()=>{
  const {g,storage}=make(),p=g.state.props[0],h=g.state.hero;g.state.enemies=[];h.x=p.x;h.z=p.z+1;g.aim(p.x,p.z);
@@ -95,6 +100,13 @@ test('Three.js supply visuals use shared real geometry, retain broken state and 
  const {g}=make();r.syncProps(g.state.props);assert.equal(r.dynamic.children.length,6);
  const first=r.propMeshes.get(g.state.props[0].id);assert.equal(first.children.length,4);assert.equal(first.children[0].geometry,r.geometries.get('box'));
  g.state.props[0].broken=true;r.syncProps(g.state.props);assert.equal(first.scale.y,.12);r.syncProps([]);assert.equal(r.dynamic.children.length,0);assert.equal(r.propMeshes.size,0);
+});
+test('NPC procedural markers are present in both WebGL and Canvas render paths',()=>{
+ const {WorldRenderer,CanvasFallbackRenderer}=context.window.__HD2D_MODULES.renderer,T=context.window.__HD2D_MODULES.three,{g}=make(),items=g.state.npcs;
+ const webgl=Object.create(WorldRenderer.prototype);Object.assign(webgl,{materials:new Map(),dynamic:new T.Group(),geometries:new Map([['ring',new T.RingGeometry(.88,1,16)],['cylinder',new T.CylinderGeometry(1,1,1,8)],['rock',new T.IcosahedronGeometry(1,0)],['octa',new T.OctahedronGeometry(1)]]),options:{reducedMotion:false},time:0});
+ webgl.syncNPCs(items);assert.equal(webgl.npcMeshes.size,2);assert.equal(webgl.dynamic.children.length,2);assert.equal(webgl.dynamic.children[0].children.length,4);webgl.syncNPCs([items[0]]);assert.equal(webgl.npcMeshes.size,1);
+ const calls=[],ctx=new Proxy({}, {get(target,key){if(!(key in target))target[key]=(...args)=>calls.push([key,...args]);return target[key];},set(target,key,value){target[key]=value;return true;}});
+ const canvas=Object.create(CanvasFallbackRenderer.prototype);Object.assign(canvas,{ctx,scale:20,width:1280,height:720,cameraX:0,cameraZ:0,drawCalls:0});canvas.drawNPCs(items);assert.equal(canvas.npcCount,2);assert.ok(calls.some(c=>c[0]==='arc'));assert.ok(calls.some(c=>c[0]==='ellipse'));
 });
 test('Canvas compatibility renderer draws dimensional, zone-specific structures instead of flat house placeholders',()=>{
  const {CanvasFallbackRenderer}=context.window.__HD2D_MODULES.renderer,calls=[];

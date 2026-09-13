@@ -32,5 +32,5 @@ test('touch skills fire on press once, mouse and keyboard click remain supported
 test('delivery and high fidelity requirements are visible in the actual build',()=>{
  assert.match(html,/id="game-shell" hidden/);assert.match(html,/id="launch-help"/);assert.match(html,/https:\/\/xuhuanzhi32-svg.github.io\/devour-hd2d-mobile\//);
  assert.match(html,/HD2D_WEBGL_UNAVAILABLE/);assert.match(html,/options.compatibilityConfirmed/);assert.match(html,/webglcontextlost/);assert.match(html,/visualViewport/);
- assert.match(html,/\.touch-ui \.web-tools\{display:none/);assert.match(html,/v0\.9\.1 WEB/);
+ assert.match(html,/\.touch-ui \.web-tools\{display:none/);assert.match(html,/v0\.10\.0 WEB/);
 });
