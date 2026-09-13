@@ -1,6 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
 const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');
-const scripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(m=>m[1]);
+const scripts=[...html.matchAll(/<script(?![^>]*\bsrc=)(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].map(m=>m[1]);
+const assetScripts=[...html.matchAll(/<script src="(assets\/embedded\/asset-[^"]+\.js)"><\/script>/g)].map(m=>m[1]);
 const context=vm.createContext({window:{__HD2D_MODULES:{}},console});
 for(const name of ['progression','journey','game','navigation'])vm.runInContext(scripts.find(s=>s.startsWith('window.__HD2D_MODULES["'+name+'"]')),context);
 const {Game}=context.window.__HD2D_MODULES.game;
@@ -8,11 +9,14 @@ const clone=v=>JSON.parse(JSON.stringify(v));
 function make(){const values=new Map(),storage={getItem:k=>values.get(k)??null,setItem:(k,v)=>values.set(k,v)};const g=new Game({storage});g.start({difficulty:'story'});return{g,storage};}
 function settle(g){for(let i=0;g.state.mode==='upgrade'&&i<100;i++)g.chooseUpgrade(0);}
 // Unit fixtures position actors to isolate distance, arc, save and reward boundaries.
-test('published HTML parses all inline scripts, preserves seven PNG sheets and has no external script dependency',()=>{
- assert.equal(scripts.length,15);for(const s of scripts)new vm.Script(s);
- assert.equal((html.match(/data:image\/png;base64,/g)||[]).length,7);
- assert.doesNotMatch(html,/<script[^>]+src=|<script[^>]+type=["']module/);
- assert.match(html,/v0\.8\.1 WEB/);assert.match(html,/id="renderer-mode"/);
+test('published HTML parses all inline scripts and references every local PNG data chunk',()=>{
+ assert.equal(scripts.length,18);for(const s of scripts)new vm.Script(s);
+ assert.equal(assetScripts.length,30);
+ assert.equal(new Set(assetScripts).size,30);
+ for(const source of assetScripts){assert.ok(fs.existsSync(path.join(__dirname,'..',source)));assert.ok(fs.statSync(path.join(__dirname,'..',source)).size<1024*1024);}
+ assert.doesNotMatch(html,/<script[^>]+type=["']module/);
+ assert.doesNotMatch(html,/<script src="(?!assets\/embedded\/asset-)/);
+ assert.match(html,/v0\.9\.1 WEB/);assert.match(html,/id="renderer-mode"/);
 });
 test('directional attack breaks supplies in its arc and grants only one persistent pickup',()=>{
  const {g,storage}=make(),p=g.state.props[0],h=g.state.hero;g.state.enemies=[];h.x=p.x;h.z=p.z+1;g.aim(p.x,p.z);
@@ -99,5 +103,13 @@ test('Canvas compatibility renderer draws dimensional, zone-specific structures 
  const palette={stone:0xa5a08b,plaster:0xd5bd8b,wood:0x665041,roof:0x555f5d,water:0x5e9d90,glow:0xffc571};
  for(let zone=0;zone<5;zone++)r.drawStructure(zone*2,zone,palette,zone,zone);
  assert.equal(r.drawCalls,5);assert.ok(calls.filter(c=>c[0]==='lineTo').length>30);assert.ok(calls.some(c=>c[0]==='quadraticCurveTo'));assert.ok(calls.some(c=>c[0]==='strokeRect'));assert.ok(calls.filter(c=>c[0]==='ellipse').length>=4);
+});
+test('WebGL architecture response opens real hinged doors nearby and keeps smoke bounded',()=>{
+ const {WorldRenderer,architectureResponse}=context.window.__HD2D_MODULES.renderer;
+ assert.equal(architectureResponse(0,2,.1,false)>0,true);assert.equal(architectureResponse(1,8,.1,false)<1,true);assert.equal(architectureResponse(0,2,.1,true),1);assert.equal(architectureResponse(1,8,.1,true),0);
+ const door={type:'door',node:{rotation:{y:0}},x:0,z:0,openness:0,sign:1},smoke={type:'smoke',node:{position:{y:0},scale:{setScalar(v){this.value=v;}},material:{opacity:0}},baseY:4,phase:.2};
+ const r=Object.create(WorldRenderer.prototype);Object.assign(r,{zone:0,time:2,options:{reducedMotion:false},zoneCache:new Map([[0,{userData:{architecture:[door,smoke]}}]])});r.updateArchitecture({x:0,z:0},.16);
+ assert.ok(door.openness>0&&door.openness<=1);assert.ok(door.node.rotation.y>0);assert.ok(smoke.node.position.y>=4&&smoke.node.position.y<5.85);assert.ok(smoke.node.scale.value>=.34&&smoke.node.scale.value<=.8);assert.ok(smoke.node.material.opacity>=0&&smoke.node.material.opacity<=.19);
+ assert.match(html,/house\(11,10,4\.55,4\.35,3\.05\)/);assert.match(html,/A real hinged door replaces the old facade decal/);
 });
 module.exports={Game,context,make,html,scripts};

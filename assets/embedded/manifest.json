@@ -1,0 +1,45 @@
+{
+  "format": "hd2d-base64-js-chunks-v1",
+  "assetCount": 7,
+  "chunkCount": 30,
+  "chunkSize": 700000,
+  "originalHtmlBytes": 19981556,
+  "transformedHtmlBytes": 1028168,
+  "assets": [
+    {
+      "assetIndex": 0,
+      "base64Length": 2690100,
+      "sha256": "7d7c9711c2395bcbe1c7bfea2174aad5886fb261eafd29defee6b188ce86f920"
+    },
+    {
+      "assetIndex": 1,
+      "base64Length": 2486884,
+      "sha256": "124c4856f51528944506e4bc6c67b3c227f2547a016618f426587ae0d54b28da"
+    },
+    {
+      "assetIndex": 2,
+      "base64Length": 2714156,
+      "sha256": "4969cafba4564cdabdc189125d0ba7a0f1f8580dc46c410a6fecce16ad32b1d9"
+    },
+    {
+      "assetIndex": 3,
+      "base64Length": 2605228,
+      "sha256": "f3ed649df8f4782bdbbc4605d4e0e5b7accbdc07e789456ecd0addc36256d80e"
+    },
+    {
+      "assetIndex": 4,
+      "base64Length": 2905220,
+      "sha256": "5aef09e126db0cde9a10a856d845319466d263dac31ef6c6177eb26726708b46"
+    },
+    {
+      "assetIndex": 5,
+      "base64Length": 3121300,
+      "sha256": "91dad85618b857599a9386d9a5ffae662eeb5b796849dd5513b5c6dcb4387f20"
+    },
+    {
+      "assetIndex": 6,
+      "base64Length": 2432332,
+      "sha256": "cbd1a717515d0ea4268d31cefd2ad3a4763c2b5083c9712021062ec95662de29"
+    }
+  ]
+}
