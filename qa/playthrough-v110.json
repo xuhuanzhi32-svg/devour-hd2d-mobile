@@ -1,0 +1,41 @@
+{
+  "kind": "public-api-accelerated-simulation",
+  "noStateInjection": true,
+  "notBrowserPlaythrough": true,
+  "results": [
+    {
+      "difficulty": "story",
+      "seed": 420,
+      "result": "victory",
+      "seconds": 229.4,
+      "zones": 5,
+      "hp": 184.71,
+      "propsBroken": 14,
+      "maxChain": 21,
+      "perfectDodges": 0,
+      "bossBreaks": 0,
+      "npcTalks": 4,
+      "sideQuests": 0,
+      "storyBeats": 5,
+      "attacks": 262
+    },
+    {
+      "journey": "trial",
+      "difficulty": "story",
+      "origin": "fangborn",
+      "seed": 420,
+      "result": "victory",
+      "seconds": 41.48,
+      "zones": 5,
+      "hp": 278.79,
+      "propsBroken": 0,
+      "maxChain": 1,
+      "perfectDodges": 0,
+      "bossBreaks": 0,
+      "npcTalks": 0,
+      "sideQuests": 0,
+      "storyBeats": 5,
+      "attacks": 53
+    }
+  ]
+}

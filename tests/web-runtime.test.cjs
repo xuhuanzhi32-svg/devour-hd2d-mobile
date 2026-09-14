@@ -10,8 +10,14 @@ function make(){const values=new Map(),storage={getItem:k=>values.get(k)??null,s
 function settle(g){for(let i=0;g.state.mode==='upgrade'&&i<100;i++)g.chooseUpgrade(0);}
 test('abstract story beats and NPC head bubbles are deterministic, bounded and rewarded once',()=>{
  const {g,storage}=make(),h=g.state.hero,npc=g.state.npcs[0];assert.equal(g.state.npcs.length,2);assert.equal(g.state.storyBeat,'discarded-thought');assert.equal(g.state.storySeen.length,1);
- h.x=npc.x;h.z=npc.z;assert.equal(g.interact(),true);assert.equal(g.state.npcLog.length,1);assert.equal(g.state.npcLog[0],npc.id);assert.equal(g.state.stats.npcTalks,1);assert.equal(g.state.npcDialogue.npcId,npc.id);assert.ok(npc.bubbles.includes(g.state.npcDialogue.text));assert.equal(g.interact(),false);
+ h.x=npc.x;h.z=npc.z;assert.equal(g.interact(),true);assert.equal(g.state.npcLog.length,1);assert.equal(g.state.npcLog[0],npc.id);assert.equal(g.state.stats.npcTalks,1);assert.equal(g.state.npcDialogue.npcId,npc.id);assert.ok(npc.bubbles.some(line=>g.state.npcDialogue.text.startsWith(line)));assert.equal(g.state.sideQuest.status,'active');assert.equal(g.interact(),false);
  const reload=new Game({storage});assert.ok(reload.resume());assert.equal(reload.state.storyBeat,'discarded-thought');assert.equal(reload.state.npcs[0].talked,true);assert.equal(reload.state.stats.npcTalks,1);assert.equal(reload.state.npcLog.length,1);
+});
+test('NPC side quest accepts progress, survives event save and resolves one of two rewards',()=>{
+ const {g,storage}=make(),h=g.state.hero,npc=g.state.npcs.find(n=>n.id==='bubble-prophet');h.x=npc.x;h.z=npc.z;assert.equal(g.interact(),true);assert.equal(g.state.sideQuest.status,'active');
+ g.state.stats.eaten=3;g.state.objectives.eaten=3;g._updateSideQuest();assert.equal(g.state.sideQuest.status,'ready');assert.equal(g.state.sideQuest.progress,3);assert.equal(g.interact(),true);assert.equal(g.state.mode,'event');assert.equal(g.state.activeExpedition,'npc:flush-three');
+ const event=new Game({storage});assert.ok(event.resume());const choice=event.getExpedition();assert.equal(choice.choices.length,2);assert.match(choice.text,/三口/);assert.equal(event.chooseExpedition(0),true);assert.equal(event.state.sideQuest,null);assert.deepEqual([...event.state.sideQuestLog],['flush-three']);assert.equal(event.state.mode,'playing');assert.ok(event.state.hero.xp>0);
+ const done=new Game({storage});assert.ok(done.resume());assert.equal(done.state.sideQuest,null);assert.deepEqual([...done.state.sideQuestLog],['flush-three']);assert.equal(done.state.npcs[0].talked,true);assert.equal(done.interact(),false);
 });
 // Unit fixtures position actors to isolate distance, arc, save and reward boundaries.
 test('published HTML parses all inline scripts and references every local PNG data chunk',()=>{
@@ -21,7 +27,7 @@ test('published HTML parses all inline scripts and references every local PNG da
  for(const source of assetScripts){assert.ok(fs.existsSync(path.join(__dirname,'..',source)));assert.ok(fs.statSync(path.join(__dirname,'..',source)).size<1024*1024);}
  assert.doesNotMatch(html,/<script[^>]+type=["']module/);
  assert.doesNotMatch(html,/<script src="(?!assets\/embedded\/asset-)/);
- assert.match(html,/v0\.10\.0 WEB/);assert.match(html,/id="renderer-mode"/);
+ assert.match(html,/v0\.11\.0 WEB/);assert.match(html,/id="renderer-mode"/);
 });
 test('directional attack breaks supplies in its arc and grants only one persistent pickup',()=>{
  const {g,storage}=make(),p=g.state.props[0],h=g.state.hero;g.state.enemies=[];h.x=p.x;h.z=p.z+1;g.aim(p.x,p.z);
